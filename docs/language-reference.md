@@ -33,6 +33,7 @@
   - [8.2 Equality, identity, and unification](#82-equality-identity-and-unification)
   - [8.3 Goal-directed execution versus model-theoretic meaning](#83-goal-directed-execution-versus-model-theoretic-meaning)
   - [8.4 Built-ins and operational extensions](#84-built-ins-and-operational-extensions)
+  - [8.5 Stratified negation](#85-stratified-negation)
 - [9. Standard built-in predicates](#9-standard-built-in-predicates)
   - [9.1 Equality and unification](#91-equality-and-unification)
   - [9.2 Arithmetic](#92-arithmetic)
@@ -48,6 +49,7 @@
 - [11. Declarations](#11-declarations)
   - [11.1 Automatic hybrid reasoning](#111-automatic-hybrid-reasoning)
   - [11.2 Default-output materialization](#112-default-output-materialization)
+  - [11.3 Advisory modes and determinism](#113-advisory-modes-and-determinism)
 - [12. deriva Sockets](#12-deriva-sockets)
   - [12.1 Socket vocabulary](#121-socket-vocabulary)
   - [12.2 Socket example](#122-socket-example)
@@ -802,7 +804,7 @@ A conforming deriva implementation supports the standard language described abov
 
 Browser execution, package layout, CLI URL loading, and any implementation-specific built-ins described in host documentation are outside this conformance surface unless separately standardized.
 
-Conformance cases live in the repository under `test/conformance/`. They are run by `npm test` before the example suite, and can be run alone with `node test/run-conformance.mjs`. Positive cases have input programs under `conformance/cases/` and exact expected standard-output files under `conformance/expected/`; both use `.pl` so expected output remains deriva-readable. Expected-error cases live under `conformance/errors/` with exact messages under `conformance/expected-errors/`. Expected-warning cases live under `conformance/warnings/` with exact `--warnings` stdout and stderr files under `conformance/expected-warnings/`. The corpus is grouped by language area, including arithmetic, strings, lists, terms, atoms, variables, negation, declarations, materialization, rules, syntax, and errors.
+Conformance cases live in the repository under `test/conformance/`. They are run by `npm test` before the example suite, and can be run alone with `node test/run-conformance.mjs`. Positive cases have input programs under `test/conformance/cases/` and exact expected standard-output files under `test/conformance/expected/`; both use `.pl` so expected output remains deriva-readable. Expected-error cases live under `test/conformance/errors/` with exact messages under `test/conformance/expected-errors/`. Expected-warning cases live under `test/conformance/warnings/` with exact `--warnings` stdout and stderr files under `test/conformance/expected-warnings/`. Proof cases live under `test/conformance/proofs/` with exact explanation output under `test/conformance/expected-proofs/`. The corpus is grouped by language area, including arithmetic, strings, lists, terms, atoms, variables, negation, declarations, materialization, rules, syntax, and errors.
 
 ## 15. Relationship to ISO Prolog
 

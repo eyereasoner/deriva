@@ -38,6 +38,13 @@ node bin/deriva.js facts.pl rules.pl
 printf 'works(stdin, true) :- eq(ok, ok).\n' | node bin/deriva.js -
 ```
 
+To install the published CLI instead, use:
+
+```sh
+npm install --global deriva
+deriva --version
+```
+
 You can also use npm's local package-bin runner from the checkout:
 
 ```sh
@@ -554,12 +561,12 @@ deriva -s examples/observability-log-correlation.pl > /dev/null
 
 For a release:
 
-1. update `VERSION`;
-2. update `README.md` and the language reference;
-3. regenerate golden outputs if behavior changed;
-4. run `npm run test:deriva`;
-5. run `node test/run-conformance-report.mjs conformance-report.md`;
-6. publish the repository with the browser playground assets if publishing the playground. The playground includes controls equivalent to CLI `--stats` and `--proof`.
+1. update `README.md` and the language reference when behavior or public guidance changed;
+2. regenerate golden outputs if behavior changed;
+3. execute `npm test`;
+4. execute npm version with `patch` (or `minor`/`major` as appropriate).
+
+The `preversion` script reruns the full test suite and refreshes [`conformance-report.md`](../conformance-report.md). The version command updates `package.json`, creates the release commit and `v*` tag, and the `postversion` script pushes the commit and tag. The tag triggers the GitHub Release and trusted npm publishing workflows. A push to `main` also deploys the browser playground through GitHub Pages.
 
 ## Relationship to Eyeling
 
@@ -578,7 +585,7 @@ A useful rule of thumb:
 | Human-auditable derivations | Either | Both can emit proof explanations when requested. |
 | Large generated Horn-clause workloads | deriva | The engine specializes in predicate/arity indexing, scalar argument indexes, fast fact paths, and materialized output goals. |
 
-On local smoke benchmarks, deriva is substantially faster on large generated Horn-clause and recursion-heavy workloads. These numbers are 5-run medians with stdout redirected to `/dev/null`, using Node.js `v22.16.0`, deriva from this checkout, and Eyeling package version `1.34.6` with its default output mode. The ratio is `Eyeling median / deriva median`, so larger numbers mea deriva was faster.
+On local smoke benchmarks, deriva is substantially faster on large generated Horn-clause and recursion-heavy workloads. These numbers are 5-run medians with stdout redirected to `/dev/null`, using Node.js `v22.16.0`, deriva from this checkout, and Eyeling package version `1.34.6` with its default output mode. The ratio is `Eyeling median / deriva median`, so larger numbers mean deriva was faster.
 
 | Example | deriva median | Eyeling median | Ratio |
 | --- | ---: | ---: | ---: |

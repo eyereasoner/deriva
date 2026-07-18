@@ -12,6 +12,14 @@ and tabled automatically.
 
 ## Install and run
 
+Install the published CLI globally:
+
+```bash
+npm install --global deriva
+deriva --version
+printf 'works(stdin, true) :- eq(ok, ok).\n' | deriva -
+```
+
 Deriva has no runtime npm dependencies and no build step. From a source checkout, run the CLI directly with Node.js 18 or newer:
 
 ```bash
