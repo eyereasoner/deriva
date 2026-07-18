@@ -1,6 +1,6 @@
 # Via
 
-[![npm version](https://img.shields.io/npm/v/via.svg)](https://www.npmjs.com/package/via)
+[![npm version](https://img.shields.io/npm/v/%40josd%2Fvia.svg)](https://www.npmjs.com/package/@josd/via)
 
 Via is a small reasoning language for turning facts and rules into answers and proofs.
 
