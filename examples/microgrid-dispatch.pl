@@ -1,0 +1,89 @@
+% Representative example: microgrid dispatch planning.
+%
+% The rules compute renewable supply, reserve-aware battery dispatch, remaining
+% grid import, and a concise feasibility report for a campus microgrid interval.
+
+% Output declarations: materialize/2 selects the relations written to this example's golden output.
+%
+% The dispatch policy is greedy but auditable: use renewables first, discharge
+% the battery only down to reserve, then import the remaining deficit from grid.
+materialize(renewablePower_kW, 2).
+materialize(batteryDispatch_kW, 2).
+materialize(gridImport_kW, 2).
+materialize(reserveAfterDispatch_kW, 2).
+materialize(status, 2).
+materialize(reason, 2).
+
+% Program structure: facts set up the scenario, and rules derive the materialized conclusions.
+site(campus_interval_17).
+
+load_kW(campus_interval_17, 620.0).
+solar_kW(campus_interval_17, 180.0).
+wind_kW(campus_interval_17, 90.0).
+battery_max_discharge_kW(campus_interval_17, 320.0).
+required_battery_reserve_kW(campus_interval_17, 80.0).
+grid_contract_limit_kW(campus_interval_17, 150.0).
+
+% Derivation rules: each rule below contributes one logical step toward the displayed results.
+renewable_kW(Site, Renewable) :-
+  solar_kW(Site, Solar),
+  wind_kW(Site, Wind),
+  add(Solar, Wind, Renewable).
+
+net_deficit_kW(Site, Deficit) :-
+  load_kW(Site, Load),
+  renewable_kW(Site, Renewable),
+  sub(Load, Renewable, Deficit).
+
+reserve_aware_battery_limit_kW(Site, Limit) :-
+  battery_max_discharge_kW(Site, Maxdischarge),
+  required_battery_reserve_kW(Site, Reserve),
+  sub(Maxdischarge, Reserve, Limit).
+
+battery_dispatch_kW(Site, Dispatch) :-
+  net_deficit_kW(Site, Deficit),
+  reserve_aware_battery_limit_kW(Site, Limit),
+  min(Deficit, Limit, Dispatch).
+
+grid_import_kW(Site, Import) :-
+  net_deficit_kW(Site, Deficit),
+  battery_dispatch_kW(Site, Dispatch),
+  sub(Deficit, Dispatch, Import).
+
+battery_reserve_after_dispatch_kW(Site, Reserveleft) :-
+  battery_max_discharge_kW(Site, Maxdischarge),
+  battery_dispatch_kW(Site, Dispatch),
+  sub(Maxdischarge, Dispatch, Reserveleft).
+
+contract_ok(Site) :-
+  grid_import_kW(Site, Import),
+  grid_contract_limit_kW(Site, Limit),
+  le(Import, Limit).
+
+reserve_ok(Site) :-
+  battery_reserve_after_dispatch_kW(Site, Reserveleft),
+  required_battery_reserve_kW(Site, Required),
+  ge(Reserveleft, Required).
+
+% stable_dispatch/1 passes only when contract and reserve constraints remain satisfied.
+stable_dispatch(Site) :-
+  contract_ok(Site),
+  reserve_ok(Site).
+
+renewablePower_kW(Site, Renewable) :-
+  renewable_kW(Site, Renewable).
+
+batteryDispatch_kW(Site, Dispatch) :-
+  battery_dispatch_kW(Site, Dispatch).
+
+gridImport_kW(Site, Import) :-
+  grid_import_kW(Site, Import).
+
+reserveAfterDispatch_kW(Site, Reserveleft) :-
+  battery_reserve_after_dispatch_kW(Site, Reserveleft).
+
+status(Site, stable_dispatch) :-
+  stable_dispatch(Site).
+
+reason(Site, "battery dispatch covers the deficit while preserving reserve and grid contract limits") :-
+  stable_dispatch(Site).

@@ -1,0 +1,1 @@
+answer(ok) :- seed(?x).

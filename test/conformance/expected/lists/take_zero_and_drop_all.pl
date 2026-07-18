@@ -1,0 +1,2 @@
+answer(take, []).
+answer(drop, []).

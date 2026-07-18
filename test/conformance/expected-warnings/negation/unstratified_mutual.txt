@@ -1,0 +1,3 @@
+via warning: unstratified negation
+  p/1 depends negatively on q/1
+  q/1 depends negatively on p/1

@@ -1,0 +1,13 @@
+evidenceTotal(case, 0.0016436300000000003).
+result(case, result(covid19)).
+result(case, result(influenza)).
+result(case, result(allergicRhinitis)).
+result(case, result(bacterialPneumonia)).
+disease(result(covid19), covid19).
+disease(result(influenza), influenza).
+disease(result(allergicRhinitis), allergicRhinitis).
+disease(result(bacterialPneumonia), bacterialPneumonia).
+unnormalized(result(covid19), 0.0015470000000000002).
+unnormalized(result(influenza), 0.000048000000000000015).
+unnormalized(result(allergicRhinitis), 7.499999999999999e-7).
+unnormalized(result(bacterialPneumonia), 0.000047879999999999996).

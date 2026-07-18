@@ -1,0 +1,1 @@
+answer(sum, 7).

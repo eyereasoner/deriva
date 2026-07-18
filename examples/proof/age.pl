@@ -1,0 +1,71 @@
+ageAbove(patH, "P80Y").
+why(
+  ageAbove(patH, "P80Y"),
+  proof(
+    goal(ageAbove(patH, "P80Y")),
+    by(rule("age.pl", clause(7))),
+    bindings([binding("S", patH), binding("A", "P80Y"), binding("B", "1944-08-21"), binding("D", "2026-05-30"), binding("F", "P81Y9M9D")]),
+    uses([
+      proof(
+        goal(birthDay(patH, "1944-08-21")),
+        by(fact("age.pl", clause(5)))
+      ),
+      proof(
+        goal(duration(check, "P80Y")),
+        by(fact("age.pl", clause(6)))
+      ),
+      proof(
+        goal(local_time("2026-05-30")),
+        by(builtin(local_time, 1))
+      ),
+      proof(
+        goal(difference("2026-05-30", "1944-08-21", "P81Y9M9D")),
+        by(builtin(difference, 3))
+      ),
+      proof(
+        goal(gt("P81Y9M9D", "P80Y")),
+        by(builtin(gt, 2))
+      )
+    ])
+  )
+).
+
+is(test, true).
+why(
+  is(test, true),
+  proof(
+    goal(is(test, true)),
+    by(rule("age.pl", clause(8))),
+    bindings([binding("S", patH)]),
+    uses([
+      proof(
+        goal(ageAbove(patH, "P80Y")),
+        by(rule("age.pl", clause(7))),
+        bindings([binding("S", patH), binding("A", "P80Y"), binding("B", "1944-08-21"), binding("D", "2026-05-30"), binding("F", "P81Y9M9D")]),
+        uses([
+          proof(
+            goal(birthDay(patH, "1944-08-21")),
+            by(fact("age.pl", clause(5)))
+          ),
+          proof(
+            goal(duration(check, "P80Y")),
+            by(fact("age.pl", clause(6)))
+          ),
+          proof(
+            goal(local_time("2026-05-30")),
+            by(builtin(local_time, 1))
+          ),
+          proof(
+            goal(difference("2026-05-30", "1944-08-21", "P81Y9M9D")),
+            by(builtin(difference, 3))
+          ),
+          proof(
+            goal(gt("P81Y9M9D", "P80Y")),
+            by(builtin(gt, 2))
+          )
+        ])
+      )
+    ])
+  )
+).
+

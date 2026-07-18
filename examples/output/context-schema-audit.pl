@@ -1,0 +1,12 @@
+context_shape(msg_ok, heartbeat, 0).
+context_shape(msg_ok, source, 1).
+context_shape(msg_ok, temperature, 2).
+context_shape(msg_ok, gps, 3).
+context_shape(msg_ok, signature, 4).
+context_shape(msg_bad, heartbeat, 0).
+context_shape(msg_bad, source, 1).
+context_shape(msg_bad, temperature, 2).
+context_shape(msg_bad, gps, 2).
+context_shape(msg_bad, tampered, 1).
+schema_violation(msg_bad, gps, 2).
+schema_violation(msg_bad, tampered, 1).

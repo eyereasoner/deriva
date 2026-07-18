@@ -1,0 +1,22 @@
+isIndeedMoreInterestingThan(5, 3).
+why(
+  isIndeedMoreInterestingThan(5, 3),
+  proof(
+    goal(isIndeedMoreInterestingThan(5, 3)),
+    by(rule("backward.pl", clause(3))),
+    uses([
+      proof(
+        goal(moreInterestingThan(5, 3)),
+        by(rule("backward.pl", clause(2))),
+        bindings([binding("X", 5), binding("Y", 3)]),
+        uses([
+          proof(
+            goal(gt(5, 3)),
+            by(builtin(gt, 2))
+          )
+        ])
+      )
+    ])
+  )
+).
+

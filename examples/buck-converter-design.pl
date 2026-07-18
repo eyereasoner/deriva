@@ -1,0 +1,83 @@
+% Engineering example: buck-converter ripple check.
+%
+% A simplified continuous-conduction buck converter model computes duty cycle,
+% inductor ripple current, capacitor ripple voltage, and checks design limits.
+
+% Output declarations: materialize/2 selects the relations written to this example's golden output.
+%
+% The constants describe one regulator design. The rules intentionally keep
+% each engineering equation separate so proof output can point to the exact
+% calculation that made the design pass or fail.
+materialize(dutyCycle, 2).
+materialize(inductorRipple_A, 2).
+materialize(rippleRatio, 2).
+materialize(capacitorRipple_V, 2).
+materialize(status, 2).
+materialize(reason, 2).
+
+% Program structure: facts set up the scenario, and rules derive the materialized conclusions.
+converter(regulator1, inputVoltage_V, 24.0).
+converter(regulator1, outputVoltage_V, 5.0).
+converter(regulator1, loadCurrent_A, 2.0).
+converter(regulator1, switchingFrequency_Hz, 500000.0).
+converter(regulator1, inductance_H, 0.000022).
+converter(regulator1, capacitance_F, 0.000047).
+limit(regulator1, maxRippleRatio, 0.30).
+limit(regulator1, maxOutputRipple_V, 0.05).
+
+% Derivation rules: each rule below contributes one logical step toward the displayed results.
+duty_cycle(Converter, Duty) :-
+  converter(Converter, outputVoltage_V, Outputvoltage),
+  converter(Converter, inputVoltage_V, Inputvoltage),
+  div(Outputvoltage, Inputvoltage, Duty).
+
+inductor_ripple_current(Converter, Ripplecurrent) :-
+  converter(Converter, inputVoltage_V, Inputvoltage),
+  converter(Converter, outputVoltage_V, Outputvoltage),
+  converter(Converter, inductance_H, Inductance),
+  converter(Converter, switchingFrequency_Hz, Frequency),
+  duty_cycle(Converter, Duty),
+  sub(Inputvoltage, Outputvoltage, Voltageacrossinductor),
+  mul(Voltageacrossinductor, Duty, Numerator),
+  mul(Inductance, Frequency, Denominator),
+  div(Numerator, Denominator, Ripplecurrent).
+
+ripple_ratio(Converter, Ratio) :-
+  inductor_ripple_current(Converter, Ripplecurrent),
+  converter(Converter, loadCurrent_A, Loadcurrent),
+  div(Ripplecurrent, Loadcurrent, Ratio).
+
+capacitor_ripple_voltage(Converter, Ripplevoltage) :-
+  inductor_ripple_current(Converter, Ripplecurrent),
+  converter(Converter, switchingFrequency_Hz, Frequency),
+  converter(Converter, capacitance_F, Capacitance),
+  mul(8.0, Frequency, Eightf),
+  mul(Eightf, Capacitance, Denominator),
+  div(Ripplecurrent, Denominator, Ripplevoltage).
+
+% within_ripple_limits/1 is the design gate for ripple current and output voltage.
+within_ripple_limits(Converter) :-
+  ripple_ratio(Converter, Ratio),
+  limit(Converter, maxRippleRatio, Maxratio),
+  lt(Ratio, Maxratio),
+  capacitor_ripple_voltage(Converter, Ripplevoltage),
+  limit(Converter, maxOutputRipple_V, Maxripplevoltage),
+  lt(Ripplevoltage, Maxripplevoltage).
+
+dutyCycle(Converter, Duty) :-
+  duty_cycle(Converter, Duty).
+
+inductorRipple_A(Converter, Ripplecurrent) :-
+  inductor_ripple_current(Converter, Ripplecurrent).
+
+rippleRatio(Converter, Ratio) :-
+  ripple_ratio(Converter, Ratio).
+
+capacitorRipple_V(Converter, Ripplevoltage) :-
+  capacitor_ripple_voltage(Converter, Ripplevoltage).
+
+status(Converter, stable_ripple_design) :-
+  within_ripple_limits(Converter).
+
+reason(Converter, "inductor-current and output-voltage ripple are below design limits") :-
+  within_ripple_limits(Converter).

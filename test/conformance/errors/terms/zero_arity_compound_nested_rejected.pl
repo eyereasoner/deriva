@@ -1,0 +1,1 @@
+answer(f(nil())).

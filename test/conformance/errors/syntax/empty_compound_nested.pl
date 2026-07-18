@@ -1,0 +1,1 @@
+answer(pair(nil())).

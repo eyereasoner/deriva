@@ -1,0 +1,1 @@
+answer(path, 2).

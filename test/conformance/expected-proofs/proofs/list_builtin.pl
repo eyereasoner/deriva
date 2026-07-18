@@ -1,0 +1,20 @@
+answer(b).
+why(
+  answer(b),
+  proof(
+    goal(answer(b)),
+    by(rule("<stdin>", clause(2))),
+    bindings([binding("X", b)]),
+    uses([
+      proof(
+        goal(member(b, [a, b])),
+        by(builtin(member, 2))
+      ),
+      proof(
+        goal(eq(b, b)),
+        by(builtin(eq, 2))
+      )
+    ])
+  )
+).
+

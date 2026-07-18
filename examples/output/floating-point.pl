@@ -1,0 +1,9 @@
+value(sum, 3.75).
+value(difference, 6.875).
+value(product, 10.0).
+value(quotient, 3.75).
+value(sqrtByPower, 3.0).
+value(mathSum, 1.0).
+value(mathProduct, 3.0).
+value(comfortable, true).
+than(warmer, targetC).

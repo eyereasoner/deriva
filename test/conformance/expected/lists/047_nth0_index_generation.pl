@@ -1,0 +1,1 @@
+answer(index, 1).

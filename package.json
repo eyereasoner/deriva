@@ -1,0 +1,53 @@
+{
+  "name": "@josd/via",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "0.0.1",
+  "description": "A small reasoning language with ISO Prolog-compatible surface syntax.",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "bin": {
+    "via": "./bin/via.js"
+  },
+  "keywords": [
+    "logic",
+    "rules",
+    "prolog",
+    "reasoner",
+    "proofs"
+  ],
+  "license": "MIT",
+  "author": "Jos De Roo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josd/via.git"
+  },
+  "homepage": "https://github.com/josd/via#readme",
+  "files": [
+    "LICENSE.md",
+    "README.md",
+    "index.js",
+    "index.d.ts",
+    "playground.html",
+    "bin",
+    "src",
+    "conformance-report.md",
+    "docs",
+    "examples",
+    "test"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node test/run-all.mjs",
+    "test:via": "node test/run-all.mjs",
+    "test:conformance": "node test/run-conformance.mjs",
+    "test:examples": "node test/run-examples.mjs",
+    "test:regression": "node test/run-regression.mjs",
+    "preversion": "npm test && node test/run-conformance-report.mjs conformance-report.md",
+    "postversion": "git push origin HEAD --follow-tags"
+  }
+}

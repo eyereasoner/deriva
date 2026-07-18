@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Via Playground</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --panel-soft: #eef2f7;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #d7dce5;
+      --accent: #0969da;
+      --accent-strong: #0757b8;
+      --danger: #b42318;
+      --editor-bg: #ffffff;
+      --editor-text: #172033;
+      --editor-caret: #111827;
+      --editor-selection: rgba(9, 105, 218, 0.18);
+      --editor-error-line: #fee2e2;
+      --editor-error-border: #dc2626;
+      --line-number-bg: #f8fafc;
+      --line-number-text: #64748b;
+      --line-number-border: #e2e8f0;
+      --code-bg: #0f172a;
+      --code-text: #dbeafe;
+      --comment: #64748b;
+      --string: #047857;
+      --number: #b45309;
+      --variable: #1d4ed8;
+      --keyword: #7c3aed;
+      --predicate: #be123c;
+      --punctuation: #475569;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b1020;
+        --panel: #111827;
+        --panel-soft: #1f2937;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --border: #374151;
+        --accent: #60a5fa;
+        --accent-strong: #93c5fd;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    header,
+    main,
+    footer {
+      width: min(100% - 2rem, 72rem);
+      margin: 0 auto;
+    }
+
+    header { padding: 1.25rem 0 0.9rem; }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 4vw, 2rem);
+    }
+
+    header p { margin: 0.35rem 0 0; color: var(--muted); }
+
+    main {
+      display: block;
+      padding: 0 0 2rem;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .panel-body { padding: 1rem; }
+
+    .toolbar,
+    .example-row,
+    .button-row,
+    .option-row,
+    .background-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .toolbar {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel-soft);
+    }
+
+    .toolbar:last-child { border-bottom: 0; }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 700;
+      padding: 0.85rem 1rem;
+      background: var(--panel-soft);
+      border-bottom: 1px solid var(--border);
+    }
+
+    details:not([open]) summary { border-bottom: 0; }
+
+    label { font-weight: 650; }
+
+    select,
+    input,
+    textarea,
+    button {
+      font: inherit;
+      font-size: 1rem;
+    }
+
+    select,
+    input[type="url"],
+    input[type="search"] {
+      min-height: 2.65rem;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 0.55rem;
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    select { min-width: min(100%, 18rem); flex: 1; }
+    input[type="url"] { flex: 1 1 20rem; min-width: 12rem; }
+    input[type="search"] { flex: 1 1 12rem; min-width: 10rem; }
+
+    button {
+      border: 1px solid var(--border);
+      border-radius: 0.55rem;
+      padding: 0.58rem 0.78rem;
+      min-height: 2.65rem;
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    button.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+    }
+
+    button.primary:hover { background: var(--accent-strong); }
+    button:disabled { cursor: not-allowed; opacity: 0.6; }
+
+    .option-row label,
+    .background-row label {
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: center;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .editor-shell { padding: 0; }
+
+    .editor-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+    }
+
+    .editor {
+      position: relative;
+      min-height: 56vh;
+      background: var(--editor-bg);
+      overflow: hidden;
+    }
+
+    .line-numbers,
+    .editor pre,
+    .editor textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .line-numbers {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3.6rem;
+      padding: 1rem 0.65rem 1rem 0.35rem;
+      overflow: hidden;
+      text-align: right;
+      color: var(--line-number-text);
+      background: var(--line-number-bg);
+      border-right: 1px solid var(--line-number-border);
+      user-select: none;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .line-numbers-inner { will-change: transform; }
+
+    .line-number {
+      display: block;
+      min-height: 1.55em;
+      padding-right: 0.1rem;
+    }
+
+    .line-number.error {
+      color: var(--danger);
+      background: var(--editor-error-line);
+      font-weight: 700;
+      margin: 0 -0.65rem 0 -0.35rem;
+      padding: 0 0.65rem 0 0.35rem;
+    }
+
+    .editor pre,
+    .editor textarea {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      padding: 1rem 1rem 1rem 4.35rem;
+      border: 0;
+      width: 100%;
+      height: 100%;
+      resize: none;
+      overflow: auto;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .error-line-marker {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      display: none;
+      pointer-events: none;
+      background: var(--editor-error-line);
+      border-left: 0.28rem solid var(--editor-error-border);
+      z-index: 0;
+    }
+
+    .editor pre {
+      pointer-events: none;
+      color: var(--editor-text);
+      z-index: 1;
+    }
+
+    .editor textarea {
+      background: transparent;
+      color: rgba(17, 24, 39, 0.025);
+      caret-color: var(--editor-caret);
+      outline: none;
+      z-index: 2;
+      -webkit-text-fill-color: rgba(17, 24, 39, 0.025);
+    }
+
+    .editor textarea::selection { background: var(--editor-selection); }
+
+    .tok-comment { color: var(--comment); font-style: italic; }
+    .tok-string { color: var(--string); }
+    .tok-number { color: var(--number); }
+    .tok-variable { color: var(--variable); }
+    .tok-keyword { color: var(--keyword); font-weight: 700; }
+    .tok-predicate { color: var(--predicate); }
+    .tok-punctuation { color: var(--punctuation); }
+
+    .output {
+      min-height: 18rem;
+      max-height: 58vh;
+      overflow: auto;
+      padding: 1rem;
+      margin: 0;
+      background: var(--code-bg);
+      color: var(--code-text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin: 0.4rem 0 0;
+    }
+
+    .error { color: var(--danger); }
+
+    footer {
+      color: var(--muted);
+      padding: 0 0 1.5rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    footer a { color: var(--accent); }
+
+    @media (max-width: 560px) {
+      header,
+      main,
+      footer { width: min(100% - 1rem, 72rem); }
+      .toolbar,
+      .panel-body,
+      .editor-label,
+      details summary { padding: 0.8rem; }
+      button,
+      select,
+      input[type="url"],
+      input[type="search"] { width: 100%; }
+      .button-row > button { flex: 1 1 8rem; }
+      .editor { min-height: 58vh; }
+      .line-numbers,
+      .editor pre,
+      .editor textarea { font-size: 0.9rem; }
+      .line-numbers { width: 3.2rem; padding: 0.8rem 0.55rem 0.8rem 0.25rem; }
+      .line-number.error { margin: 0 -0.55rem 0 -0.25rem; padding: 0 0.55rem 0 0.25rem; }
+      .editor pre,
+      .editor textarea { padding: 0.8rem 0.8rem 0.8rem 3.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>The Via Playground</h1>
+    <p>Run Via programs in your browser with syntax coloring, examples, proofs, and shareable editor links.</p>
+  </header>
+
+  <main>
+    <section aria-labelledby="examples-heading">
+      <div class="toolbar" aria-label="Example loader">
+        <label id="examples-heading" for="example-search">Load an example</label>
+        <input id="example-search" type="search" placeholder="Filter examples" autocomplete="off">
+        <select id="examples" aria-label="Examples"></select>
+        <button id="load-example" type="button">Load example</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="advanced-heading">
+      <details>
+        <summary id="advanced-heading">⚙ Advanced configuration</summary>
+        <div class="toolbar" aria-label="URL loader">
+          <label for="source-url">Load Via from URL</label>
+          <input id="source-url" type="url" placeholder="https://example.org/program.pl">
+          <button id="load-url" type="button">Load from URL</button>
+        </div>
+        <div class="toolbar background-row">
+          <label><input id="load-background" type="checkbox"> Load into background knowledge instead of overwriting the editor</label>
+          <span id="background-status" class="hint">No background knowledge loaded.</span>
+          <button id="clear-background" type="button">Clear background</button>
+        </div>
+        <div class="toolbar option-row" aria-label="Run options">
+          <label><input id="proof" type="checkbox"> Show proof explanations</label>
+          <label><input id="stats" type="checkbox"> Show stats</label>
+        </div>
+        <div class="panel-body">
+          <p class="hint">Enter any Via file URL and click “Load from URL”. Background knowledge is prepended when the program runs.</p>
+        </div>
+      </details>
+    </section>
+
+    <section aria-labelledby="editor-heading">
+      <div class="editor-shell">
+        <div class="editor-label">
+          <strong id="editor-heading">Editable Via program</strong>
+          <span id="source-name" class="hint">custom program</span>
+        </div>
+        <div class="editor">
+          <div id="line-numbers" class="line-numbers" aria-hidden="true"><div class="line-numbers-inner"></div></div>
+          <div id="error-line-marker" class="error-line-marker" aria-hidden="true"></div>
+          <pre id="highlight" aria-hidden="true"><code></code></pre>
+          <textarea id="source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Editable Via source"></textarea>
+        </div>
+      </div>
+      <div class="toolbar button-row">
+        <button id="run" type="button" class="primary">Run reasoning</button>
+        <button id="stop" type="button" disabled>Stop</button>
+        <button id="copy-source" type="button">Copy source</button>
+        <button id="copy-output" type="button">Copy output</button>
+        <button id="share" type="button">Copy share link</button>
+        <button id="create-gist" type="button">Create Gist share</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="output-heading">
+      <div class="editor-label">
+        <strong id="output-heading">Output</strong>
+        <span id="elapsed" class="hint">Idle.</span>
+      </div>
+      <pre id="output" class="output">(no output yet)</pre>
+      <div class="status">
+        <span id="status">Ready.</span>
+        <span id="version">via v…</span>
+      </div>
+      <div class="panel-body">
+        <p class="hint">For local use, serve the checkout with a small HTTP server first; browser modules and example loading usually do not work from <code>file://</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Powered by <a href="https://github.com/josd/via">Via</a>.
+  </footer>
+
+  <script type="module">
+    const EXAMPLES = [
+          "abstract-interpretation",
+          "access-control-policy",
+          "ackermann",
+          "age",
+          "aliases-and-namespaces",
+          "alignment-demo",
+          "allen-interval-calculus",
+          "ancestor",
+          "animal",
+          "annotation",
+          "auroracare",
+          "backward",
+          "basic-monadic",
+          "bayes-diagnosis",
+          "bayes-therapy",
+          "beam-deflection",
+          "binomial-vandermonde",
+          "blocks-world-planning",
+          "bmi",
+          "braking-safety-worlds",
+          "buck-converter-design",
+          "cache-performance",
+          "canary-release",
+          "cat-koko",
+          "catalan-convolution",
+          "cdcl-sat-solver",
+          "chart-parser",
+          "clinical-trial-screening",
+          "collatz-1000",
+          "combinatorics-findall-sort",
+          "competitive-enzyme-kinetics",
+          "complex",
+          "composition-of-injective-functions-is-injective",
+          "context-association",
+          "context-schema-audit",
+          "continued-fraction-sqrt2",
+          "control-system",
+          "critical-path-schedule",
+          "cyclic-path",
+          "d3-group",
+          "dairy-energy-balance",
+          "data-negotiation",
+          "deep-taxonomy-10",
+          "deep-taxonomy-100",
+          "deep-taxonomy-1000",
+          "deep-taxonomy-10000",
+          "deep-taxonomy-100000",
+          "delfour",
+          "deontic-logic",
+          "derived-backward-rule",
+          "derived-rule",
+          "diamond-property",
+          "dijkstra",
+          "dijkstra-findall-sort",
+          "dijkstra-risk-path",
+          "dining-philosophers",
+          "dog",
+          "dpv-odrl-purpose-mapping",
+          "drone-corridor-planner",
+          "easter-computus",
+          "electrical-rc-filter",
+          "equality-saturation",
+          "epidemic-policy",
+          "equivalence-classes-overlap-implies-same-class",
+          "eulerian-path",
+          "ev-range-worlds",
+          "existential-rule",
+          "exoplanet-validation-worlds",
+          "expression-eval",
+          "family-cousins",
+          "fastpow",
+          "fft8-numeric",
+          "fibonacci",
+          "field-nitrogen-balance",
+          "flandor",
+          "floating-point",
+          "four-color-map",
+          "fundamental-theorem-arithmetic",
+          "gd-step-certified",
+          "gdpr-compliance",
+          "good-cobbler",
+          "gps",
+          "graph",
+          "graph-reachability",
+          "gray-code-counter",
+          "greatest-lower-bound-uniqueness",
+          "group-inverse-uniqueness",
+          "hamiltonian-path",
+          "hamming-code",
+          "hanoi",
+          "heat-loss",
+          "herbrand-witnesses",
+          "heron-theorem",
+          "ideal-gas-law",
+          "illegitimate-reasoning",
+          "integer-partitions",
+          "intuitionistic-logic-kripke",
+          "job-shop-scheduling",
+          "knapsack-optimization",
+          "knuth-bendix-completion",
+          "knowledge-engineering-alignment-flow",
+          "language",
+          "law-of-cosines",
+          "least-squares-regression",
+          "linear-logic-resources",
+          "list-collection",
+          "lldm",
+          "manufacturing-quality-control",
+          "markov-logic-network",
+          "map-four-color-search",
+          "matrix-chain-order",
+          "matrix-noncommutativity",
+          "microgrid-dispatch",
+          "missionaries-cannibals",
+          "modal-logic-kripke",
+          "modular-exponentiation",
+          "monkey-bananas",
+          "n-queens-8",
+          "network-sla",
+          "newton-raphson",
+          "nixon-diamond",
+          "observability-log-correlation",
+          "odrl-dpv-fpv-trust-flow",
+          "odrl-dpv-healthcare-risk-ranked",
+          "odrl-dpv-risk-ranked",
+          "orbital-transfer-design",
+          "path-discovery",
+          "partial-evaluator",
+          "peano-arithmetic",
+          "peano-calculus",
+          "peasant",
+          "pell-equation",
+          "pendulum-period",
+          "pointer-analysis",
+          "polynomial",
+          "prime-range",
+          "proof-contrapositive",
+          "quadratic-formula",
+          "radioactive-decay",
+          "register-allocation",
+          "reusable-builtins",
+          "riemann-hypothesis",
+          "route-planning",
+          "sat-solver-dpll",
+          "security-incident-correlation",
+          "send-more-money",
+          "service-impact",
+          "shoelace-polygon-area",
+          "sieve",
+          "skolem-functions",
+          "socket-age",
+          "socket-family",
+          "socrates",
+          "stable-marriage",
+          "statistics-summary",
+          "stirling-bell-numbers",
+          "sudoku-4x4",
+          "superdense-coding",
+          "symbolic-derivative",
+          "term-tools",
+          "totient-summatory",
+          "trust-flow-provenance-threshold",
+          "truth-maintenance-system",
+          "type-inference",
+          "turing",
+          "vector-similarity",
+          "vulnerability-impact",
+          "web-names",
+          "weighted-interval-scheduling",
+          "witch",
+          "wolf-goat-cabbage",
+          "workplace-compliance",
+          "zebra"
+    ];
+    const FALLBACK_SOURCE = `materialize(answer, 1).
+answer(ok) :- eq(ok, ok).
+`;
+    const HIGHLIGHT_LIMIT = 200000;
+    const MAX_SHARE_URL_LENGTH = 1900;
+    const GIST_STATE_FILENAME = 'via-playground-state.json';
+    const KEYWORDS = new Set(['materialize', 'table']);
+    const BUILTINS = new Set([
+            "abs",
+            "acos",
+            "add",
+            "aggregate_max",
+            "aggregate_min",
+            "append",
+            "arg",
+            "asin",
+            "atan2",
+            "atom_string",
+            "between",
+            "ceiling",
+            "compound_name_arguments",
+            "contains",
+            "cos",
+            "countall",
+            "difference",
+            "div",
+            "drop",
+            "eq",
+            "exp",
+            "findall",
+            "floor",
+            "forall",
+            "functor",
+            "ge",
+            "gt",
+            "head",
+            "holds",
+            "join",
+            "last",
+            "le",
+            "length",
+            "list_to_set",
+            "local_time",
+            "log",
+            "lowercase",
+            "lt",
+            "matches",
+            "max",
+            "max_list",
+            "member",
+            "min",
+            "min_list",
+            "mod",
+            "mul",
+            "neg",
+            "neq",
+            "not",
+            "not_matches",
+            "not_member",
+            "nth0",
+            "number_string",
+            "once",
+            "pow",
+            "replace",
+            "rest",
+            "reverse",
+            "rounded",
+            "select",
+            "set_nth0",
+            "sin",
+            "slice",
+            "smallest_divisor_from",
+            "sort",
+            "split",
+            "sqrt",
+            "str_concat",
+            "sub",
+            "substring",
+            "sum_list",
+            "sumall",
+            "take",
+            "tan",
+            "term_string",
+            "trim",
+            "trunc",
+            "uppercase"
+      ]);
+
+    const source = document.querySelector('#source');
+    const highlight = document.querySelector('#highlight');
+    const lineNumbers = document.querySelector('#line-numbers');
+    const lineNumbersInner = lineNumbers.firstElementChild;
+    const errorLineMarker = document.querySelector('#error-line-marker');
+    const exampleSelect = document.querySelector('#examples');
+    const exampleSearch = document.querySelector('#example-search');
+    const output = document.querySelector('#output');
+    const status = document.querySelector('#status');
+    const elapsed = document.querySelector('#elapsed');
+    const sourceName = document.querySelector('#source-name');
+    const backgroundStatus = document.querySelector('#background-status');
+    const loadBackground = document.querySelector('#load-background');
+    const proof = document.querySelector('#proof');
+    const stats = document.querySelector('#stats');
+    const runButton = document.querySelector('#run');
+    const stopButton = document.querySelector('#stop');
+    let backgroundSource = '';
+    let backgroundName = '';
+    let activeWorker = null;
+    let activeWorkerUrl = null;
+    let renderToken = 0;
+    let syntaxErrorLine = null;
+    let sourceReference = { kind: 'custom' };
+    let sourceDirty = false;
+    let backgroundReference = null;
+
+    populateExamples(EXAMPLES);
+    await restoreFromHashOrLoadDefault();
+    loadVersion();
+
+    source.addEventListener('input', () => {
+      sourceDirty = true;
+      sourceReference = { kind: 'custom' };
+      clearSyntaxError();
+      render();
+    });
+    source.addEventListener('scroll', syncScroll);
+    exampleSearch.addEventListener('input', () => populateExamples(filterExamples(exampleSearch.value)));
+    document.querySelector('#load-example').addEventListener('click', () => loadExample(exampleSelect.value));
+    document.querySelector('#load-url').addEventListener('click', loadUrl);
+    document.querySelector('#clear-background').addEventListener('click', clearBackground);
+    document.querySelector('#run').addEventListener('click', runProgram);
+    document.querySelector('#stop').addEventListener('click', stopProgram);
+    document.querySelector('#copy-source').addEventListener('click', () => copyText(source.value, 'Source copied.'));
+    document.querySelector('#copy-output').addEventListener('click', () => copyText(output.textContent, 'Output copied.'));
+    document.querySelector('#share').addEventListener('click', copyShareLink);
+    document.querySelector('#create-gist').addEventListener('click', createGistShare);
+
+    function populateExamples(names) {
+      const current = exampleSelect.value;
+      exampleSelect.replaceChildren(...names.map((name) => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        return option;
+      }));
+      if (names.includes(current)) exampleSelect.value = current;
+      else if (names.length) exampleSelect.value = names[0];
+    }
+
+    function filterExamples(query) {
+      const needle = query.trim().toLowerCase();
+      if (!needle) return EXAMPLES;
+      return EXAMPLES.filter((name) => name.includes(needle));
+    }
+
+    async function loadExample(name) {
+      if (!name) return;
+      try {
+        setStatus(`Loading ${name}…`);
+        const exampleUrl = new URL(`./examples/${name}.pl`, location.href);
+        const response = await fetch(exampleUrl, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+        setSource(await response.text(), `examples/${name}.pl`, { kind: 'example', name });
+        setStatus(`Loaded examples/${name}.pl.`);
+      } catch (error) {
+        setSource(FALLBACK_SOURCE, 'fallback program');
+        setStatus(`Could not load examples/${name}.pl: ${formatError(error)}`, true);
+      }
+    }
+
+    async function loadUrl() {
+      const url = document.querySelector('#source-url').value.trim();
+      if (!url) return;
+      try {
+        setStatus(`Loading ${url}…`);
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+        const text = await response.text();
+        if (loadBackground.checked) {
+          backgroundSource = text;
+          backgroundName = url;
+          backgroundReference = { kind: 'url', url };
+          updateBackgroundStatus();
+          setStatus(`Loaded background knowledge from ${url}.`);
+        } else {
+          setSource(text, url, { kind: 'url', url });
+          setStatus(`Loaded ${url}.`);
+        }
+      } catch (error) {
+        setStatus(`Could not load URL: ${formatError(error)}`, true);
+      }
+    }
+
+    function clearBackground() {
+      backgroundSource = '';
+      backgroundName = '';
+      backgroundReference = null;
+      updateBackgroundStatus();
+      setStatus('Background knowledge cleared.');
+    }
+
+    function updateBackgroundStatus() {
+      backgroundStatus.textContent = backgroundSource
+        ? `Background loaded from ${backgroundName} (${backgroundSource.length.toLocaleString()} chars).`
+        : 'No background knowledge loaded.';
+    }
+
+    function setSource(text, name, reference = { kind: 'custom' }) {
+      source.value = text;
+      sourceName.textContent = name;
+      sourceReference = reference;
+      sourceDirty = false;
+      clearSyntaxError();
+      render();
+    }
+
+    function render() {
+      const token = ++renderToken;
+      const text = source.value;
+      requestAnimationFrame(() => {
+        if (token !== renderToken) return;
+        highlight.firstElementChild.innerHTML = renderHighlightedSource(text);
+        updateLineNumbers(text);
+        syncScroll();
+      });
+    }
+
+    function renderHighlightedSource(text) {
+      const rendered = text.length > HIGHLIGHT_LIMIT ? escapeHtml(text) : colorize(text);
+      return rendered + (text.endsWith('\n') ? ' ' : '');
+    }
+
+    function syncScroll() {
+      highlight.scrollTop = source.scrollTop;
+      highlight.scrollLeft = source.scrollLeft;
+      lineNumbersInner.style.transform = `translateY(${-source.scrollTop}px)`;
+      updateErrorLineMarker();
+    }
+
+    function updateLineNumbers(text = source.value) {
+      const count = Math.max(1, text.split('\n').length);
+      lineNumbersInner.innerHTML = Array.from({ length: count }, (_, index) => {
+        const line = index + 1;
+        const className = line === syntaxErrorLine ? 'line-number error' : 'line-number';
+        return `<span class="${className}">${line}</span>`;
+      }).join('');
+    }
+
+    function colorize(text) {
+      let out = '';
+      for (let i = 0; i < text.length;) {
+        const ch = text[i];
+        if (ch === '%') {
+          const end = text.indexOf('\n', i);
+          const stop = end === -1 ? text.length : end;
+          out += span('comment', text.slice(i, stop));
+          i = stop;
+        } else if (ch === '"' || ch === "'") {
+          const quote = ch;
+          let j = i + 1;
+          while (j < text.length) {
+            if (text[j] === '\\') j += 2;
+            else if (text[j] === quote) { j++; break; }
+            else j++;
+          }
+          out += span('string', text.slice(i, j));
+          i = j;
+        } else if (/\d/.test(ch)) {
+          let j = i + 1;
+          while (j < text.length && /[\d.]/.test(text[j])) j++;
+          out += span('number', text.slice(i, j));
+          i = j;
+        } else if (/[A-Z_]/.test(ch)) {
+          let j = i + 1;
+          while (j < text.length && /[A-Za-z0-9_]/.test(text[j])) j++;
+          out += span('variable', text.slice(i, j));
+          i = j;
+        } else if (/[a-z]/.test(ch)) {
+          let j = i + 1;
+          while (j < text.length && /[A-Za-z0-9_]/.test(text[j])) j++;
+          const word = text.slice(i, j);
+          if (KEYWORDS.has(word)) out += span('keyword', word);
+          else if (BUILTINS.has(word) || text[j] === '(') out += span('predicate', word);
+          else out += escapeHtml(word);
+          i = j;
+        } else if ('()[]{},.;|:-'.includes(ch)) {
+          out += span('punctuation', ch);
+          i++;
+        } else {
+          out += escapeHtml(ch);
+          i++;
+        }
+      }
+      return out;
+    }
+
+    function span(kind, text) { return `<span class="tok-${kind}">${escapeHtml(text)}</span>`; }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[ch]));
+    }
+
+    function runProgram() {
+      stopProgram(false);
+      clearSyntaxError();
+      output.textContent = '';
+      elapsed.textContent = 'Running…';
+      setStatus('Running Via…');
+      runButton.disabled = true;
+      stopButton.disabled = false;
+
+      const engineUrl = new URL('./src/index.js', location.href).href;
+      const workerCode = `
+        import { run } from ${JSON.stringify(engineUrl)};
+        self.onmessage = (event) => {
+          const started = performance.now();
+          try {
+            const result = run(event.data.source, event.data.options);
+            self.postMessage({
+              ok: true,
+              stdout: result.stdout,
+              stats: result.stats,
+              elapsedMs: performance.now() - started,
+            });
+          } catch (error) {
+            self.postMessage({ ok: false, error: error?.stack || error?.message || String(error) });
+          }
+        };
+      `;
+      activeWorkerUrl = URL.createObjectURL(new Blob([workerCode], { type: 'text/javascript' }));
+      activeWorker = new Worker(activeWorkerUrl, { type: 'module' });
+      activeWorker.onmessage = (event) => finishRun(event.data);
+      activeWorker.onerror = (event) => finishRun({ ok: false, error: event.message || 'worker error' });
+      activeWorker.postMessage({
+        source: combinedSource(),
+        options: { proof: proof.checked, stats: stats.checked },
+      });
+    }
+
+    function combinedSource() {
+      if (!backgroundSource.trim()) return source.value;
+      return `${backgroundSource}\n${source.value}`;
+    }
+
+    function extractParseErrorLine(text) {
+      const match = String(text).match(/parse line (\d+)/i);
+      return match ? Number(match[1]) : null;
+    }
+
+    function editorLineForParseLine(parseLine) {
+      if (!Number.isFinite(parseLine) || parseLine < 1) return null;
+      if (!backgroundSource.trim()) return parseLine;
+      const backgroundLines = backgroundSource.split('\n').length;
+      const editorLine = parseLine - backgroundLines;
+      return editorLine >= 1 ? editorLine : null;
+    }
+
+    function markSyntaxErrorLine(line) {
+      syntaxErrorLine = line;
+      updateLineNumbers();
+      revealLine(line);
+      updateErrorLineMarker();
+    }
+
+    function clearSyntaxError() {
+      syntaxErrorLine = null;
+      updateLineNumbers();
+      updateErrorLineMarker();
+    }
+
+    function revealLine(line) {
+      const metrics = editorMetrics();
+      const y = metrics.paddingTop + (line - 1) * metrics.lineHeight;
+      const top = source.scrollTop;
+      const bottom = top + source.clientHeight - metrics.lineHeight;
+      if (y < top || y > bottom) {
+        source.scrollTop = Math.max(0, y - source.clientHeight / 3);
+      }
+    }
+
+    function updateErrorLineMarker() {
+      if (syntaxErrorLine == null) {
+        errorLineMarker.style.display = 'none';
+        return;
+      }
+      const metrics = editorMetrics();
+      errorLineMarker.style.display = 'block';
+      errorLineMarker.style.height = `${metrics.lineHeight}px`;
+      errorLineMarker.style.top = `${metrics.paddingTop + (syntaxErrorLine - 1) * metrics.lineHeight - source.scrollTop}px`;
+    }
+
+    function editorMetrics() {
+      const style = getComputedStyle(source);
+      const fontSize = parseFloat(style.fontSize) || 15;
+      const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.55;
+      const paddingTop = parseFloat(style.paddingTop) || 0;
+      return { lineHeight, paddingTop };
+    }
+
+    function finishRun(message) {
+      cleanupWorker();
+      runButton.disabled = false;
+      stopButton.disabled = true;
+      if (!message.ok) {
+        const errorText = message.error || 'Unknown error.';
+        const parseLine = extractParseErrorLine(errorText);
+        const editorLine = editorLineForParseLine(parseLine);
+        if (editorLine != null) markSyntaxErrorLine(editorLine);
+        output.textContent = errorText;
+        elapsed.textContent = 'Failed.';
+        setStatus(editorLine == null ? 'Run failed.' : `Syntax error on line ${editorLine}.`, true);
+        return;
+      }
+      let text = message.stdout || '(no materialized output)\n';
+      if (stats.checked && message.stats) text += '\n% stats\n' + formatStats(message.stats);
+      output.textContent = text;
+      const seconds = (message.elapsedMs / 1000).toFixed(3);
+      elapsed.textContent = `${seconds} sec`;
+      setStatus('Run complete.');
+    }
+
+    function stopProgram(report = true) {
+      if (!activeWorker) return;
+      cleanupWorker();
+      runButton.disabled = false;
+      stopButton.disabled = true;
+      elapsed.textContent = 'Stopped.';
+      if (report) setStatus('Run stopped.');
+    }
+
+    function cleanupWorker() {
+      if (activeWorker) activeWorker.terminate();
+      activeWorker = null;
+      if (activeWorkerUrl) URL.revokeObjectURL(activeWorkerUrl);
+      activeWorkerUrl = null;
+    }
+
+    function formatStats(values) {
+      return Object.entries(values).map(([key, value]) => `${key}: ${value}`).join('\n') + '\n';
+    }
+
+    async function copyText(text, message) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus(message);
+      } catch (_) {
+        setStatus('Clipboard access is not available in this browser.', true);
+      }
+    }
+
+    async function copyShareLink() {
+      const link = buildShareLink();
+      if (link != null) {
+        await copyText(link, 'Share link copied.');
+        return;
+      }
+      await createGistShare({
+        reason: 'This program is too large for an inline URL, so Copy share link will create a Gist share instead.',
+      });
+    }
+
+    function buildShareLink() {
+      const referenced = buildReferenceShareLink();
+      if (referenced && referenced.length <= MAX_SHARE_URL_LENGTH) return referenced;
+      const embedded = `${basePlaygroundUrl()}#state=${encodeState(currentShareState())}`;
+      return embedded.length <= MAX_SHARE_URL_LENGTH ? embedded : null;
+    }
+
+    function buildReferenceShareLink() {
+      const params = new URLSearchParams();
+      if (proof.checked) params.set('proof', '1');
+      if (stats.checked) params.set('stats', '1');
+      if (backgroundSource.trim()) {
+        if (backgroundReference?.kind !== 'url') return null;
+        params.set('background-url', backgroundReference.url);
+      }
+      if (!sourceDirty && sourceReference.kind === 'example') params.set('example', sourceReference.name);
+      else if (!sourceDirty && sourceReference.kind === 'url') params.set('url', sourceReference.url);
+      else return null;
+      return `${basePlaygroundUrl()}#${params.toString()}`;
+    }
+
+    async function createGistShare(options = {}) {
+      const stateText = JSON.stringify(currentShareState(), null, 2);
+      if (options.reason) setStatus(options.reason);
+      const token = prompt(`${options.reason ? `${options.reason}\n\n` : ''}Optional GitHub token with gist scope. It is only sent to api.github.com and is not stored. Leave blank to copy Gist-ready state and open gist.github.com.`);
+      if (token === null) {
+        setStatus('Gist share cancelled.');
+        return;
+      }
+      if (!token.trim()) {
+        await copyText(stateText, `Gist-ready state copied. Create a Gist file named ${GIST_STATE_FILENAME}, paste it, then copy its raw URL into a playground #state-url link.`);
+        window.open('https://gist.github.com/', '_blank', 'noopener');
+        return;
+      }
+
+      try {
+        setStatus('Creating GitHub Gist…');
+        const files = {
+          [GIST_STATE_FILENAME]: { content: stateText },
+          'program.pl': { content: source.value },
+        };
+        if (backgroundSource.trim()) files['background.pl'] = { content: backgroundSource };
+        const response = await fetch('https://api.github.com/gists', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${token.trim()}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            description: 'Via playground share',
+            public: false,
+            files,
+          }),
+        });
+        const gist = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(gist.message || `${response.status} ${response.statusText}`);
+        const rawUrl = gist.files?.[GIST_STATE_FILENAME]?.raw_url;
+        if (!rawUrl) throw new Error('Gist response did not include a raw state URL.');
+        await copyText(`${basePlaygroundUrl()}#state-url=${encodeURIComponent(rawUrl)}`, 'Gist share link copied.');
+      } catch (error) {
+        await copyText(stateText, `Could not create Gist: ${formatError(error)}. Gist-ready state copied instead.`);
+      }
+    }
+
+    function currentShareState() {
+      return {
+        source: source.value,
+        proof: proof.checked,
+        stats: stats.checked,
+        backgroundSource,
+        backgroundName,
+      };
+    }
+
+    function encodeState(payload) {
+      const data = new TextEncoder().encode(JSON.stringify(payload));
+      let binary = '';
+      for (const byte of data) binary += String.fromCharCode(byte);
+      return btoa(binary).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
+    }
+
+    function decodeState(encoded) {
+      const base64 = encoded.replaceAll('-', '+').replaceAll('_', '/');
+      const padded = base64 + '='.repeat((4 - base64.length % 4) % 4);
+      const bytes = Uint8Array.from(atob(padded), (ch) => ch.charCodeAt(0));
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    function basePlaygroundUrl() {
+      return location.href.split('#')[0];
+    }
+
+    async function restoreFromHashOrLoadDefault() {
+      if (!(await restoreFromHash())) await loadExample('ancestor');
+    }
+
+    async function restoreFromHash() {
+      if (!location.hash || location.hash === '#') return false;
+      const params = new URLSearchParams(location.hash.slice(1));
+      try {
+        if (params.has('state')) {
+          applySharedState(decodeState(params.get('state')), 'shared program');
+          setStatus('Loaded shared program.');
+          return true;
+        }
+        if (params.has('state-url')) {
+          const stateUrl = params.get('state-url');
+          const response = await fetch(stateUrl);
+          if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+          applySharedState(await response.json(), `shared state from ${stateUrl}`);
+          setStatus('Loaded shared Gist state.');
+          return true;
+        }
+        await restoreBackgroundUrl(params);
+        applyOptionParams(params);
+        if (params.has('example')) {
+          await loadExample(params.get('example'));
+          applyOptionParams(params);
+          return true;
+        }
+        if (params.has('url')) {
+          await loadSourceFromUrl(params.get('url'), false);
+          applyOptionParams(params);
+          return true;
+        }
+      } catch (error) {
+        setStatus(`Could not read shared state: ${formatError(error)}`, true);
+        return false;
+      }
+      return false;
+    }
+
+    async function restoreBackgroundUrl(params) {
+      const url = params.get('background-url');
+      if (!url) return;
+      await loadSourceFromUrl(url, true);
+    }
+
+    async function loadSourceFromUrl(url, asBackground) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      const text = await response.text();
+      if (asBackground) {
+        backgroundSource = text;
+        backgroundName = url;
+        backgroundReference = { kind: 'url', url };
+        updateBackgroundStatus();
+      } else {
+        setSource(text, url, { kind: 'url', url });
+      }
+    }
+
+    function applySharedState(payload, label) {
+      setSource(String(payload.source || ''), label, { kind: 'custom' });
+      proof.checked = Boolean(payload.proof);
+      stats.checked = Boolean(payload.stats);
+      backgroundSource = String(payload.backgroundSource || '');
+      backgroundName = String(payload.backgroundName || 'shared background');
+      backgroundReference = null;
+      updateBackgroundStatus();
+    }
+
+    function applyOptionParams(params) {
+      proof.checked = params.get('proof') === '1' || params.get('proof') === 'true';
+      stats.checked = params.get('stats') === '1' || params.get('stats') === 'true';
+    }
+
+    async function loadVersion() {
+      try {
+        const response = await fetch('package.json', { cache: 'no-store' });
+        if (!response.ok) return;
+        const pkg = await response.json();
+        if (pkg.version) document.querySelector('#version').textContent = `via v${pkg.version}`;
+      } catch (_) {
+        // Package metadata is optional when the page is copied elsewhere.
+      }
+    }
+
+    function setStatus(message, isError = false) {
+      status.textContent = message;
+      status.classList.toggle('error', isError);
+    }
+
+    function formatError(error) { return error?.message || String(error); }
+  </script>
+</body>
+</html>

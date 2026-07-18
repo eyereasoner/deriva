@@ -1,0 +1,10 @@
+% Reference 9.1: reusable list selectors and slices have explicit finite boundary behavior.
+materialize(answer, 2).
+answer(take_zero, X) :- take(0, [a, b, c], X).
+answer(drop_all, X) :- drop(3, [a, b, c], X).
+answer(slice_empty, X) :- slice(1, 0, [a, b, c], X).
+answer(last_single, X) :- last([only], X).
+answer(head_rest, pair(H, R)) :- head([a, b, c], H), rest([a, b, c], R).
+answer(take_too_many_rejected, ok) :- not(take(4, [a, b, c], X)).
+answer(drop_too_many_rejected, ok) :- not(drop(4, [a, b, c], X)).
+answer(last_empty_rejected, ok) :- not(last([], X)).

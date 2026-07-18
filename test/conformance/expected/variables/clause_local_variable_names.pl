@@ -1,0 +1,2 @@
+answer(a).
+answer(b).

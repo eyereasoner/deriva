@@ -1,0 +1,1 @@
+answer(divisor, 3).

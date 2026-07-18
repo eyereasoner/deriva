@@ -1,0 +1,16 @@
+answer(eq_builtin, a).
+why(
+  answer(eq_builtin, a),
+  proof(
+    goal(answer(eq_builtin, a)),
+    by(rule("<stdin>", clause(2))),
+    bindings([binding("X", a)]),
+    uses([
+      proof(
+        goal(eq(pair(a, b), pair(a, b))),
+        by(builtin(eq, 2))
+      )
+    ])
+  )
+).
+

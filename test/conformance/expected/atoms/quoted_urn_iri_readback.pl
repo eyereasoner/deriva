@@ -1,0 +1,1 @@
+answer('urn:example:quoted').

@@ -1,0 +1,9 @@
+answer(sum, 5).
+answer(diff, 3).
+answer(product, 42).
+answer(integer_division, 3).
+answer(remainder, 1).
+answer(power, 256).
+answer(minimum, 3).
+answer(less_than, true).
+answer(greater_equal, true).

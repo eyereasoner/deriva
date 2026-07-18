@@ -1,0 +1,1 @@
+answer(alice, clara).

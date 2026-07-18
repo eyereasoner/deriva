@@ -1,0 +1,1 @@
+answer(nil, 0).
