@@ -1,10 +1,11 @@
 # Deriva
 
 <p align="left">
-  <img src="docs/assets/deriva-logo.png" alt="Deriva logo" width="75">
+  <img src="docs/assets/deriva-logo.png" alt="Deriva logo" width="50">
 </p>
 
 [![npm version](https://img.shields.io/npm/v/deriva.svg)](https://www.npmjs.com/package/deriva)
+[![DOI](https://zenodo.org/badge/1305066220.svg)](https://zenodo.org/badge/latestdoi/1305066220)
 
 Deriva is a small reasoning language for turning facts and rules into answers and proofs.
 
