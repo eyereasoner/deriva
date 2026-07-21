@@ -1,4 +1,5 @@
 name: Publish to npm (OIDC)
+run-name: Publish ${{ github.ref_name }} to npm — ${{ github.event.head_commit.message || 'manual dispatch' }}
 
 on:
   push:

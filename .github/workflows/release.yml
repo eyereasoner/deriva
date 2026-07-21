@@ -1,4 +1,6 @@
 name: Release
+run-name: ${{ github.event.head_commit.message || format('Release {0}', github.ref_name) }}
+
 on:
   push:
     tags:
