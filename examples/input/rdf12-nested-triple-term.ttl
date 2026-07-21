@@ -1,0 +1,7 @@
+VERSION "1.2"
+
+@prefix ex: <https://example.org/> .
+
+ex:auditor ex:reviews <<(
+  ex:alice ex:claims <<( ex:bob ex:knows ex:carol )>>
+)>> .

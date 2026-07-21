@@ -1,0 +1,6 @@
+VERSION "1.2"
+
+@prefix ex: <https://example.org/> .
+
+ex:welcome ex:label "مرحبا"@ar--rtl .
+ex:welcome ex:label "Welcome"@en--ltr .
