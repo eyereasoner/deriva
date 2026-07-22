@@ -1,0 +1,5387 @@
+% Performance example: repeated multi-key relational cube lookups.
+%
+% Generated Cartesian cube: 3375 facts and 2000 exact-key lookups.
+% Each single bound key leaves 225 clauses; all three bound keys leave one.
+materialize(lookupResult, 2).
+materialize(reason, 2).
+
+cube(a0, b0, c0, v0_0_0).
+cube(a0, b0, c1, v0_0_1).
+cube(a0, b0, c2, v0_0_2).
+cube(a0, b0, c3, v0_0_3).
+cube(a0, b0, c4, v0_0_4).
+cube(a0, b0, c5, v0_0_5).
+cube(a0, b0, c6, v0_0_6).
+cube(a0, b0, c7, v0_0_7).
+cube(a0, b0, c8, v0_0_8).
+cube(a0, b0, c9, v0_0_9).
+cube(a0, b0, c10, v0_0_10).
+cube(a0, b0, c11, v0_0_11).
+cube(a0, b0, c12, v0_0_12).
+cube(a0, b0, c13, v0_0_13).
+cube(a0, b0, c14, v0_0_14).
+cube(a0, b1, c0, v0_1_0).
+cube(a0, b1, c1, v0_1_1).
+cube(a0, b1, c2, v0_1_2).
+cube(a0, b1, c3, v0_1_3).
+cube(a0, b1, c4, v0_1_4).
+cube(a0, b1, c5, v0_1_5).
+cube(a0, b1, c6, v0_1_6).
+cube(a0, b1, c7, v0_1_7).
+cube(a0, b1, c8, v0_1_8).
+cube(a0, b1, c9, v0_1_9).
+cube(a0, b1, c10, v0_1_10).
+cube(a0, b1, c11, v0_1_11).
+cube(a0, b1, c12, v0_1_12).
+cube(a0, b1, c13, v0_1_13).
+cube(a0, b1, c14, v0_1_14).
+cube(a0, b2, c0, v0_2_0).
+cube(a0, b2, c1, v0_2_1).
+cube(a0, b2, c2, v0_2_2).
+cube(a0, b2, c3, v0_2_3).
+cube(a0, b2, c4, v0_2_4).
+cube(a0, b2, c5, v0_2_5).
+cube(a0, b2, c6, v0_2_6).
+cube(a0, b2, c7, v0_2_7).
+cube(a0, b2, c8, v0_2_8).
+cube(a0, b2, c9, v0_2_9).
+cube(a0, b2, c10, v0_2_10).
+cube(a0, b2, c11, v0_2_11).
+cube(a0, b2, c12, v0_2_12).
+cube(a0, b2, c13, v0_2_13).
+cube(a0, b2, c14, v0_2_14).
+cube(a0, b3, c0, v0_3_0).
+cube(a0, b3, c1, v0_3_1).
+cube(a0, b3, c2, v0_3_2).
+cube(a0, b3, c3, v0_3_3).
+cube(a0, b3, c4, v0_3_4).
+cube(a0, b3, c5, v0_3_5).
+cube(a0, b3, c6, v0_3_6).
+cube(a0, b3, c7, v0_3_7).
+cube(a0, b3, c8, v0_3_8).
+cube(a0, b3, c9, v0_3_9).
+cube(a0, b3, c10, v0_3_10).
+cube(a0, b3, c11, v0_3_11).
+cube(a0, b3, c12, v0_3_12).
+cube(a0, b3, c13, v0_3_13).
+cube(a0, b3, c14, v0_3_14).
+cube(a0, b4, c0, v0_4_0).
+cube(a0, b4, c1, v0_4_1).
+cube(a0, b4, c2, v0_4_2).
+cube(a0, b4, c3, v0_4_3).
+cube(a0, b4, c4, v0_4_4).
+cube(a0, b4, c5, v0_4_5).
+cube(a0, b4, c6, v0_4_6).
+cube(a0, b4, c7, v0_4_7).
+cube(a0, b4, c8, v0_4_8).
+cube(a0, b4, c9, v0_4_9).
+cube(a0, b4, c10, v0_4_10).
+cube(a0, b4, c11, v0_4_11).
+cube(a0, b4, c12, v0_4_12).
+cube(a0, b4, c13, v0_4_13).
+cube(a0, b4, c14, v0_4_14).
+cube(a0, b5, c0, v0_5_0).
+cube(a0, b5, c1, v0_5_1).
+cube(a0, b5, c2, v0_5_2).
+cube(a0, b5, c3, v0_5_3).
+cube(a0, b5, c4, v0_5_4).
+cube(a0, b5, c5, v0_5_5).
+cube(a0, b5, c6, v0_5_6).
+cube(a0, b5, c7, v0_5_7).
+cube(a0, b5, c8, v0_5_8).
+cube(a0, b5, c9, v0_5_9).
+cube(a0, b5, c10, v0_5_10).
+cube(a0, b5, c11, v0_5_11).
+cube(a0, b5, c12, v0_5_12).
+cube(a0, b5, c13, v0_5_13).
+cube(a0, b5, c14, v0_5_14).
+cube(a0, b6, c0, v0_6_0).
+cube(a0, b6, c1, v0_6_1).
+cube(a0, b6, c2, v0_6_2).
+cube(a0, b6, c3, v0_6_3).
+cube(a0, b6, c4, v0_6_4).
+cube(a0, b6, c5, v0_6_5).
+cube(a0, b6, c6, v0_6_6).
+cube(a0, b6, c7, v0_6_7).
+cube(a0, b6, c8, v0_6_8).
+cube(a0, b6, c9, v0_6_9).
+cube(a0, b6, c10, v0_6_10).
+cube(a0, b6, c11, v0_6_11).
+cube(a0, b6, c12, v0_6_12).
+cube(a0, b6, c13, v0_6_13).
+cube(a0, b6, c14, v0_6_14).
+cube(a0, b7, c0, v0_7_0).
+cube(a0, b7, c1, v0_7_1).
+cube(a0, b7, c2, v0_7_2).
+cube(a0, b7, c3, v0_7_3).
+cube(a0, b7, c4, v0_7_4).
+cube(a0, b7, c5, v0_7_5).
+cube(a0, b7, c6, v0_7_6).
+cube(a0, b7, c7, v0_7_7).
+cube(a0, b7, c8, v0_7_8).
+cube(a0, b7, c9, v0_7_9).
+cube(a0, b7, c10, v0_7_10).
+cube(a0, b7, c11, v0_7_11).
+cube(a0, b7, c12, v0_7_12).
+cube(a0, b7, c13, v0_7_13).
+cube(a0, b7, c14, v0_7_14).
+cube(a0, b8, c0, v0_8_0).
+cube(a0, b8, c1, v0_8_1).
+cube(a0, b8, c2, v0_8_2).
+cube(a0, b8, c3, v0_8_3).
+cube(a0, b8, c4, v0_8_4).
+cube(a0, b8, c5, v0_8_5).
+cube(a0, b8, c6, v0_8_6).
+cube(a0, b8, c7, v0_8_7).
+cube(a0, b8, c8, v0_8_8).
+cube(a0, b8, c9, v0_8_9).
+cube(a0, b8, c10, v0_8_10).
+cube(a0, b8, c11, v0_8_11).
+cube(a0, b8, c12, v0_8_12).
+cube(a0, b8, c13, v0_8_13).
+cube(a0, b8, c14, v0_8_14).
+cube(a0, b9, c0, v0_9_0).
+cube(a0, b9, c1, v0_9_1).
+cube(a0, b9, c2, v0_9_2).
+cube(a0, b9, c3, v0_9_3).
+cube(a0, b9, c4, v0_9_4).
+cube(a0, b9, c5, v0_9_5).
+cube(a0, b9, c6, v0_9_6).
+cube(a0, b9, c7, v0_9_7).
+cube(a0, b9, c8, v0_9_8).
+cube(a0, b9, c9, v0_9_9).
+cube(a0, b9, c10, v0_9_10).
+cube(a0, b9, c11, v0_9_11).
+cube(a0, b9, c12, v0_9_12).
+cube(a0, b9, c13, v0_9_13).
+cube(a0, b9, c14, v0_9_14).
+cube(a0, b10, c0, v0_10_0).
+cube(a0, b10, c1, v0_10_1).
+cube(a0, b10, c2, v0_10_2).
+cube(a0, b10, c3, v0_10_3).
+cube(a0, b10, c4, v0_10_4).
+cube(a0, b10, c5, v0_10_5).
+cube(a0, b10, c6, v0_10_6).
+cube(a0, b10, c7, v0_10_7).
+cube(a0, b10, c8, v0_10_8).
+cube(a0, b10, c9, v0_10_9).
+cube(a0, b10, c10, v0_10_10).
+cube(a0, b10, c11, v0_10_11).
+cube(a0, b10, c12, v0_10_12).
+cube(a0, b10, c13, v0_10_13).
+cube(a0, b10, c14, v0_10_14).
+cube(a0, b11, c0, v0_11_0).
+cube(a0, b11, c1, v0_11_1).
+cube(a0, b11, c2, v0_11_2).
+cube(a0, b11, c3, v0_11_3).
+cube(a0, b11, c4, v0_11_4).
+cube(a0, b11, c5, v0_11_5).
+cube(a0, b11, c6, v0_11_6).
+cube(a0, b11, c7, v0_11_7).
+cube(a0, b11, c8, v0_11_8).
+cube(a0, b11, c9, v0_11_9).
+cube(a0, b11, c10, v0_11_10).
+cube(a0, b11, c11, v0_11_11).
+cube(a0, b11, c12, v0_11_12).
+cube(a0, b11, c13, v0_11_13).
+cube(a0, b11, c14, v0_11_14).
+cube(a0, b12, c0, v0_12_0).
+cube(a0, b12, c1, v0_12_1).
+cube(a0, b12, c2, v0_12_2).
+cube(a0, b12, c3, v0_12_3).
+cube(a0, b12, c4, v0_12_4).
+cube(a0, b12, c5, v0_12_5).
+cube(a0, b12, c6, v0_12_6).
+cube(a0, b12, c7, v0_12_7).
+cube(a0, b12, c8, v0_12_8).
+cube(a0, b12, c9, v0_12_9).
+cube(a0, b12, c10, v0_12_10).
+cube(a0, b12, c11, v0_12_11).
+cube(a0, b12, c12, v0_12_12).
+cube(a0, b12, c13, v0_12_13).
+cube(a0, b12, c14, v0_12_14).
+cube(a0, b13, c0, v0_13_0).
+cube(a0, b13, c1, v0_13_1).
+cube(a0, b13, c2, v0_13_2).
+cube(a0, b13, c3, v0_13_3).
+cube(a0, b13, c4, v0_13_4).
+cube(a0, b13, c5, v0_13_5).
+cube(a0, b13, c6, v0_13_6).
+cube(a0, b13, c7, v0_13_7).
+cube(a0, b13, c8, v0_13_8).
+cube(a0, b13, c9, v0_13_9).
+cube(a0, b13, c10, v0_13_10).
+cube(a0, b13, c11, v0_13_11).
+cube(a0, b13, c12, v0_13_12).
+cube(a0, b13, c13, v0_13_13).
+cube(a0, b13, c14, v0_13_14).
+cube(a0, b14, c0, v0_14_0).
+cube(a0, b14, c1, v0_14_1).
+cube(a0, b14, c2, v0_14_2).
+cube(a0, b14, c3, v0_14_3).
+cube(a0, b14, c4, v0_14_4).
+cube(a0, b14, c5, v0_14_5).
+cube(a0, b14, c6, v0_14_6).
+cube(a0, b14, c7, v0_14_7).
+cube(a0, b14, c8, v0_14_8).
+cube(a0, b14, c9, v0_14_9).
+cube(a0, b14, c10, v0_14_10).
+cube(a0, b14, c11, v0_14_11).
+cube(a0, b14, c12, v0_14_12).
+cube(a0, b14, c13, v0_14_13).
+cube(a0, b14, c14, v0_14_14).
+cube(a1, b0, c0, v1_0_0).
+cube(a1, b0, c1, v1_0_1).
+cube(a1, b0, c2, v1_0_2).
+cube(a1, b0, c3, v1_0_3).
+cube(a1, b0, c4, v1_0_4).
+cube(a1, b0, c5, v1_0_5).
+cube(a1, b0, c6, v1_0_6).
+cube(a1, b0, c7, v1_0_7).
+cube(a1, b0, c8, v1_0_8).
+cube(a1, b0, c9, v1_0_9).
+cube(a1, b0, c10, v1_0_10).
+cube(a1, b0, c11, v1_0_11).
+cube(a1, b0, c12, v1_0_12).
+cube(a1, b0, c13, v1_0_13).
+cube(a1, b0, c14, v1_0_14).
+cube(a1, b1, c0, v1_1_0).
+cube(a1, b1, c1, v1_1_1).
+cube(a1, b1, c2, v1_1_2).
+cube(a1, b1, c3, v1_1_3).
+cube(a1, b1, c4, v1_1_4).
+cube(a1, b1, c5, v1_1_5).
+cube(a1, b1, c6, v1_1_6).
+cube(a1, b1, c7, v1_1_7).
+cube(a1, b1, c8, v1_1_8).
+cube(a1, b1, c9, v1_1_9).
+cube(a1, b1, c10, v1_1_10).
+cube(a1, b1, c11, v1_1_11).
+cube(a1, b1, c12, v1_1_12).
+cube(a1, b1, c13, v1_1_13).
+cube(a1, b1, c14, v1_1_14).
+cube(a1, b2, c0, v1_2_0).
+cube(a1, b2, c1, v1_2_1).
+cube(a1, b2, c2, v1_2_2).
+cube(a1, b2, c3, v1_2_3).
+cube(a1, b2, c4, v1_2_4).
+cube(a1, b2, c5, v1_2_5).
+cube(a1, b2, c6, v1_2_6).
+cube(a1, b2, c7, v1_2_7).
+cube(a1, b2, c8, v1_2_8).
+cube(a1, b2, c9, v1_2_9).
+cube(a1, b2, c10, v1_2_10).
+cube(a1, b2, c11, v1_2_11).
+cube(a1, b2, c12, v1_2_12).
+cube(a1, b2, c13, v1_2_13).
+cube(a1, b2, c14, v1_2_14).
+cube(a1, b3, c0, v1_3_0).
+cube(a1, b3, c1, v1_3_1).
+cube(a1, b3, c2, v1_3_2).
+cube(a1, b3, c3, v1_3_3).
+cube(a1, b3, c4, v1_3_4).
+cube(a1, b3, c5, v1_3_5).
+cube(a1, b3, c6, v1_3_6).
+cube(a1, b3, c7, v1_3_7).
+cube(a1, b3, c8, v1_3_8).
+cube(a1, b3, c9, v1_3_9).
+cube(a1, b3, c10, v1_3_10).
+cube(a1, b3, c11, v1_3_11).
+cube(a1, b3, c12, v1_3_12).
+cube(a1, b3, c13, v1_3_13).
+cube(a1, b3, c14, v1_3_14).
+cube(a1, b4, c0, v1_4_0).
+cube(a1, b4, c1, v1_4_1).
+cube(a1, b4, c2, v1_4_2).
+cube(a1, b4, c3, v1_4_3).
+cube(a1, b4, c4, v1_4_4).
+cube(a1, b4, c5, v1_4_5).
+cube(a1, b4, c6, v1_4_6).
+cube(a1, b4, c7, v1_4_7).
+cube(a1, b4, c8, v1_4_8).
+cube(a1, b4, c9, v1_4_9).
+cube(a1, b4, c10, v1_4_10).
+cube(a1, b4, c11, v1_4_11).
+cube(a1, b4, c12, v1_4_12).
+cube(a1, b4, c13, v1_4_13).
+cube(a1, b4, c14, v1_4_14).
+cube(a1, b5, c0, v1_5_0).
+cube(a1, b5, c1, v1_5_1).
+cube(a1, b5, c2, v1_5_2).
+cube(a1, b5, c3, v1_5_3).
+cube(a1, b5, c4, v1_5_4).
+cube(a1, b5, c5, v1_5_5).
+cube(a1, b5, c6, v1_5_6).
+cube(a1, b5, c7, v1_5_7).
+cube(a1, b5, c8, v1_5_8).
+cube(a1, b5, c9, v1_5_9).
+cube(a1, b5, c10, v1_5_10).
+cube(a1, b5, c11, v1_5_11).
+cube(a1, b5, c12, v1_5_12).
+cube(a1, b5, c13, v1_5_13).
+cube(a1, b5, c14, v1_5_14).
+cube(a1, b6, c0, v1_6_0).
+cube(a1, b6, c1, v1_6_1).
+cube(a1, b6, c2, v1_6_2).
+cube(a1, b6, c3, v1_6_3).
+cube(a1, b6, c4, v1_6_4).
+cube(a1, b6, c5, v1_6_5).
+cube(a1, b6, c6, v1_6_6).
+cube(a1, b6, c7, v1_6_7).
+cube(a1, b6, c8, v1_6_8).
+cube(a1, b6, c9, v1_6_9).
+cube(a1, b6, c10, v1_6_10).
+cube(a1, b6, c11, v1_6_11).
+cube(a1, b6, c12, v1_6_12).
+cube(a1, b6, c13, v1_6_13).
+cube(a1, b6, c14, v1_6_14).
+cube(a1, b7, c0, v1_7_0).
+cube(a1, b7, c1, v1_7_1).
+cube(a1, b7, c2, v1_7_2).
+cube(a1, b7, c3, v1_7_3).
+cube(a1, b7, c4, v1_7_4).
+cube(a1, b7, c5, v1_7_5).
+cube(a1, b7, c6, v1_7_6).
+cube(a1, b7, c7, v1_7_7).
+cube(a1, b7, c8, v1_7_8).
+cube(a1, b7, c9, v1_7_9).
+cube(a1, b7, c10, v1_7_10).
+cube(a1, b7, c11, v1_7_11).
+cube(a1, b7, c12, v1_7_12).
+cube(a1, b7, c13, v1_7_13).
+cube(a1, b7, c14, v1_7_14).
+cube(a1, b8, c0, v1_8_0).
+cube(a1, b8, c1, v1_8_1).
+cube(a1, b8, c2, v1_8_2).
+cube(a1, b8, c3, v1_8_3).
+cube(a1, b8, c4, v1_8_4).
+cube(a1, b8, c5, v1_8_5).
+cube(a1, b8, c6, v1_8_6).
+cube(a1, b8, c7, v1_8_7).
+cube(a1, b8, c8, v1_8_8).
+cube(a1, b8, c9, v1_8_9).
+cube(a1, b8, c10, v1_8_10).
+cube(a1, b8, c11, v1_8_11).
+cube(a1, b8, c12, v1_8_12).
+cube(a1, b8, c13, v1_8_13).
+cube(a1, b8, c14, v1_8_14).
+cube(a1, b9, c0, v1_9_0).
+cube(a1, b9, c1, v1_9_1).
+cube(a1, b9, c2, v1_9_2).
+cube(a1, b9, c3, v1_9_3).
+cube(a1, b9, c4, v1_9_4).
+cube(a1, b9, c5, v1_9_5).
+cube(a1, b9, c6, v1_9_6).
+cube(a1, b9, c7, v1_9_7).
+cube(a1, b9, c8, v1_9_8).
+cube(a1, b9, c9, v1_9_9).
+cube(a1, b9, c10, v1_9_10).
+cube(a1, b9, c11, v1_9_11).
+cube(a1, b9, c12, v1_9_12).
+cube(a1, b9, c13, v1_9_13).
+cube(a1, b9, c14, v1_9_14).
+cube(a1, b10, c0, v1_10_0).
+cube(a1, b10, c1, v1_10_1).
+cube(a1, b10, c2, v1_10_2).
+cube(a1, b10, c3, v1_10_3).
+cube(a1, b10, c4, v1_10_4).
+cube(a1, b10, c5, v1_10_5).
+cube(a1, b10, c6, v1_10_6).
+cube(a1, b10, c7, v1_10_7).
+cube(a1, b10, c8, v1_10_8).
+cube(a1, b10, c9, v1_10_9).
+cube(a1, b10, c10, v1_10_10).
+cube(a1, b10, c11, v1_10_11).
+cube(a1, b10, c12, v1_10_12).
+cube(a1, b10, c13, v1_10_13).
+cube(a1, b10, c14, v1_10_14).
+cube(a1, b11, c0, v1_11_0).
+cube(a1, b11, c1, v1_11_1).
+cube(a1, b11, c2, v1_11_2).
+cube(a1, b11, c3, v1_11_3).
+cube(a1, b11, c4, v1_11_4).
+cube(a1, b11, c5, v1_11_5).
+cube(a1, b11, c6, v1_11_6).
+cube(a1, b11, c7, v1_11_7).
+cube(a1, b11, c8, v1_11_8).
+cube(a1, b11, c9, v1_11_9).
+cube(a1, b11, c10, v1_11_10).
+cube(a1, b11, c11, v1_11_11).
+cube(a1, b11, c12, v1_11_12).
+cube(a1, b11, c13, v1_11_13).
+cube(a1, b11, c14, v1_11_14).
+cube(a1, b12, c0, v1_12_0).
+cube(a1, b12, c1, v1_12_1).
+cube(a1, b12, c2, v1_12_2).
+cube(a1, b12, c3, v1_12_3).
+cube(a1, b12, c4, v1_12_4).
+cube(a1, b12, c5, v1_12_5).
+cube(a1, b12, c6, v1_12_6).
+cube(a1, b12, c7, v1_12_7).
+cube(a1, b12, c8, v1_12_8).
+cube(a1, b12, c9, v1_12_9).
+cube(a1, b12, c10, v1_12_10).
+cube(a1, b12, c11, v1_12_11).
+cube(a1, b12, c12, v1_12_12).
+cube(a1, b12, c13, v1_12_13).
+cube(a1, b12, c14, v1_12_14).
+cube(a1, b13, c0, v1_13_0).
+cube(a1, b13, c1, v1_13_1).
+cube(a1, b13, c2, v1_13_2).
+cube(a1, b13, c3, v1_13_3).
+cube(a1, b13, c4, v1_13_4).
+cube(a1, b13, c5, v1_13_5).
+cube(a1, b13, c6, v1_13_6).
+cube(a1, b13, c7, v1_13_7).
+cube(a1, b13, c8, v1_13_8).
+cube(a1, b13, c9, v1_13_9).
+cube(a1, b13, c10, v1_13_10).
+cube(a1, b13, c11, v1_13_11).
+cube(a1, b13, c12, v1_13_12).
+cube(a1, b13, c13, v1_13_13).
+cube(a1, b13, c14, v1_13_14).
+cube(a1, b14, c0, v1_14_0).
+cube(a1, b14, c1, v1_14_1).
+cube(a1, b14, c2, v1_14_2).
+cube(a1, b14, c3, v1_14_3).
+cube(a1, b14, c4, v1_14_4).
+cube(a1, b14, c5, v1_14_5).
+cube(a1, b14, c6, v1_14_6).
+cube(a1, b14, c7, v1_14_7).
+cube(a1, b14, c8, v1_14_8).
+cube(a1, b14, c9, v1_14_9).
+cube(a1, b14, c10, v1_14_10).
+cube(a1, b14, c11, v1_14_11).
+cube(a1, b14, c12, v1_14_12).
+cube(a1, b14, c13, v1_14_13).
+cube(a1, b14, c14, v1_14_14).
+cube(a2, b0, c0, v2_0_0).
+cube(a2, b0, c1, v2_0_1).
+cube(a2, b0, c2, v2_0_2).
+cube(a2, b0, c3, v2_0_3).
+cube(a2, b0, c4, v2_0_4).
+cube(a2, b0, c5, v2_0_5).
+cube(a2, b0, c6, v2_0_6).
+cube(a2, b0, c7, v2_0_7).
+cube(a2, b0, c8, v2_0_8).
+cube(a2, b0, c9, v2_0_9).
+cube(a2, b0, c10, v2_0_10).
+cube(a2, b0, c11, v2_0_11).
+cube(a2, b0, c12, v2_0_12).
+cube(a2, b0, c13, v2_0_13).
+cube(a2, b0, c14, v2_0_14).
+cube(a2, b1, c0, v2_1_0).
+cube(a2, b1, c1, v2_1_1).
+cube(a2, b1, c2, v2_1_2).
+cube(a2, b1, c3, v2_1_3).
+cube(a2, b1, c4, v2_1_4).
+cube(a2, b1, c5, v2_1_5).
+cube(a2, b1, c6, v2_1_6).
+cube(a2, b1, c7, v2_1_7).
+cube(a2, b1, c8, v2_1_8).
+cube(a2, b1, c9, v2_1_9).
+cube(a2, b1, c10, v2_1_10).
+cube(a2, b1, c11, v2_1_11).
+cube(a2, b1, c12, v2_1_12).
+cube(a2, b1, c13, v2_1_13).
+cube(a2, b1, c14, v2_1_14).
+cube(a2, b2, c0, v2_2_0).
+cube(a2, b2, c1, v2_2_1).
+cube(a2, b2, c2, v2_2_2).
+cube(a2, b2, c3, v2_2_3).
+cube(a2, b2, c4, v2_2_4).
+cube(a2, b2, c5, v2_2_5).
+cube(a2, b2, c6, v2_2_6).
+cube(a2, b2, c7, v2_2_7).
+cube(a2, b2, c8, v2_2_8).
+cube(a2, b2, c9, v2_2_9).
+cube(a2, b2, c10, v2_2_10).
+cube(a2, b2, c11, v2_2_11).
+cube(a2, b2, c12, v2_2_12).
+cube(a2, b2, c13, v2_2_13).
+cube(a2, b2, c14, v2_2_14).
+cube(a2, b3, c0, v2_3_0).
+cube(a2, b3, c1, v2_3_1).
+cube(a2, b3, c2, v2_3_2).
+cube(a2, b3, c3, v2_3_3).
+cube(a2, b3, c4, v2_3_4).
+cube(a2, b3, c5, v2_3_5).
+cube(a2, b3, c6, v2_3_6).
+cube(a2, b3, c7, v2_3_7).
+cube(a2, b3, c8, v2_3_8).
+cube(a2, b3, c9, v2_3_9).
+cube(a2, b3, c10, v2_3_10).
+cube(a2, b3, c11, v2_3_11).
+cube(a2, b3, c12, v2_3_12).
+cube(a2, b3, c13, v2_3_13).
+cube(a2, b3, c14, v2_3_14).
+cube(a2, b4, c0, v2_4_0).
+cube(a2, b4, c1, v2_4_1).
+cube(a2, b4, c2, v2_4_2).
+cube(a2, b4, c3, v2_4_3).
+cube(a2, b4, c4, v2_4_4).
+cube(a2, b4, c5, v2_4_5).
+cube(a2, b4, c6, v2_4_6).
+cube(a2, b4, c7, v2_4_7).
+cube(a2, b4, c8, v2_4_8).
+cube(a2, b4, c9, v2_4_9).
+cube(a2, b4, c10, v2_4_10).
+cube(a2, b4, c11, v2_4_11).
+cube(a2, b4, c12, v2_4_12).
+cube(a2, b4, c13, v2_4_13).
+cube(a2, b4, c14, v2_4_14).
+cube(a2, b5, c0, v2_5_0).
+cube(a2, b5, c1, v2_5_1).
+cube(a2, b5, c2, v2_5_2).
+cube(a2, b5, c3, v2_5_3).
+cube(a2, b5, c4, v2_5_4).
+cube(a2, b5, c5, v2_5_5).
+cube(a2, b5, c6, v2_5_6).
+cube(a2, b5, c7, v2_5_7).
+cube(a2, b5, c8, v2_5_8).
+cube(a2, b5, c9, v2_5_9).
+cube(a2, b5, c10, v2_5_10).
+cube(a2, b5, c11, v2_5_11).
+cube(a2, b5, c12, v2_5_12).
+cube(a2, b5, c13, v2_5_13).
+cube(a2, b5, c14, v2_5_14).
+cube(a2, b6, c0, v2_6_0).
+cube(a2, b6, c1, v2_6_1).
+cube(a2, b6, c2, v2_6_2).
+cube(a2, b6, c3, v2_6_3).
+cube(a2, b6, c4, v2_6_4).
+cube(a2, b6, c5, v2_6_5).
+cube(a2, b6, c6, v2_6_6).
+cube(a2, b6, c7, v2_6_7).
+cube(a2, b6, c8, v2_6_8).
+cube(a2, b6, c9, v2_6_9).
+cube(a2, b6, c10, v2_6_10).
+cube(a2, b6, c11, v2_6_11).
+cube(a2, b6, c12, v2_6_12).
+cube(a2, b6, c13, v2_6_13).
+cube(a2, b6, c14, v2_6_14).
+cube(a2, b7, c0, v2_7_0).
+cube(a2, b7, c1, v2_7_1).
+cube(a2, b7, c2, v2_7_2).
+cube(a2, b7, c3, v2_7_3).
+cube(a2, b7, c4, v2_7_4).
+cube(a2, b7, c5, v2_7_5).
+cube(a2, b7, c6, v2_7_6).
+cube(a2, b7, c7, v2_7_7).
+cube(a2, b7, c8, v2_7_8).
+cube(a2, b7, c9, v2_7_9).
+cube(a2, b7, c10, v2_7_10).
+cube(a2, b7, c11, v2_7_11).
+cube(a2, b7, c12, v2_7_12).
+cube(a2, b7, c13, v2_7_13).
+cube(a2, b7, c14, v2_7_14).
+cube(a2, b8, c0, v2_8_0).
+cube(a2, b8, c1, v2_8_1).
+cube(a2, b8, c2, v2_8_2).
+cube(a2, b8, c3, v2_8_3).
+cube(a2, b8, c4, v2_8_4).
+cube(a2, b8, c5, v2_8_5).
+cube(a2, b8, c6, v2_8_6).
+cube(a2, b8, c7, v2_8_7).
+cube(a2, b8, c8, v2_8_8).
+cube(a2, b8, c9, v2_8_9).
+cube(a2, b8, c10, v2_8_10).
+cube(a2, b8, c11, v2_8_11).
+cube(a2, b8, c12, v2_8_12).
+cube(a2, b8, c13, v2_8_13).
+cube(a2, b8, c14, v2_8_14).
+cube(a2, b9, c0, v2_9_0).
+cube(a2, b9, c1, v2_9_1).
+cube(a2, b9, c2, v2_9_2).
+cube(a2, b9, c3, v2_9_3).
+cube(a2, b9, c4, v2_9_4).
+cube(a2, b9, c5, v2_9_5).
+cube(a2, b9, c6, v2_9_6).
+cube(a2, b9, c7, v2_9_7).
+cube(a2, b9, c8, v2_9_8).
+cube(a2, b9, c9, v2_9_9).
+cube(a2, b9, c10, v2_9_10).
+cube(a2, b9, c11, v2_9_11).
+cube(a2, b9, c12, v2_9_12).
+cube(a2, b9, c13, v2_9_13).
+cube(a2, b9, c14, v2_9_14).
+cube(a2, b10, c0, v2_10_0).
+cube(a2, b10, c1, v2_10_1).
+cube(a2, b10, c2, v2_10_2).
+cube(a2, b10, c3, v2_10_3).
+cube(a2, b10, c4, v2_10_4).
+cube(a2, b10, c5, v2_10_5).
+cube(a2, b10, c6, v2_10_6).
+cube(a2, b10, c7, v2_10_7).
+cube(a2, b10, c8, v2_10_8).
+cube(a2, b10, c9, v2_10_9).
+cube(a2, b10, c10, v2_10_10).
+cube(a2, b10, c11, v2_10_11).
+cube(a2, b10, c12, v2_10_12).
+cube(a2, b10, c13, v2_10_13).
+cube(a2, b10, c14, v2_10_14).
+cube(a2, b11, c0, v2_11_0).
+cube(a2, b11, c1, v2_11_1).
+cube(a2, b11, c2, v2_11_2).
+cube(a2, b11, c3, v2_11_3).
+cube(a2, b11, c4, v2_11_4).
+cube(a2, b11, c5, v2_11_5).
+cube(a2, b11, c6, v2_11_6).
+cube(a2, b11, c7, v2_11_7).
+cube(a2, b11, c8, v2_11_8).
+cube(a2, b11, c9, v2_11_9).
+cube(a2, b11, c10, v2_11_10).
+cube(a2, b11, c11, v2_11_11).
+cube(a2, b11, c12, v2_11_12).
+cube(a2, b11, c13, v2_11_13).
+cube(a2, b11, c14, v2_11_14).
+cube(a2, b12, c0, v2_12_0).
+cube(a2, b12, c1, v2_12_1).
+cube(a2, b12, c2, v2_12_2).
+cube(a2, b12, c3, v2_12_3).
+cube(a2, b12, c4, v2_12_4).
+cube(a2, b12, c5, v2_12_5).
+cube(a2, b12, c6, v2_12_6).
+cube(a2, b12, c7, v2_12_7).
+cube(a2, b12, c8, v2_12_8).
+cube(a2, b12, c9, v2_12_9).
+cube(a2, b12, c10, v2_12_10).
+cube(a2, b12, c11, v2_12_11).
+cube(a2, b12, c12, v2_12_12).
+cube(a2, b12, c13, v2_12_13).
+cube(a2, b12, c14, v2_12_14).
+cube(a2, b13, c0, v2_13_0).
+cube(a2, b13, c1, v2_13_1).
+cube(a2, b13, c2, v2_13_2).
+cube(a2, b13, c3, v2_13_3).
+cube(a2, b13, c4, v2_13_4).
+cube(a2, b13, c5, v2_13_5).
+cube(a2, b13, c6, v2_13_6).
+cube(a2, b13, c7, v2_13_7).
+cube(a2, b13, c8, v2_13_8).
+cube(a2, b13, c9, v2_13_9).
+cube(a2, b13, c10, v2_13_10).
+cube(a2, b13, c11, v2_13_11).
+cube(a2, b13, c12, v2_13_12).
+cube(a2, b13, c13, v2_13_13).
+cube(a2, b13, c14, v2_13_14).
+cube(a2, b14, c0, v2_14_0).
+cube(a2, b14, c1, v2_14_1).
+cube(a2, b14, c2, v2_14_2).
+cube(a2, b14, c3, v2_14_3).
+cube(a2, b14, c4, v2_14_4).
+cube(a2, b14, c5, v2_14_5).
+cube(a2, b14, c6, v2_14_6).
+cube(a2, b14, c7, v2_14_7).
+cube(a2, b14, c8, v2_14_8).
+cube(a2, b14, c9, v2_14_9).
+cube(a2, b14, c10, v2_14_10).
+cube(a2, b14, c11, v2_14_11).
+cube(a2, b14, c12, v2_14_12).
+cube(a2, b14, c13, v2_14_13).
+cube(a2, b14, c14, v2_14_14).
+cube(a3, b0, c0, v3_0_0).
+cube(a3, b0, c1, v3_0_1).
+cube(a3, b0, c2, v3_0_2).
+cube(a3, b0, c3, v3_0_3).
+cube(a3, b0, c4, v3_0_4).
+cube(a3, b0, c5, v3_0_5).
+cube(a3, b0, c6, v3_0_6).
+cube(a3, b0, c7, v3_0_7).
+cube(a3, b0, c8, v3_0_8).
+cube(a3, b0, c9, v3_0_9).
+cube(a3, b0, c10, v3_0_10).
+cube(a3, b0, c11, v3_0_11).
+cube(a3, b0, c12, v3_0_12).
+cube(a3, b0, c13, v3_0_13).
+cube(a3, b0, c14, v3_0_14).
+cube(a3, b1, c0, v3_1_0).
+cube(a3, b1, c1, v3_1_1).
+cube(a3, b1, c2, v3_1_2).
+cube(a3, b1, c3, v3_1_3).
+cube(a3, b1, c4, v3_1_4).
+cube(a3, b1, c5, v3_1_5).
+cube(a3, b1, c6, v3_1_6).
+cube(a3, b1, c7, v3_1_7).
+cube(a3, b1, c8, v3_1_8).
+cube(a3, b1, c9, v3_1_9).
+cube(a3, b1, c10, v3_1_10).
+cube(a3, b1, c11, v3_1_11).
+cube(a3, b1, c12, v3_1_12).
+cube(a3, b1, c13, v3_1_13).
+cube(a3, b1, c14, v3_1_14).
+cube(a3, b2, c0, v3_2_0).
+cube(a3, b2, c1, v3_2_1).
+cube(a3, b2, c2, v3_2_2).
+cube(a3, b2, c3, v3_2_3).
+cube(a3, b2, c4, v3_2_4).
+cube(a3, b2, c5, v3_2_5).
+cube(a3, b2, c6, v3_2_6).
+cube(a3, b2, c7, v3_2_7).
+cube(a3, b2, c8, v3_2_8).
+cube(a3, b2, c9, v3_2_9).
+cube(a3, b2, c10, v3_2_10).
+cube(a3, b2, c11, v3_2_11).
+cube(a3, b2, c12, v3_2_12).
+cube(a3, b2, c13, v3_2_13).
+cube(a3, b2, c14, v3_2_14).
+cube(a3, b3, c0, v3_3_0).
+cube(a3, b3, c1, v3_3_1).
+cube(a3, b3, c2, v3_3_2).
+cube(a3, b3, c3, v3_3_3).
+cube(a3, b3, c4, v3_3_4).
+cube(a3, b3, c5, v3_3_5).
+cube(a3, b3, c6, v3_3_6).
+cube(a3, b3, c7, v3_3_7).
+cube(a3, b3, c8, v3_3_8).
+cube(a3, b3, c9, v3_3_9).
+cube(a3, b3, c10, v3_3_10).
+cube(a3, b3, c11, v3_3_11).
+cube(a3, b3, c12, v3_3_12).
+cube(a3, b3, c13, v3_3_13).
+cube(a3, b3, c14, v3_3_14).
+cube(a3, b4, c0, v3_4_0).
+cube(a3, b4, c1, v3_4_1).
+cube(a3, b4, c2, v3_4_2).
+cube(a3, b4, c3, v3_4_3).
+cube(a3, b4, c4, v3_4_4).
+cube(a3, b4, c5, v3_4_5).
+cube(a3, b4, c6, v3_4_6).
+cube(a3, b4, c7, v3_4_7).
+cube(a3, b4, c8, v3_4_8).
+cube(a3, b4, c9, v3_4_9).
+cube(a3, b4, c10, v3_4_10).
+cube(a3, b4, c11, v3_4_11).
+cube(a3, b4, c12, v3_4_12).
+cube(a3, b4, c13, v3_4_13).
+cube(a3, b4, c14, v3_4_14).
+cube(a3, b5, c0, v3_5_0).
+cube(a3, b5, c1, v3_5_1).
+cube(a3, b5, c2, v3_5_2).
+cube(a3, b5, c3, v3_5_3).
+cube(a3, b5, c4, v3_5_4).
+cube(a3, b5, c5, v3_5_5).
+cube(a3, b5, c6, v3_5_6).
+cube(a3, b5, c7, v3_5_7).
+cube(a3, b5, c8, v3_5_8).
+cube(a3, b5, c9, v3_5_9).
+cube(a3, b5, c10, v3_5_10).
+cube(a3, b5, c11, v3_5_11).
+cube(a3, b5, c12, v3_5_12).
+cube(a3, b5, c13, v3_5_13).
+cube(a3, b5, c14, v3_5_14).
+cube(a3, b6, c0, v3_6_0).
+cube(a3, b6, c1, v3_6_1).
+cube(a3, b6, c2, v3_6_2).
+cube(a3, b6, c3, v3_6_3).
+cube(a3, b6, c4, v3_6_4).
+cube(a3, b6, c5, v3_6_5).
+cube(a3, b6, c6, v3_6_6).
+cube(a3, b6, c7, v3_6_7).
+cube(a3, b6, c8, v3_6_8).
+cube(a3, b6, c9, v3_6_9).
+cube(a3, b6, c10, v3_6_10).
+cube(a3, b6, c11, v3_6_11).
+cube(a3, b6, c12, v3_6_12).
+cube(a3, b6, c13, v3_6_13).
+cube(a3, b6, c14, v3_6_14).
+cube(a3, b7, c0, v3_7_0).
+cube(a3, b7, c1, v3_7_1).
+cube(a3, b7, c2, v3_7_2).
+cube(a3, b7, c3, v3_7_3).
+cube(a3, b7, c4, v3_7_4).
+cube(a3, b7, c5, v3_7_5).
+cube(a3, b7, c6, v3_7_6).
+cube(a3, b7, c7, v3_7_7).
+cube(a3, b7, c8, v3_7_8).
+cube(a3, b7, c9, v3_7_9).
+cube(a3, b7, c10, v3_7_10).
+cube(a3, b7, c11, v3_7_11).
+cube(a3, b7, c12, v3_7_12).
+cube(a3, b7, c13, v3_7_13).
+cube(a3, b7, c14, v3_7_14).
+cube(a3, b8, c0, v3_8_0).
+cube(a3, b8, c1, v3_8_1).
+cube(a3, b8, c2, v3_8_2).
+cube(a3, b8, c3, v3_8_3).
+cube(a3, b8, c4, v3_8_4).
+cube(a3, b8, c5, v3_8_5).
+cube(a3, b8, c6, v3_8_6).
+cube(a3, b8, c7, v3_8_7).
+cube(a3, b8, c8, v3_8_8).
+cube(a3, b8, c9, v3_8_9).
+cube(a3, b8, c10, v3_8_10).
+cube(a3, b8, c11, v3_8_11).
+cube(a3, b8, c12, v3_8_12).
+cube(a3, b8, c13, v3_8_13).
+cube(a3, b8, c14, v3_8_14).
+cube(a3, b9, c0, v3_9_0).
+cube(a3, b9, c1, v3_9_1).
+cube(a3, b9, c2, v3_9_2).
+cube(a3, b9, c3, v3_9_3).
+cube(a3, b9, c4, v3_9_4).
+cube(a3, b9, c5, v3_9_5).
+cube(a3, b9, c6, v3_9_6).
+cube(a3, b9, c7, v3_9_7).
+cube(a3, b9, c8, v3_9_8).
+cube(a3, b9, c9, v3_9_9).
+cube(a3, b9, c10, v3_9_10).
+cube(a3, b9, c11, v3_9_11).
+cube(a3, b9, c12, v3_9_12).
+cube(a3, b9, c13, v3_9_13).
+cube(a3, b9, c14, v3_9_14).
+cube(a3, b10, c0, v3_10_0).
+cube(a3, b10, c1, v3_10_1).
+cube(a3, b10, c2, v3_10_2).
+cube(a3, b10, c3, v3_10_3).
+cube(a3, b10, c4, v3_10_4).
+cube(a3, b10, c5, v3_10_5).
+cube(a3, b10, c6, v3_10_6).
+cube(a3, b10, c7, v3_10_7).
+cube(a3, b10, c8, v3_10_8).
+cube(a3, b10, c9, v3_10_9).
+cube(a3, b10, c10, v3_10_10).
+cube(a3, b10, c11, v3_10_11).
+cube(a3, b10, c12, v3_10_12).
+cube(a3, b10, c13, v3_10_13).
+cube(a3, b10, c14, v3_10_14).
+cube(a3, b11, c0, v3_11_0).
+cube(a3, b11, c1, v3_11_1).
+cube(a3, b11, c2, v3_11_2).
+cube(a3, b11, c3, v3_11_3).
+cube(a3, b11, c4, v3_11_4).
+cube(a3, b11, c5, v3_11_5).
+cube(a3, b11, c6, v3_11_6).
+cube(a3, b11, c7, v3_11_7).
+cube(a3, b11, c8, v3_11_8).
+cube(a3, b11, c9, v3_11_9).
+cube(a3, b11, c10, v3_11_10).
+cube(a3, b11, c11, v3_11_11).
+cube(a3, b11, c12, v3_11_12).
+cube(a3, b11, c13, v3_11_13).
+cube(a3, b11, c14, v3_11_14).
+cube(a3, b12, c0, v3_12_0).
+cube(a3, b12, c1, v3_12_1).
+cube(a3, b12, c2, v3_12_2).
+cube(a3, b12, c3, v3_12_3).
+cube(a3, b12, c4, v3_12_4).
+cube(a3, b12, c5, v3_12_5).
+cube(a3, b12, c6, v3_12_6).
+cube(a3, b12, c7, v3_12_7).
+cube(a3, b12, c8, v3_12_8).
+cube(a3, b12, c9, v3_12_9).
+cube(a3, b12, c10, v3_12_10).
+cube(a3, b12, c11, v3_12_11).
+cube(a3, b12, c12, v3_12_12).
+cube(a3, b12, c13, v3_12_13).
+cube(a3, b12, c14, v3_12_14).
+cube(a3, b13, c0, v3_13_0).
+cube(a3, b13, c1, v3_13_1).
+cube(a3, b13, c2, v3_13_2).
+cube(a3, b13, c3, v3_13_3).
+cube(a3, b13, c4, v3_13_4).
+cube(a3, b13, c5, v3_13_5).
+cube(a3, b13, c6, v3_13_6).
+cube(a3, b13, c7, v3_13_7).
+cube(a3, b13, c8, v3_13_8).
+cube(a3, b13, c9, v3_13_9).
+cube(a3, b13, c10, v3_13_10).
+cube(a3, b13, c11, v3_13_11).
+cube(a3, b13, c12, v3_13_12).
+cube(a3, b13, c13, v3_13_13).
+cube(a3, b13, c14, v3_13_14).
+cube(a3, b14, c0, v3_14_0).
+cube(a3, b14, c1, v3_14_1).
+cube(a3, b14, c2, v3_14_2).
+cube(a3, b14, c3, v3_14_3).
+cube(a3, b14, c4, v3_14_4).
+cube(a3, b14, c5, v3_14_5).
+cube(a3, b14, c6, v3_14_6).
+cube(a3, b14, c7, v3_14_7).
+cube(a3, b14, c8, v3_14_8).
+cube(a3, b14, c9, v3_14_9).
+cube(a3, b14, c10, v3_14_10).
+cube(a3, b14, c11, v3_14_11).
+cube(a3, b14, c12, v3_14_12).
+cube(a3, b14, c13, v3_14_13).
+cube(a3, b14, c14, v3_14_14).
+cube(a4, b0, c0, v4_0_0).
+cube(a4, b0, c1, v4_0_1).
+cube(a4, b0, c2, v4_0_2).
+cube(a4, b0, c3, v4_0_3).
+cube(a4, b0, c4, v4_0_4).
+cube(a4, b0, c5, v4_0_5).
+cube(a4, b0, c6, v4_0_6).
+cube(a4, b0, c7, v4_0_7).
+cube(a4, b0, c8, v4_0_8).
+cube(a4, b0, c9, v4_0_9).
+cube(a4, b0, c10, v4_0_10).
+cube(a4, b0, c11, v4_0_11).
+cube(a4, b0, c12, v4_0_12).
+cube(a4, b0, c13, v4_0_13).
+cube(a4, b0, c14, v4_0_14).
+cube(a4, b1, c0, v4_1_0).
+cube(a4, b1, c1, v4_1_1).
+cube(a4, b1, c2, v4_1_2).
+cube(a4, b1, c3, v4_1_3).
+cube(a4, b1, c4, v4_1_4).
+cube(a4, b1, c5, v4_1_5).
+cube(a4, b1, c6, v4_1_6).
+cube(a4, b1, c7, v4_1_7).
+cube(a4, b1, c8, v4_1_8).
+cube(a4, b1, c9, v4_1_9).
+cube(a4, b1, c10, v4_1_10).
+cube(a4, b1, c11, v4_1_11).
+cube(a4, b1, c12, v4_1_12).
+cube(a4, b1, c13, v4_1_13).
+cube(a4, b1, c14, v4_1_14).
+cube(a4, b2, c0, v4_2_0).
+cube(a4, b2, c1, v4_2_1).
+cube(a4, b2, c2, v4_2_2).
+cube(a4, b2, c3, v4_2_3).
+cube(a4, b2, c4, v4_2_4).
+cube(a4, b2, c5, v4_2_5).
+cube(a4, b2, c6, v4_2_6).
+cube(a4, b2, c7, v4_2_7).
+cube(a4, b2, c8, v4_2_8).
+cube(a4, b2, c9, v4_2_9).
+cube(a4, b2, c10, v4_2_10).
+cube(a4, b2, c11, v4_2_11).
+cube(a4, b2, c12, v4_2_12).
+cube(a4, b2, c13, v4_2_13).
+cube(a4, b2, c14, v4_2_14).
+cube(a4, b3, c0, v4_3_0).
+cube(a4, b3, c1, v4_3_1).
+cube(a4, b3, c2, v4_3_2).
+cube(a4, b3, c3, v4_3_3).
+cube(a4, b3, c4, v4_3_4).
+cube(a4, b3, c5, v4_3_5).
+cube(a4, b3, c6, v4_3_6).
+cube(a4, b3, c7, v4_3_7).
+cube(a4, b3, c8, v4_3_8).
+cube(a4, b3, c9, v4_3_9).
+cube(a4, b3, c10, v4_3_10).
+cube(a4, b3, c11, v4_3_11).
+cube(a4, b3, c12, v4_3_12).
+cube(a4, b3, c13, v4_3_13).
+cube(a4, b3, c14, v4_3_14).
+cube(a4, b4, c0, v4_4_0).
+cube(a4, b4, c1, v4_4_1).
+cube(a4, b4, c2, v4_4_2).
+cube(a4, b4, c3, v4_4_3).
+cube(a4, b4, c4, v4_4_4).
+cube(a4, b4, c5, v4_4_5).
+cube(a4, b4, c6, v4_4_6).
+cube(a4, b4, c7, v4_4_7).
+cube(a4, b4, c8, v4_4_8).
+cube(a4, b4, c9, v4_4_9).
+cube(a4, b4, c10, v4_4_10).
+cube(a4, b4, c11, v4_4_11).
+cube(a4, b4, c12, v4_4_12).
+cube(a4, b4, c13, v4_4_13).
+cube(a4, b4, c14, v4_4_14).
+cube(a4, b5, c0, v4_5_0).
+cube(a4, b5, c1, v4_5_1).
+cube(a4, b5, c2, v4_5_2).
+cube(a4, b5, c3, v4_5_3).
+cube(a4, b5, c4, v4_5_4).
+cube(a4, b5, c5, v4_5_5).
+cube(a4, b5, c6, v4_5_6).
+cube(a4, b5, c7, v4_5_7).
+cube(a4, b5, c8, v4_5_8).
+cube(a4, b5, c9, v4_5_9).
+cube(a4, b5, c10, v4_5_10).
+cube(a4, b5, c11, v4_5_11).
+cube(a4, b5, c12, v4_5_12).
+cube(a4, b5, c13, v4_5_13).
+cube(a4, b5, c14, v4_5_14).
+cube(a4, b6, c0, v4_6_0).
+cube(a4, b6, c1, v4_6_1).
+cube(a4, b6, c2, v4_6_2).
+cube(a4, b6, c3, v4_6_3).
+cube(a4, b6, c4, v4_6_4).
+cube(a4, b6, c5, v4_6_5).
+cube(a4, b6, c6, v4_6_6).
+cube(a4, b6, c7, v4_6_7).
+cube(a4, b6, c8, v4_6_8).
+cube(a4, b6, c9, v4_6_9).
+cube(a4, b6, c10, v4_6_10).
+cube(a4, b6, c11, v4_6_11).
+cube(a4, b6, c12, v4_6_12).
+cube(a4, b6, c13, v4_6_13).
+cube(a4, b6, c14, v4_6_14).
+cube(a4, b7, c0, v4_7_0).
+cube(a4, b7, c1, v4_7_1).
+cube(a4, b7, c2, v4_7_2).
+cube(a4, b7, c3, v4_7_3).
+cube(a4, b7, c4, v4_7_4).
+cube(a4, b7, c5, v4_7_5).
+cube(a4, b7, c6, v4_7_6).
+cube(a4, b7, c7, v4_7_7).
+cube(a4, b7, c8, v4_7_8).
+cube(a4, b7, c9, v4_7_9).
+cube(a4, b7, c10, v4_7_10).
+cube(a4, b7, c11, v4_7_11).
+cube(a4, b7, c12, v4_7_12).
+cube(a4, b7, c13, v4_7_13).
+cube(a4, b7, c14, v4_7_14).
+cube(a4, b8, c0, v4_8_0).
+cube(a4, b8, c1, v4_8_1).
+cube(a4, b8, c2, v4_8_2).
+cube(a4, b8, c3, v4_8_3).
+cube(a4, b8, c4, v4_8_4).
+cube(a4, b8, c5, v4_8_5).
+cube(a4, b8, c6, v4_8_6).
+cube(a4, b8, c7, v4_8_7).
+cube(a4, b8, c8, v4_8_8).
+cube(a4, b8, c9, v4_8_9).
+cube(a4, b8, c10, v4_8_10).
+cube(a4, b8, c11, v4_8_11).
+cube(a4, b8, c12, v4_8_12).
+cube(a4, b8, c13, v4_8_13).
+cube(a4, b8, c14, v4_8_14).
+cube(a4, b9, c0, v4_9_0).
+cube(a4, b9, c1, v4_9_1).
+cube(a4, b9, c2, v4_9_2).
+cube(a4, b9, c3, v4_9_3).
+cube(a4, b9, c4, v4_9_4).
+cube(a4, b9, c5, v4_9_5).
+cube(a4, b9, c6, v4_9_6).
+cube(a4, b9, c7, v4_9_7).
+cube(a4, b9, c8, v4_9_8).
+cube(a4, b9, c9, v4_9_9).
+cube(a4, b9, c10, v4_9_10).
+cube(a4, b9, c11, v4_9_11).
+cube(a4, b9, c12, v4_9_12).
+cube(a4, b9, c13, v4_9_13).
+cube(a4, b9, c14, v4_9_14).
+cube(a4, b10, c0, v4_10_0).
+cube(a4, b10, c1, v4_10_1).
+cube(a4, b10, c2, v4_10_2).
+cube(a4, b10, c3, v4_10_3).
+cube(a4, b10, c4, v4_10_4).
+cube(a4, b10, c5, v4_10_5).
+cube(a4, b10, c6, v4_10_6).
+cube(a4, b10, c7, v4_10_7).
+cube(a4, b10, c8, v4_10_8).
+cube(a4, b10, c9, v4_10_9).
+cube(a4, b10, c10, v4_10_10).
+cube(a4, b10, c11, v4_10_11).
+cube(a4, b10, c12, v4_10_12).
+cube(a4, b10, c13, v4_10_13).
+cube(a4, b10, c14, v4_10_14).
+cube(a4, b11, c0, v4_11_0).
+cube(a4, b11, c1, v4_11_1).
+cube(a4, b11, c2, v4_11_2).
+cube(a4, b11, c3, v4_11_3).
+cube(a4, b11, c4, v4_11_4).
+cube(a4, b11, c5, v4_11_5).
+cube(a4, b11, c6, v4_11_6).
+cube(a4, b11, c7, v4_11_7).
+cube(a4, b11, c8, v4_11_8).
+cube(a4, b11, c9, v4_11_9).
+cube(a4, b11, c10, v4_11_10).
+cube(a4, b11, c11, v4_11_11).
+cube(a4, b11, c12, v4_11_12).
+cube(a4, b11, c13, v4_11_13).
+cube(a4, b11, c14, v4_11_14).
+cube(a4, b12, c0, v4_12_0).
+cube(a4, b12, c1, v4_12_1).
+cube(a4, b12, c2, v4_12_2).
+cube(a4, b12, c3, v4_12_3).
+cube(a4, b12, c4, v4_12_4).
+cube(a4, b12, c5, v4_12_5).
+cube(a4, b12, c6, v4_12_6).
+cube(a4, b12, c7, v4_12_7).
+cube(a4, b12, c8, v4_12_8).
+cube(a4, b12, c9, v4_12_9).
+cube(a4, b12, c10, v4_12_10).
+cube(a4, b12, c11, v4_12_11).
+cube(a4, b12, c12, v4_12_12).
+cube(a4, b12, c13, v4_12_13).
+cube(a4, b12, c14, v4_12_14).
+cube(a4, b13, c0, v4_13_0).
+cube(a4, b13, c1, v4_13_1).
+cube(a4, b13, c2, v4_13_2).
+cube(a4, b13, c3, v4_13_3).
+cube(a4, b13, c4, v4_13_4).
+cube(a4, b13, c5, v4_13_5).
+cube(a4, b13, c6, v4_13_6).
+cube(a4, b13, c7, v4_13_7).
+cube(a4, b13, c8, v4_13_8).
+cube(a4, b13, c9, v4_13_9).
+cube(a4, b13, c10, v4_13_10).
+cube(a4, b13, c11, v4_13_11).
+cube(a4, b13, c12, v4_13_12).
+cube(a4, b13, c13, v4_13_13).
+cube(a4, b13, c14, v4_13_14).
+cube(a4, b14, c0, v4_14_0).
+cube(a4, b14, c1, v4_14_1).
+cube(a4, b14, c2, v4_14_2).
+cube(a4, b14, c3, v4_14_3).
+cube(a4, b14, c4, v4_14_4).
+cube(a4, b14, c5, v4_14_5).
+cube(a4, b14, c6, v4_14_6).
+cube(a4, b14, c7, v4_14_7).
+cube(a4, b14, c8, v4_14_8).
+cube(a4, b14, c9, v4_14_9).
+cube(a4, b14, c10, v4_14_10).
+cube(a4, b14, c11, v4_14_11).
+cube(a4, b14, c12, v4_14_12).
+cube(a4, b14, c13, v4_14_13).
+cube(a4, b14, c14, v4_14_14).
+cube(a5, b0, c0, v5_0_0).
+cube(a5, b0, c1, v5_0_1).
+cube(a5, b0, c2, v5_0_2).
+cube(a5, b0, c3, v5_0_3).
+cube(a5, b0, c4, v5_0_4).
+cube(a5, b0, c5, v5_0_5).
+cube(a5, b0, c6, v5_0_6).
+cube(a5, b0, c7, v5_0_7).
+cube(a5, b0, c8, v5_0_8).
+cube(a5, b0, c9, v5_0_9).
+cube(a5, b0, c10, v5_0_10).
+cube(a5, b0, c11, v5_0_11).
+cube(a5, b0, c12, v5_0_12).
+cube(a5, b0, c13, v5_0_13).
+cube(a5, b0, c14, v5_0_14).
+cube(a5, b1, c0, v5_1_0).
+cube(a5, b1, c1, v5_1_1).
+cube(a5, b1, c2, v5_1_2).
+cube(a5, b1, c3, v5_1_3).
+cube(a5, b1, c4, v5_1_4).
+cube(a5, b1, c5, v5_1_5).
+cube(a5, b1, c6, v5_1_6).
+cube(a5, b1, c7, v5_1_7).
+cube(a5, b1, c8, v5_1_8).
+cube(a5, b1, c9, v5_1_9).
+cube(a5, b1, c10, v5_1_10).
+cube(a5, b1, c11, v5_1_11).
+cube(a5, b1, c12, v5_1_12).
+cube(a5, b1, c13, v5_1_13).
+cube(a5, b1, c14, v5_1_14).
+cube(a5, b2, c0, v5_2_0).
+cube(a5, b2, c1, v5_2_1).
+cube(a5, b2, c2, v5_2_2).
+cube(a5, b2, c3, v5_2_3).
+cube(a5, b2, c4, v5_2_4).
+cube(a5, b2, c5, v5_2_5).
+cube(a5, b2, c6, v5_2_6).
+cube(a5, b2, c7, v5_2_7).
+cube(a5, b2, c8, v5_2_8).
+cube(a5, b2, c9, v5_2_9).
+cube(a5, b2, c10, v5_2_10).
+cube(a5, b2, c11, v5_2_11).
+cube(a5, b2, c12, v5_2_12).
+cube(a5, b2, c13, v5_2_13).
+cube(a5, b2, c14, v5_2_14).
+cube(a5, b3, c0, v5_3_0).
+cube(a5, b3, c1, v5_3_1).
+cube(a5, b3, c2, v5_3_2).
+cube(a5, b3, c3, v5_3_3).
+cube(a5, b3, c4, v5_3_4).
+cube(a5, b3, c5, v5_3_5).
+cube(a5, b3, c6, v5_3_6).
+cube(a5, b3, c7, v5_3_7).
+cube(a5, b3, c8, v5_3_8).
+cube(a5, b3, c9, v5_3_9).
+cube(a5, b3, c10, v5_3_10).
+cube(a5, b3, c11, v5_3_11).
+cube(a5, b3, c12, v5_3_12).
+cube(a5, b3, c13, v5_3_13).
+cube(a5, b3, c14, v5_3_14).
+cube(a5, b4, c0, v5_4_0).
+cube(a5, b4, c1, v5_4_1).
+cube(a5, b4, c2, v5_4_2).
+cube(a5, b4, c3, v5_4_3).
+cube(a5, b4, c4, v5_4_4).
+cube(a5, b4, c5, v5_4_5).
+cube(a5, b4, c6, v5_4_6).
+cube(a5, b4, c7, v5_4_7).
+cube(a5, b4, c8, v5_4_8).
+cube(a5, b4, c9, v5_4_9).
+cube(a5, b4, c10, v5_4_10).
+cube(a5, b4, c11, v5_4_11).
+cube(a5, b4, c12, v5_4_12).
+cube(a5, b4, c13, v5_4_13).
+cube(a5, b4, c14, v5_4_14).
+cube(a5, b5, c0, v5_5_0).
+cube(a5, b5, c1, v5_5_1).
+cube(a5, b5, c2, v5_5_2).
+cube(a5, b5, c3, v5_5_3).
+cube(a5, b5, c4, v5_5_4).
+cube(a5, b5, c5, v5_5_5).
+cube(a5, b5, c6, v5_5_6).
+cube(a5, b5, c7, v5_5_7).
+cube(a5, b5, c8, v5_5_8).
+cube(a5, b5, c9, v5_5_9).
+cube(a5, b5, c10, v5_5_10).
+cube(a5, b5, c11, v5_5_11).
+cube(a5, b5, c12, v5_5_12).
+cube(a5, b5, c13, v5_5_13).
+cube(a5, b5, c14, v5_5_14).
+cube(a5, b6, c0, v5_6_0).
+cube(a5, b6, c1, v5_6_1).
+cube(a5, b6, c2, v5_6_2).
+cube(a5, b6, c3, v5_6_3).
+cube(a5, b6, c4, v5_6_4).
+cube(a5, b6, c5, v5_6_5).
+cube(a5, b6, c6, v5_6_6).
+cube(a5, b6, c7, v5_6_7).
+cube(a5, b6, c8, v5_6_8).
+cube(a5, b6, c9, v5_6_9).
+cube(a5, b6, c10, v5_6_10).
+cube(a5, b6, c11, v5_6_11).
+cube(a5, b6, c12, v5_6_12).
+cube(a5, b6, c13, v5_6_13).
+cube(a5, b6, c14, v5_6_14).
+cube(a5, b7, c0, v5_7_0).
+cube(a5, b7, c1, v5_7_1).
+cube(a5, b7, c2, v5_7_2).
+cube(a5, b7, c3, v5_7_3).
+cube(a5, b7, c4, v5_7_4).
+cube(a5, b7, c5, v5_7_5).
+cube(a5, b7, c6, v5_7_6).
+cube(a5, b7, c7, v5_7_7).
+cube(a5, b7, c8, v5_7_8).
+cube(a5, b7, c9, v5_7_9).
+cube(a5, b7, c10, v5_7_10).
+cube(a5, b7, c11, v5_7_11).
+cube(a5, b7, c12, v5_7_12).
+cube(a5, b7, c13, v5_7_13).
+cube(a5, b7, c14, v5_7_14).
+cube(a5, b8, c0, v5_8_0).
+cube(a5, b8, c1, v5_8_1).
+cube(a5, b8, c2, v5_8_2).
+cube(a5, b8, c3, v5_8_3).
+cube(a5, b8, c4, v5_8_4).
+cube(a5, b8, c5, v5_8_5).
+cube(a5, b8, c6, v5_8_6).
+cube(a5, b8, c7, v5_8_7).
+cube(a5, b8, c8, v5_8_8).
+cube(a5, b8, c9, v5_8_9).
+cube(a5, b8, c10, v5_8_10).
+cube(a5, b8, c11, v5_8_11).
+cube(a5, b8, c12, v5_8_12).
+cube(a5, b8, c13, v5_8_13).
+cube(a5, b8, c14, v5_8_14).
+cube(a5, b9, c0, v5_9_0).
+cube(a5, b9, c1, v5_9_1).
+cube(a5, b9, c2, v5_9_2).
+cube(a5, b9, c3, v5_9_3).
+cube(a5, b9, c4, v5_9_4).
+cube(a5, b9, c5, v5_9_5).
+cube(a5, b9, c6, v5_9_6).
+cube(a5, b9, c7, v5_9_7).
+cube(a5, b9, c8, v5_9_8).
+cube(a5, b9, c9, v5_9_9).
+cube(a5, b9, c10, v5_9_10).
+cube(a5, b9, c11, v5_9_11).
+cube(a5, b9, c12, v5_9_12).
+cube(a5, b9, c13, v5_9_13).
+cube(a5, b9, c14, v5_9_14).
+cube(a5, b10, c0, v5_10_0).
+cube(a5, b10, c1, v5_10_1).
+cube(a5, b10, c2, v5_10_2).
+cube(a5, b10, c3, v5_10_3).
+cube(a5, b10, c4, v5_10_4).
+cube(a5, b10, c5, v5_10_5).
+cube(a5, b10, c6, v5_10_6).
+cube(a5, b10, c7, v5_10_7).
+cube(a5, b10, c8, v5_10_8).
+cube(a5, b10, c9, v5_10_9).
+cube(a5, b10, c10, v5_10_10).
+cube(a5, b10, c11, v5_10_11).
+cube(a5, b10, c12, v5_10_12).
+cube(a5, b10, c13, v5_10_13).
+cube(a5, b10, c14, v5_10_14).
+cube(a5, b11, c0, v5_11_0).
+cube(a5, b11, c1, v5_11_1).
+cube(a5, b11, c2, v5_11_2).
+cube(a5, b11, c3, v5_11_3).
+cube(a5, b11, c4, v5_11_4).
+cube(a5, b11, c5, v5_11_5).
+cube(a5, b11, c6, v5_11_6).
+cube(a5, b11, c7, v5_11_7).
+cube(a5, b11, c8, v5_11_8).
+cube(a5, b11, c9, v5_11_9).
+cube(a5, b11, c10, v5_11_10).
+cube(a5, b11, c11, v5_11_11).
+cube(a5, b11, c12, v5_11_12).
+cube(a5, b11, c13, v5_11_13).
+cube(a5, b11, c14, v5_11_14).
+cube(a5, b12, c0, v5_12_0).
+cube(a5, b12, c1, v5_12_1).
+cube(a5, b12, c2, v5_12_2).
+cube(a5, b12, c3, v5_12_3).
+cube(a5, b12, c4, v5_12_4).
+cube(a5, b12, c5, v5_12_5).
+cube(a5, b12, c6, v5_12_6).
+cube(a5, b12, c7, v5_12_7).
+cube(a5, b12, c8, v5_12_8).
+cube(a5, b12, c9, v5_12_9).
+cube(a5, b12, c10, v5_12_10).
+cube(a5, b12, c11, v5_12_11).
+cube(a5, b12, c12, v5_12_12).
+cube(a5, b12, c13, v5_12_13).
+cube(a5, b12, c14, v5_12_14).
+cube(a5, b13, c0, v5_13_0).
+cube(a5, b13, c1, v5_13_1).
+cube(a5, b13, c2, v5_13_2).
+cube(a5, b13, c3, v5_13_3).
+cube(a5, b13, c4, v5_13_4).
+cube(a5, b13, c5, v5_13_5).
+cube(a5, b13, c6, v5_13_6).
+cube(a5, b13, c7, v5_13_7).
+cube(a5, b13, c8, v5_13_8).
+cube(a5, b13, c9, v5_13_9).
+cube(a5, b13, c10, v5_13_10).
+cube(a5, b13, c11, v5_13_11).
+cube(a5, b13, c12, v5_13_12).
+cube(a5, b13, c13, v5_13_13).
+cube(a5, b13, c14, v5_13_14).
+cube(a5, b14, c0, v5_14_0).
+cube(a5, b14, c1, v5_14_1).
+cube(a5, b14, c2, v5_14_2).
+cube(a5, b14, c3, v5_14_3).
+cube(a5, b14, c4, v5_14_4).
+cube(a5, b14, c5, v5_14_5).
+cube(a5, b14, c6, v5_14_6).
+cube(a5, b14, c7, v5_14_7).
+cube(a5, b14, c8, v5_14_8).
+cube(a5, b14, c9, v5_14_9).
+cube(a5, b14, c10, v5_14_10).
+cube(a5, b14, c11, v5_14_11).
+cube(a5, b14, c12, v5_14_12).
+cube(a5, b14, c13, v5_14_13).
+cube(a5, b14, c14, v5_14_14).
+cube(a6, b0, c0, v6_0_0).
+cube(a6, b0, c1, v6_0_1).
+cube(a6, b0, c2, v6_0_2).
+cube(a6, b0, c3, v6_0_3).
+cube(a6, b0, c4, v6_0_4).
+cube(a6, b0, c5, v6_0_5).
+cube(a6, b0, c6, v6_0_6).
+cube(a6, b0, c7, v6_0_7).
+cube(a6, b0, c8, v6_0_8).
+cube(a6, b0, c9, v6_0_9).
+cube(a6, b0, c10, v6_0_10).
+cube(a6, b0, c11, v6_0_11).
+cube(a6, b0, c12, v6_0_12).
+cube(a6, b0, c13, v6_0_13).
+cube(a6, b0, c14, v6_0_14).
+cube(a6, b1, c0, v6_1_0).
+cube(a6, b1, c1, v6_1_1).
+cube(a6, b1, c2, v6_1_2).
+cube(a6, b1, c3, v6_1_3).
+cube(a6, b1, c4, v6_1_4).
+cube(a6, b1, c5, v6_1_5).
+cube(a6, b1, c6, v6_1_6).
+cube(a6, b1, c7, v6_1_7).
+cube(a6, b1, c8, v6_1_8).
+cube(a6, b1, c9, v6_1_9).
+cube(a6, b1, c10, v6_1_10).
+cube(a6, b1, c11, v6_1_11).
+cube(a6, b1, c12, v6_1_12).
+cube(a6, b1, c13, v6_1_13).
+cube(a6, b1, c14, v6_1_14).
+cube(a6, b2, c0, v6_2_0).
+cube(a6, b2, c1, v6_2_1).
+cube(a6, b2, c2, v6_2_2).
+cube(a6, b2, c3, v6_2_3).
+cube(a6, b2, c4, v6_2_4).
+cube(a6, b2, c5, v6_2_5).
+cube(a6, b2, c6, v6_2_6).
+cube(a6, b2, c7, v6_2_7).
+cube(a6, b2, c8, v6_2_8).
+cube(a6, b2, c9, v6_2_9).
+cube(a6, b2, c10, v6_2_10).
+cube(a6, b2, c11, v6_2_11).
+cube(a6, b2, c12, v6_2_12).
+cube(a6, b2, c13, v6_2_13).
+cube(a6, b2, c14, v6_2_14).
+cube(a6, b3, c0, v6_3_0).
+cube(a6, b3, c1, v6_3_1).
+cube(a6, b3, c2, v6_3_2).
+cube(a6, b3, c3, v6_3_3).
+cube(a6, b3, c4, v6_3_4).
+cube(a6, b3, c5, v6_3_5).
+cube(a6, b3, c6, v6_3_6).
+cube(a6, b3, c7, v6_3_7).
+cube(a6, b3, c8, v6_3_8).
+cube(a6, b3, c9, v6_3_9).
+cube(a6, b3, c10, v6_3_10).
+cube(a6, b3, c11, v6_3_11).
+cube(a6, b3, c12, v6_3_12).
+cube(a6, b3, c13, v6_3_13).
+cube(a6, b3, c14, v6_3_14).
+cube(a6, b4, c0, v6_4_0).
+cube(a6, b4, c1, v6_4_1).
+cube(a6, b4, c2, v6_4_2).
+cube(a6, b4, c3, v6_4_3).
+cube(a6, b4, c4, v6_4_4).
+cube(a6, b4, c5, v6_4_5).
+cube(a6, b4, c6, v6_4_6).
+cube(a6, b4, c7, v6_4_7).
+cube(a6, b4, c8, v6_4_8).
+cube(a6, b4, c9, v6_4_9).
+cube(a6, b4, c10, v6_4_10).
+cube(a6, b4, c11, v6_4_11).
+cube(a6, b4, c12, v6_4_12).
+cube(a6, b4, c13, v6_4_13).
+cube(a6, b4, c14, v6_4_14).
+cube(a6, b5, c0, v6_5_0).
+cube(a6, b5, c1, v6_5_1).
+cube(a6, b5, c2, v6_5_2).
+cube(a6, b5, c3, v6_5_3).
+cube(a6, b5, c4, v6_5_4).
+cube(a6, b5, c5, v6_5_5).
+cube(a6, b5, c6, v6_5_6).
+cube(a6, b5, c7, v6_5_7).
+cube(a6, b5, c8, v6_5_8).
+cube(a6, b5, c9, v6_5_9).
+cube(a6, b5, c10, v6_5_10).
+cube(a6, b5, c11, v6_5_11).
+cube(a6, b5, c12, v6_5_12).
+cube(a6, b5, c13, v6_5_13).
+cube(a6, b5, c14, v6_5_14).
+cube(a6, b6, c0, v6_6_0).
+cube(a6, b6, c1, v6_6_1).
+cube(a6, b6, c2, v6_6_2).
+cube(a6, b6, c3, v6_6_3).
+cube(a6, b6, c4, v6_6_4).
+cube(a6, b6, c5, v6_6_5).
+cube(a6, b6, c6, v6_6_6).
+cube(a6, b6, c7, v6_6_7).
+cube(a6, b6, c8, v6_6_8).
+cube(a6, b6, c9, v6_6_9).
+cube(a6, b6, c10, v6_6_10).
+cube(a6, b6, c11, v6_6_11).
+cube(a6, b6, c12, v6_6_12).
+cube(a6, b6, c13, v6_6_13).
+cube(a6, b6, c14, v6_6_14).
+cube(a6, b7, c0, v6_7_0).
+cube(a6, b7, c1, v6_7_1).
+cube(a6, b7, c2, v6_7_2).
+cube(a6, b7, c3, v6_7_3).
+cube(a6, b7, c4, v6_7_4).
+cube(a6, b7, c5, v6_7_5).
+cube(a6, b7, c6, v6_7_6).
+cube(a6, b7, c7, v6_7_7).
+cube(a6, b7, c8, v6_7_8).
+cube(a6, b7, c9, v6_7_9).
+cube(a6, b7, c10, v6_7_10).
+cube(a6, b7, c11, v6_7_11).
+cube(a6, b7, c12, v6_7_12).
+cube(a6, b7, c13, v6_7_13).
+cube(a6, b7, c14, v6_7_14).
+cube(a6, b8, c0, v6_8_0).
+cube(a6, b8, c1, v6_8_1).
+cube(a6, b8, c2, v6_8_2).
+cube(a6, b8, c3, v6_8_3).
+cube(a6, b8, c4, v6_8_4).
+cube(a6, b8, c5, v6_8_5).
+cube(a6, b8, c6, v6_8_6).
+cube(a6, b8, c7, v6_8_7).
+cube(a6, b8, c8, v6_8_8).
+cube(a6, b8, c9, v6_8_9).
+cube(a6, b8, c10, v6_8_10).
+cube(a6, b8, c11, v6_8_11).
+cube(a6, b8, c12, v6_8_12).
+cube(a6, b8, c13, v6_8_13).
+cube(a6, b8, c14, v6_8_14).
+cube(a6, b9, c0, v6_9_0).
+cube(a6, b9, c1, v6_9_1).
+cube(a6, b9, c2, v6_9_2).
+cube(a6, b9, c3, v6_9_3).
+cube(a6, b9, c4, v6_9_4).
+cube(a6, b9, c5, v6_9_5).
+cube(a6, b9, c6, v6_9_6).
+cube(a6, b9, c7, v6_9_7).
+cube(a6, b9, c8, v6_9_8).
+cube(a6, b9, c9, v6_9_9).
+cube(a6, b9, c10, v6_9_10).
+cube(a6, b9, c11, v6_9_11).
+cube(a6, b9, c12, v6_9_12).
+cube(a6, b9, c13, v6_9_13).
+cube(a6, b9, c14, v6_9_14).
+cube(a6, b10, c0, v6_10_0).
+cube(a6, b10, c1, v6_10_1).
+cube(a6, b10, c2, v6_10_2).
+cube(a6, b10, c3, v6_10_3).
+cube(a6, b10, c4, v6_10_4).
+cube(a6, b10, c5, v6_10_5).
+cube(a6, b10, c6, v6_10_6).
+cube(a6, b10, c7, v6_10_7).
+cube(a6, b10, c8, v6_10_8).
+cube(a6, b10, c9, v6_10_9).
+cube(a6, b10, c10, v6_10_10).
+cube(a6, b10, c11, v6_10_11).
+cube(a6, b10, c12, v6_10_12).
+cube(a6, b10, c13, v6_10_13).
+cube(a6, b10, c14, v6_10_14).
+cube(a6, b11, c0, v6_11_0).
+cube(a6, b11, c1, v6_11_1).
+cube(a6, b11, c2, v6_11_2).
+cube(a6, b11, c3, v6_11_3).
+cube(a6, b11, c4, v6_11_4).
+cube(a6, b11, c5, v6_11_5).
+cube(a6, b11, c6, v6_11_6).
+cube(a6, b11, c7, v6_11_7).
+cube(a6, b11, c8, v6_11_8).
+cube(a6, b11, c9, v6_11_9).
+cube(a6, b11, c10, v6_11_10).
+cube(a6, b11, c11, v6_11_11).
+cube(a6, b11, c12, v6_11_12).
+cube(a6, b11, c13, v6_11_13).
+cube(a6, b11, c14, v6_11_14).
+cube(a6, b12, c0, v6_12_0).
+cube(a6, b12, c1, v6_12_1).
+cube(a6, b12, c2, v6_12_2).
+cube(a6, b12, c3, v6_12_3).
+cube(a6, b12, c4, v6_12_4).
+cube(a6, b12, c5, v6_12_5).
+cube(a6, b12, c6, v6_12_6).
+cube(a6, b12, c7, v6_12_7).
+cube(a6, b12, c8, v6_12_8).
+cube(a6, b12, c9, v6_12_9).
+cube(a6, b12, c10, v6_12_10).
+cube(a6, b12, c11, v6_12_11).
+cube(a6, b12, c12, v6_12_12).
+cube(a6, b12, c13, v6_12_13).
+cube(a6, b12, c14, v6_12_14).
+cube(a6, b13, c0, v6_13_0).
+cube(a6, b13, c1, v6_13_1).
+cube(a6, b13, c2, v6_13_2).
+cube(a6, b13, c3, v6_13_3).
+cube(a6, b13, c4, v6_13_4).
+cube(a6, b13, c5, v6_13_5).
+cube(a6, b13, c6, v6_13_6).
+cube(a6, b13, c7, v6_13_7).
+cube(a6, b13, c8, v6_13_8).
+cube(a6, b13, c9, v6_13_9).
+cube(a6, b13, c10, v6_13_10).
+cube(a6, b13, c11, v6_13_11).
+cube(a6, b13, c12, v6_13_12).
+cube(a6, b13, c13, v6_13_13).
+cube(a6, b13, c14, v6_13_14).
+cube(a6, b14, c0, v6_14_0).
+cube(a6, b14, c1, v6_14_1).
+cube(a6, b14, c2, v6_14_2).
+cube(a6, b14, c3, v6_14_3).
+cube(a6, b14, c4, v6_14_4).
+cube(a6, b14, c5, v6_14_5).
+cube(a6, b14, c6, v6_14_6).
+cube(a6, b14, c7, v6_14_7).
+cube(a6, b14, c8, v6_14_8).
+cube(a6, b14, c9, v6_14_9).
+cube(a6, b14, c10, v6_14_10).
+cube(a6, b14, c11, v6_14_11).
+cube(a6, b14, c12, v6_14_12).
+cube(a6, b14, c13, v6_14_13).
+cube(a6, b14, c14, v6_14_14).
+cube(a7, b0, c0, v7_0_0).
+cube(a7, b0, c1, v7_0_1).
+cube(a7, b0, c2, v7_0_2).
+cube(a7, b0, c3, v7_0_3).
+cube(a7, b0, c4, v7_0_4).
+cube(a7, b0, c5, v7_0_5).
+cube(a7, b0, c6, v7_0_6).
+cube(a7, b0, c7, v7_0_7).
+cube(a7, b0, c8, v7_0_8).
+cube(a7, b0, c9, v7_0_9).
+cube(a7, b0, c10, v7_0_10).
+cube(a7, b0, c11, v7_0_11).
+cube(a7, b0, c12, v7_0_12).
+cube(a7, b0, c13, v7_0_13).
+cube(a7, b0, c14, v7_0_14).
+cube(a7, b1, c0, v7_1_0).
+cube(a7, b1, c1, v7_1_1).
+cube(a7, b1, c2, v7_1_2).
+cube(a7, b1, c3, v7_1_3).
+cube(a7, b1, c4, v7_1_4).
+cube(a7, b1, c5, v7_1_5).
+cube(a7, b1, c6, v7_1_6).
+cube(a7, b1, c7, v7_1_7).
+cube(a7, b1, c8, v7_1_8).
+cube(a7, b1, c9, v7_1_9).
+cube(a7, b1, c10, v7_1_10).
+cube(a7, b1, c11, v7_1_11).
+cube(a7, b1, c12, v7_1_12).
+cube(a7, b1, c13, v7_1_13).
+cube(a7, b1, c14, v7_1_14).
+cube(a7, b2, c0, v7_2_0).
+cube(a7, b2, c1, v7_2_1).
+cube(a7, b2, c2, v7_2_2).
+cube(a7, b2, c3, v7_2_3).
+cube(a7, b2, c4, v7_2_4).
+cube(a7, b2, c5, v7_2_5).
+cube(a7, b2, c6, v7_2_6).
+cube(a7, b2, c7, v7_2_7).
+cube(a7, b2, c8, v7_2_8).
+cube(a7, b2, c9, v7_2_9).
+cube(a7, b2, c10, v7_2_10).
+cube(a7, b2, c11, v7_2_11).
+cube(a7, b2, c12, v7_2_12).
+cube(a7, b2, c13, v7_2_13).
+cube(a7, b2, c14, v7_2_14).
+cube(a7, b3, c0, v7_3_0).
+cube(a7, b3, c1, v7_3_1).
+cube(a7, b3, c2, v7_3_2).
+cube(a7, b3, c3, v7_3_3).
+cube(a7, b3, c4, v7_3_4).
+cube(a7, b3, c5, v7_3_5).
+cube(a7, b3, c6, v7_3_6).
+cube(a7, b3, c7, v7_3_7).
+cube(a7, b3, c8, v7_3_8).
+cube(a7, b3, c9, v7_3_9).
+cube(a7, b3, c10, v7_3_10).
+cube(a7, b3, c11, v7_3_11).
+cube(a7, b3, c12, v7_3_12).
+cube(a7, b3, c13, v7_3_13).
+cube(a7, b3, c14, v7_3_14).
+cube(a7, b4, c0, v7_4_0).
+cube(a7, b4, c1, v7_4_1).
+cube(a7, b4, c2, v7_4_2).
+cube(a7, b4, c3, v7_4_3).
+cube(a7, b4, c4, v7_4_4).
+cube(a7, b4, c5, v7_4_5).
+cube(a7, b4, c6, v7_4_6).
+cube(a7, b4, c7, v7_4_7).
+cube(a7, b4, c8, v7_4_8).
+cube(a7, b4, c9, v7_4_9).
+cube(a7, b4, c10, v7_4_10).
+cube(a7, b4, c11, v7_4_11).
+cube(a7, b4, c12, v7_4_12).
+cube(a7, b4, c13, v7_4_13).
+cube(a7, b4, c14, v7_4_14).
+cube(a7, b5, c0, v7_5_0).
+cube(a7, b5, c1, v7_5_1).
+cube(a7, b5, c2, v7_5_2).
+cube(a7, b5, c3, v7_5_3).
+cube(a7, b5, c4, v7_5_4).
+cube(a7, b5, c5, v7_5_5).
+cube(a7, b5, c6, v7_5_6).
+cube(a7, b5, c7, v7_5_7).
+cube(a7, b5, c8, v7_5_8).
+cube(a7, b5, c9, v7_5_9).
+cube(a7, b5, c10, v7_5_10).
+cube(a7, b5, c11, v7_5_11).
+cube(a7, b5, c12, v7_5_12).
+cube(a7, b5, c13, v7_5_13).
+cube(a7, b5, c14, v7_5_14).
+cube(a7, b6, c0, v7_6_0).
+cube(a7, b6, c1, v7_6_1).
+cube(a7, b6, c2, v7_6_2).
+cube(a7, b6, c3, v7_6_3).
+cube(a7, b6, c4, v7_6_4).
+cube(a7, b6, c5, v7_6_5).
+cube(a7, b6, c6, v7_6_6).
+cube(a7, b6, c7, v7_6_7).
+cube(a7, b6, c8, v7_6_8).
+cube(a7, b6, c9, v7_6_9).
+cube(a7, b6, c10, v7_6_10).
+cube(a7, b6, c11, v7_6_11).
+cube(a7, b6, c12, v7_6_12).
+cube(a7, b6, c13, v7_6_13).
+cube(a7, b6, c14, v7_6_14).
+cube(a7, b7, c0, v7_7_0).
+cube(a7, b7, c1, v7_7_1).
+cube(a7, b7, c2, v7_7_2).
+cube(a7, b7, c3, v7_7_3).
+cube(a7, b7, c4, v7_7_4).
+cube(a7, b7, c5, v7_7_5).
+cube(a7, b7, c6, v7_7_6).
+cube(a7, b7, c7, v7_7_7).
+cube(a7, b7, c8, v7_7_8).
+cube(a7, b7, c9, v7_7_9).
+cube(a7, b7, c10, v7_7_10).
+cube(a7, b7, c11, v7_7_11).
+cube(a7, b7, c12, v7_7_12).
+cube(a7, b7, c13, v7_7_13).
+cube(a7, b7, c14, v7_7_14).
+cube(a7, b8, c0, v7_8_0).
+cube(a7, b8, c1, v7_8_1).
+cube(a7, b8, c2, v7_8_2).
+cube(a7, b8, c3, v7_8_3).
+cube(a7, b8, c4, v7_8_4).
+cube(a7, b8, c5, v7_8_5).
+cube(a7, b8, c6, v7_8_6).
+cube(a7, b8, c7, v7_8_7).
+cube(a7, b8, c8, v7_8_8).
+cube(a7, b8, c9, v7_8_9).
+cube(a7, b8, c10, v7_8_10).
+cube(a7, b8, c11, v7_8_11).
+cube(a7, b8, c12, v7_8_12).
+cube(a7, b8, c13, v7_8_13).
+cube(a7, b8, c14, v7_8_14).
+cube(a7, b9, c0, v7_9_0).
+cube(a7, b9, c1, v7_9_1).
+cube(a7, b9, c2, v7_9_2).
+cube(a7, b9, c3, v7_9_3).
+cube(a7, b9, c4, v7_9_4).
+cube(a7, b9, c5, v7_9_5).
+cube(a7, b9, c6, v7_9_6).
+cube(a7, b9, c7, v7_9_7).
+cube(a7, b9, c8, v7_9_8).
+cube(a7, b9, c9, v7_9_9).
+cube(a7, b9, c10, v7_9_10).
+cube(a7, b9, c11, v7_9_11).
+cube(a7, b9, c12, v7_9_12).
+cube(a7, b9, c13, v7_9_13).
+cube(a7, b9, c14, v7_9_14).
+cube(a7, b10, c0, v7_10_0).
+cube(a7, b10, c1, v7_10_1).
+cube(a7, b10, c2, v7_10_2).
+cube(a7, b10, c3, v7_10_3).
+cube(a7, b10, c4, v7_10_4).
+cube(a7, b10, c5, v7_10_5).
+cube(a7, b10, c6, v7_10_6).
+cube(a7, b10, c7, v7_10_7).
+cube(a7, b10, c8, v7_10_8).
+cube(a7, b10, c9, v7_10_9).
+cube(a7, b10, c10, v7_10_10).
+cube(a7, b10, c11, v7_10_11).
+cube(a7, b10, c12, v7_10_12).
+cube(a7, b10, c13, v7_10_13).
+cube(a7, b10, c14, v7_10_14).
+cube(a7, b11, c0, v7_11_0).
+cube(a7, b11, c1, v7_11_1).
+cube(a7, b11, c2, v7_11_2).
+cube(a7, b11, c3, v7_11_3).
+cube(a7, b11, c4, v7_11_4).
+cube(a7, b11, c5, v7_11_5).
+cube(a7, b11, c6, v7_11_6).
+cube(a7, b11, c7, v7_11_7).
+cube(a7, b11, c8, v7_11_8).
+cube(a7, b11, c9, v7_11_9).
+cube(a7, b11, c10, v7_11_10).
+cube(a7, b11, c11, v7_11_11).
+cube(a7, b11, c12, v7_11_12).
+cube(a7, b11, c13, v7_11_13).
+cube(a7, b11, c14, v7_11_14).
+cube(a7, b12, c0, v7_12_0).
+cube(a7, b12, c1, v7_12_1).
+cube(a7, b12, c2, v7_12_2).
+cube(a7, b12, c3, v7_12_3).
+cube(a7, b12, c4, v7_12_4).
+cube(a7, b12, c5, v7_12_5).
+cube(a7, b12, c6, v7_12_6).
+cube(a7, b12, c7, v7_12_7).
+cube(a7, b12, c8, v7_12_8).
+cube(a7, b12, c9, v7_12_9).
+cube(a7, b12, c10, v7_12_10).
+cube(a7, b12, c11, v7_12_11).
+cube(a7, b12, c12, v7_12_12).
+cube(a7, b12, c13, v7_12_13).
+cube(a7, b12, c14, v7_12_14).
+cube(a7, b13, c0, v7_13_0).
+cube(a7, b13, c1, v7_13_1).
+cube(a7, b13, c2, v7_13_2).
+cube(a7, b13, c3, v7_13_3).
+cube(a7, b13, c4, v7_13_4).
+cube(a7, b13, c5, v7_13_5).
+cube(a7, b13, c6, v7_13_6).
+cube(a7, b13, c7, v7_13_7).
+cube(a7, b13, c8, v7_13_8).
+cube(a7, b13, c9, v7_13_9).
+cube(a7, b13, c10, v7_13_10).
+cube(a7, b13, c11, v7_13_11).
+cube(a7, b13, c12, v7_13_12).
+cube(a7, b13, c13, v7_13_13).
+cube(a7, b13, c14, v7_13_14).
+cube(a7, b14, c0, v7_14_0).
+cube(a7, b14, c1, v7_14_1).
+cube(a7, b14, c2, v7_14_2).
+cube(a7, b14, c3, v7_14_3).
+cube(a7, b14, c4, v7_14_4).
+cube(a7, b14, c5, v7_14_5).
+cube(a7, b14, c6, v7_14_6).
+cube(a7, b14, c7, v7_14_7).
+cube(a7, b14, c8, v7_14_8).
+cube(a7, b14, c9, v7_14_9).
+cube(a7, b14, c10, v7_14_10).
+cube(a7, b14, c11, v7_14_11).
+cube(a7, b14, c12, v7_14_12).
+cube(a7, b14, c13, v7_14_13).
+cube(a7, b14, c14, v7_14_14).
+cube(a8, b0, c0, v8_0_0).
+cube(a8, b0, c1, v8_0_1).
+cube(a8, b0, c2, v8_0_2).
+cube(a8, b0, c3, v8_0_3).
+cube(a8, b0, c4, v8_0_4).
+cube(a8, b0, c5, v8_0_5).
+cube(a8, b0, c6, v8_0_6).
+cube(a8, b0, c7, v8_0_7).
+cube(a8, b0, c8, v8_0_8).
+cube(a8, b0, c9, v8_0_9).
+cube(a8, b0, c10, v8_0_10).
+cube(a8, b0, c11, v8_0_11).
+cube(a8, b0, c12, v8_0_12).
+cube(a8, b0, c13, v8_0_13).
+cube(a8, b0, c14, v8_0_14).
+cube(a8, b1, c0, v8_1_0).
+cube(a8, b1, c1, v8_1_1).
+cube(a8, b1, c2, v8_1_2).
+cube(a8, b1, c3, v8_1_3).
+cube(a8, b1, c4, v8_1_4).
+cube(a8, b1, c5, v8_1_5).
+cube(a8, b1, c6, v8_1_6).
+cube(a8, b1, c7, v8_1_7).
+cube(a8, b1, c8, v8_1_8).
+cube(a8, b1, c9, v8_1_9).
+cube(a8, b1, c10, v8_1_10).
+cube(a8, b1, c11, v8_1_11).
+cube(a8, b1, c12, v8_1_12).
+cube(a8, b1, c13, v8_1_13).
+cube(a8, b1, c14, v8_1_14).
+cube(a8, b2, c0, v8_2_0).
+cube(a8, b2, c1, v8_2_1).
+cube(a8, b2, c2, v8_2_2).
+cube(a8, b2, c3, v8_2_3).
+cube(a8, b2, c4, v8_2_4).
+cube(a8, b2, c5, v8_2_5).
+cube(a8, b2, c6, v8_2_6).
+cube(a8, b2, c7, v8_2_7).
+cube(a8, b2, c8, v8_2_8).
+cube(a8, b2, c9, v8_2_9).
+cube(a8, b2, c10, v8_2_10).
+cube(a8, b2, c11, v8_2_11).
+cube(a8, b2, c12, v8_2_12).
+cube(a8, b2, c13, v8_2_13).
+cube(a8, b2, c14, v8_2_14).
+cube(a8, b3, c0, v8_3_0).
+cube(a8, b3, c1, v8_3_1).
+cube(a8, b3, c2, v8_3_2).
+cube(a8, b3, c3, v8_3_3).
+cube(a8, b3, c4, v8_3_4).
+cube(a8, b3, c5, v8_3_5).
+cube(a8, b3, c6, v8_3_6).
+cube(a8, b3, c7, v8_3_7).
+cube(a8, b3, c8, v8_3_8).
+cube(a8, b3, c9, v8_3_9).
+cube(a8, b3, c10, v8_3_10).
+cube(a8, b3, c11, v8_3_11).
+cube(a8, b3, c12, v8_3_12).
+cube(a8, b3, c13, v8_3_13).
+cube(a8, b3, c14, v8_3_14).
+cube(a8, b4, c0, v8_4_0).
+cube(a8, b4, c1, v8_4_1).
+cube(a8, b4, c2, v8_4_2).
+cube(a8, b4, c3, v8_4_3).
+cube(a8, b4, c4, v8_4_4).
+cube(a8, b4, c5, v8_4_5).
+cube(a8, b4, c6, v8_4_6).
+cube(a8, b4, c7, v8_4_7).
+cube(a8, b4, c8, v8_4_8).
+cube(a8, b4, c9, v8_4_9).
+cube(a8, b4, c10, v8_4_10).
+cube(a8, b4, c11, v8_4_11).
+cube(a8, b4, c12, v8_4_12).
+cube(a8, b4, c13, v8_4_13).
+cube(a8, b4, c14, v8_4_14).
+cube(a8, b5, c0, v8_5_0).
+cube(a8, b5, c1, v8_5_1).
+cube(a8, b5, c2, v8_5_2).
+cube(a8, b5, c3, v8_5_3).
+cube(a8, b5, c4, v8_5_4).
+cube(a8, b5, c5, v8_5_5).
+cube(a8, b5, c6, v8_5_6).
+cube(a8, b5, c7, v8_5_7).
+cube(a8, b5, c8, v8_5_8).
+cube(a8, b5, c9, v8_5_9).
+cube(a8, b5, c10, v8_5_10).
+cube(a8, b5, c11, v8_5_11).
+cube(a8, b5, c12, v8_5_12).
+cube(a8, b5, c13, v8_5_13).
+cube(a8, b5, c14, v8_5_14).
+cube(a8, b6, c0, v8_6_0).
+cube(a8, b6, c1, v8_6_1).
+cube(a8, b6, c2, v8_6_2).
+cube(a8, b6, c3, v8_6_3).
+cube(a8, b6, c4, v8_6_4).
+cube(a8, b6, c5, v8_6_5).
+cube(a8, b6, c6, v8_6_6).
+cube(a8, b6, c7, v8_6_7).
+cube(a8, b6, c8, v8_6_8).
+cube(a8, b6, c9, v8_6_9).
+cube(a8, b6, c10, v8_6_10).
+cube(a8, b6, c11, v8_6_11).
+cube(a8, b6, c12, v8_6_12).
+cube(a8, b6, c13, v8_6_13).
+cube(a8, b6, c14, v8_6_14).
+cube(a8, b7, c0, v8_7_0).
+cube(a8, b7, c1, v8_7_1).
+cube(a8, b7, c2, v8_7_2).
+cube(a8, b7, c3, v8_7_3).
+cube(a8, b7, c4, v8_7_4).
+cube(a8, b7, c5, v8_7_5).
+cube(a8, b7, c6, v8_7_6).
+cube(a8, b7, c7, v8_7_7).
+cube(a8, b7, c8, v8_7_8).
+cube(a8, b7, c9, v8_7_9).
+cube(a8, b7, c10, v8_7_10).
+cube(a8, b7, c11, v8_7_11).
+cube(a8, b7, c12, v8_7_12).
+cube(a8, b7, c13, v8_7_13).
+cube(a8, b7, c14, v8_7_14).
+cube(a8, b8, c0, v8_8_0).
+cube(a8, b8, c1, v8_8_1).
+cube(a8, b8, c2, v8_8_2).
+cube(a8, b8, c3, v8_8_3).
+cube(a8, b8, c4, v8_8_4).
+cube(a8, b8, c5, v8_8_5).
+cube(a8, b8, c6, v8_8_6).
+cube(a8, b8, c7, v8_8_7).
+cube(a8, b8, c8, v8_8_8).
+cube(a8, b8, c9, v8_8_9).
+cube(a8, b8, c10, v8_8_10).
+cube(a8, b8, c11, v8_8_11).
+cube(a8, b8, c12, v8_8_12).
+cube(a8, b8, c13, v8_8_13).
+cube(a8, b8, c14, v8_8_14).
+cube(a8, b9, c0, v8_9_0).
+cube(a8, b9, c1, v8_9_1).
+cube(a8, b9, c2, v8_9_2).
+cube(a8, b9, c3, v8_9_3).
+cube(a8, b9, c4, v8_9_4).
+cube(a8, b9, c5, v8_9_5).
+cube(a8, b9, c6, v8_9_6).
+cube(a8, b9, c7, v8_9_7).
+cube(a8, b9, c8, v8_9_8).
+cube(a8, b9, c9, v8_9_9).
+cube(a8, b9, c10, v8_9_10).
+cube(a8, b9, c11, v8_9_11).
+cube(a8, b9, c12, v8_9_12).
+cube(a8, b9, c13, v8_9_13).
+cube(a8, b9, c14, v8_9_14).
+cube(a8, b10, c0, v8_10_0).
+cube(a8, b10, c1, v8_10_1).
+cube(a8, b10, c2, v8_10_2).
+cube(a8, b10, c3, v8_10_3).
+cube(a8, b10, c4, v8_10_4).
+cube(a8, b10, c5, v8_10_5).
+cube(a8, b10, c6, v8_10_6).
+cube(a8, b10, c7, v8_10_7).
+cube(a8, b10, c8, v8_10_8).
+cube(a8, b10, c9, v8_10_9).
+cube(a8, b10, c10, v8_10_10).
+cube(a8, b10, c11, v8_10_11).
+cube(a8, b10, c12, v8_10_12).
+cube(a8, b10, c13, v8_10_13).
+cube(a8, b10, c14, v8_10_14).
+cube(a8, b11, c0, v8_11_0).
+cube(a8, b11, c1, v8_11_1).
+cube(a8, b11, c2, v8_11_2).
+cube(a8, b11, c3, v8_11_3).
+cube(a8, b11, c4, v8_11_4).
+cube(a8, b11, c5, v8_11_5).
+cube(a8, b11, c6, v8_11_6).
+cube(a8, b11, c7, v8_11_7).
+cube(a8, b11, c8, v8_11_8).
+cube(a8, b11, c9, v8_11_9).
+cube(a8, b11, c10, v8_11_10).
+cube(a8, b11, c11, v8_11_11).
+cube(a8, b11, c12, v8_11_12).
+cube(a8, b11, c13, v8_11_13).
+cube(a8, b11, c14, v8_11_14).
+cube(a8, b12, c0, v8_12_0).
+cube(a8, b12, c1, v8_12_1).
+cube(a8, b12, c2, v8_12_2).
+cube(a8, b12, c3, v8_12_3).
+cube(a8, b12, c4, v8_12_4).
+cube(a8, b12, c5, v8_12_5).
+cube(a8, b12, c6, v8_12_6).
+cube(a8, b12, c7, v8_12_7).
+cube(a8, b12, c8, v8_12_8).
+cube(a8, b12, c9, v8_12_9).
+cube(a8, b12, c10, v8_12_10).
+cube(a8, b12, c11, v8_12_11).
+cube(a8, b12, c12, v8_12_12).
+cube(a8, b12, c13, v8_12_13).
+cube(a8, b12, c14, v8_12_14).
+cube(a8, b13, c0, v8_13_0).
+cube(a8, b13, c1, v8_13_1).
+cube(a8, b13, c2, v8_13_2).
+cube(a8, b13, c3, v8_13_3).
+cube(a8, b13, c4, v8_13_4).
+cube(a8, b13, c5, v8_13_5).
+cube(a8, b13, c6, v8_13_6).
+cube(a8, b13, c7, v8_13_7).
+cube(a8, b13, c8, v8_13_8).
+cube(a8, b13, c9, v8_13_9).
+cube(a8, b13, c10, v8_13_10).
+cube(a8, b13, c11, v8_13_11).
+cube(a8, b13, c12, v8_13_12).
+cube(a8, b13, c13, v8_13_13).
+cube(a8, b13, c14, v8_13_14).
+cube(a8, b14, c0, v8_14_0).
+cube(a8, b14, c1, v8_14_1).
+cube(a8, b14, c2, v8_14_2).
+cube(a8, b14, c3, v8_14_3).
+cube(a8, b14, c4, v8_14_4).
+cube(a8, b14, c5, v8_14_5).
+cube(a8, b14, c6, v8_14_6).
+cube(a8, b14, c7, v8_14_7).
+cube(a8, b14, c8, v8_14_8).
+cube(a8, b14, c9, v8_14_9).
+cube(a8, b14, c10, v8_14_10).
+cube(a8, b14, c11, v8_14_11).
+cube(a8, b14, c12, v8_14_12).
+cube(a8, b14, c13, v8_14_13).
+cube(a8, b14, c14, v8_14_14).
+cube(a9, b0, c0, v9_0_0).
+cube(a9, b0, c1, v9_0_1).
+cube(a9, b0, c2, v9_0_2).
+cube(a9, b0, c3, v9_0_3).
+cube(a9, b0, c4, v9_0_4).
+cube(a9, b0, c5, v9_0_5).
+cube(a9, b0, c6, v9_0_6).
+cube(a9, b0, c7, v9_0_7).
+cube(a9, b0, c8, v9_0_8).
+cube(a9, b0, c9, v9_0_9).
+cube(a9, b0, c10, v9_0_10).
+cube(a9, b0, c11, v9_0_11).
+cube(a9, b0, c12, v9_0_12).
+cube(a9, b0, c13, v9_0_13).
+cube(a9, b0, c14, v9_0_14).
+cube(a9, b1, c0, v9_1_0).
+cube(a9, b1, c1, v9_1_1).
+cube(a9, b1, c2, v9_1_2).
+cube(a9, b1, c3, v9_1_3).
+cube(a9, b1, c4, v9_1_4).
+cube(a9, b1, c5, v9_1_5).
+cube(a9, b1, c6, v9_1_6).
+cube(a9, b1, c7, v9_1_7).
+cube(a9, b1, c8, v9_1_8).
+cube(a9, b1, c9, v9_1_9).
+cube(a9, b1, c10, v9_1_10).
+cube(a9, b1, c11, v9_1_11).
+cube(a9, b1, c12, v9_1_12).
+cube(a9, b1, c13, v9_1_13).
+cube(a9, b1, c14, v9_1_14).
+cube(a9, b2, c0, v9_2_0).
+cube(a9, b2, c1, v9_2_1).
+cube(a9, b2, c2, v9_2_2).
+cube(a9, b2, c3, v9_2_3).
+cube(a9, b2, c4, v9_2_4).
+cube(a9, b2, c5, v9_2_5).
+cube(a9, b2, c6, v9_2_6).
+cube(a9, b2, c7, v9_2_7).
+cube(a9, b2, c8, v9_2_8).
+cube(a9, b2, c9, v9_2_9).
+cube(a9, b2, c10, v9_2_10).
+cube(a9, b2, c11, v9_2_11).
+cube(a9, b2, c12, v9_2_12).
+cube(a9, b2, c13, v9_2_13).
+cube(a9, b2, c14, v9_2_14).
+cube(a9, b3, c0, v9_3_0).
+cube(a9, b3, c1, v9_3_1).
+cube(a9, b3, c2, v9_3_2).
+cube(a9, b3, c3, v9_3_3).
+cube(a9, b3, c4, v9_3_4).
+cube(a9, b3, c5, v9_3_5).
+cube(a9, b3, c6, v9_3_6).
+cube(a9, b3, c7, v9_3_7).
+cube(a9, b3, c8, v9_3_8).
+cube(a9, b3, c9, v9_3_9).
+cube(a9, b3, c10, v9_3_10).
+cube(a9, b3, c11, v9_3_11).
+cube(a9, b3, c12, v9_3_12).
+cube(a9, b3, c13, v9_3_13).
+cube(a9, b3, c14, v9_3_14).
+cube(a9, b4, c0, v9_4_0).
+cube(a9, b4, c1, v9_4_1).
+cube(a9, b4, c2, v9_4_2).
+cube(a9, b4, c3, v9_4_3).
+cube(a9, b4, c4, v9_4_4).
+cube(a9, b4, c5, v9_4_5).
+cube(a9, b4, c6, v9_4_6).
+cube(a9, b4, c7, v9_4_7).
+cube(a9, b4, c8, v9_4_8).
+cube(a9, b4, c9, v9_4_9).
+cube(a9, b4, c10, v9_4_10).
+cube(a9, b4, c11, v9_4_11).
+cube(a9, b4, c12, v9_4_12).
+cube(a9, b4, c13, v9_4_13).
+cube(a9, b4, c14, v9_4_14).
+cube(a9, b5, c0, v9_5_0).
+cube(a9, b5, c1, v9_5_1).
+cube(a9, b5, c2, v9_5_2).
+cube(a9, b5, c3, v9_5_3).
+cube(a9, b5, c4, v9_5_4).
+cube(a9, b5, c5, v9_5_5).
+cube(a9, b5, c6, v9_5_6).
+cube(a9, b5, c7, v9_5_7).
+cube(a9, b5, c8, v9_5_8).
+cube(a9, b5, c9, v9_5_9).
+cube(a9, b5, c10, v9_5_10).
+cube(a9, b5, c11, v9_5_11).
+cube(a9, b5, c12, v9_5_12).
+cube(a9, b5, c13, v9_5_13).
+cube(a9, b5, c14, v9_5_14).
+cube(a9, b6, c0, v9_6_0).
+cube(a9, b6, c1, v9_6_1).
+cube(a9, b6, c2, v9_6_2).
+cube(a9, b6, c3, v9_6_3).
+cube(a9, b6, c4, v9_6_4).
+cube(a9, b6, c5, v9_6_5).
+cube(a9, b6, c6, v9_6_6).
+cube(a9, b6, c7, v9_6_7).
+cube(a9, b6, c8, v9_6_8).
+cube(a9, b6, c9, v9_6_9).
+cube(a9, b6, c10, v9_6_10).
+cube(a9, b6, c11, v9_6_11).
+cube(a9, b6, c12, v9_6_12).
+cube(a9, b6, c13, v9_6_13).
+cube(a9, b6, c14, v9_6_14).
+cube(a9, b7, c0, v9_7_0).
+cube(a9, b7, c1, v9_7_1).
+cube(a9, b7, c2, v9_7_2).
+cube(a9, b7, c3, v9_7_3).
+cube(a9, b7, c4, v9_7_4).
+cube(a9, b7, c5, v9_7_5).
+cube(a9, b7, c6, v9_7_6).
+cube(a9, b7, c7, v9_7_7).
+cube(a9, b7, c8, v9_7_8).
+cube(a9, b7, c9, v9_7_9).
+cube(a9, b7, c10, v9_7_10).
+cube(a9, b7, c11, v9_7_11).
+cube(a9, b7, c12, v9_7_12).
+cube(a9, b7, c13, v9_7_13).
+cube(a9, b7, c14, v9_7_14).
+cube(a9, b8, c0, v9_8_0).
+cube(a9, b8, c1, v9_8_1).
+cube(a9, b8, c2, v9_8_2).
+cube(a9, b8, c3, v9_8_3).
+cube(a9, b8, c4, v9_8_4).
+cube(a9, b8, c5, v9_8_5).
+cube(a9, b8, c6, v9_8_6).
+cube(a9, b8, c7, v9_8_7).
+cube(a9, b8, c8, v9_8_8).
+cube(a9, b8, c9, v9_8_9).
+cube(a9, b8, c10, v9_8_10).
+cube(a9, b8, c11, v9_8_11).
+cube(a9, b8, c12, v9_8_12).
+cube(a9, b8, c13, v9_8_13).
+cube(a9, b8, c14, v9_8_14).
+cube(a9, b9, c0, v9_9_0).
+cube(a9, b9, c1, v9_9_1).
+cube(a9, b9, c2, v9_9_2).
+cube(a9, b9, c3, v9_9_3).
+cube(a9, b9, c4, v9_9_4).
+cube(a9, b9, c5, v9_9_5).
+cube(a9, b9, c6, v9_9_6).
+cube(a9, b9, c7, v9_9_7).
+cube(a9, b9, c8, v9_9_8).
+cube(a9, b9, c9, v9_9_9).
+cube(a9, b9, c10, v9_9_10).
+cube(a9, b9, c11, v9_9_11).
+cube(a9, b9, c12, v9_9_12).
+cube(a9, b9, c13, v9_9_13).
+cube(a9, b9, c14, v9_9_14).
+cube(a9, b10, c0, v9_10_0).
+cube(a9, b10, c1, v9_10_1).
+cube(a9, b10, c2, v9_10_2).
+cube(a9, b10, c3, v9_10_3).
+cube(a9, b10, c4, v9_10_4).
+cube(a9, b10, c5, v9_10_5).
+cube(a9, b10, c6, v9_10_6).
+cube(a9, b10, c7, v9_10_7).
+cube(a9, b10, c8, v9_10_8).
+cube(a9, b10, c9, v9_10_9).
+cube(a9, b10, c10, v9_10_10).
+cube(a9, b10, c11, v9_10_11).
+cube(a9, b10, c12, v9_10_12).
+cube(a9, b10, c13, v9_10_13).
+cube(a9, b10, c14, v9_10_14).
+cube(a9, b11, c0, v9_11_0).
+cube(a9, b11, c1, v9_11_1).
+cube(a9, b11, c2, v9_11_2).
+cube(a9, b11, c3, v9_11_3).
+cube(a9, b11, c4, v9_11_4).
+cube(a9, b11, c5, v9_11_5).
+cube(a9, b11, c6, v9_11_6).
+cube(a9, b11, c7, v9_11_7).
+cube(a9, b11, c8, v9_11_8).
+cube(a9, b11, c9, v9_11_9).
+cube(a9, b11, c10, v9_11_10).
+cube(a9, b11, c11, v9_11_11).
+cube(a9, b11, c12, v9_11_12).
+cube(a9, b11, c13, v9_11_13).
+cube(a9, b11, c14, v9_11_14).
+cube(a9, b12, c0, v9_12_0).
+cube(a9, b12, c1, v9_12_1).
+cube(a9, b12, c2, v9_12_2).
+cube(a9, b12, c3, v9_12_3).
+cube(a9, b12, c4, v9_12_4).
+cube(a9, b12, c5, v9_12_5).
+cube(a9, b12, c6, v9_12_6).
+cube(a9, b12, c7, v9_12_7).
+cube(a9, b12, c8, v9_12_8).
+cube(a9, b12, c9, v9_12_9).
+cube(a9, b12, c10, v9_12_10).
+cube(a9, b12, c11, v9_12_11).
+cube(a9, b12, c12, v9_12_12).
+cube(a9, b12, c13, v9_12_13).
+cube(a9, b12, c14, v9_12_14).
+cube(a9, b13, c0, v9_13_0).
+cube(a9, b13, c1, v9_13_1).
+cube(a9, b13, c2, v9_13_2).
+cube(a9, b13, c3, v9_13_3).
+cube(a9, b13, c4, v9_13_4).
+cube(a9, b13, c5, v9_13_5).
+cube(a9, b13, c6, v9_13_6).
+cube(a9, b13, c7, v9_13_7).
+cube(a9, b13, c8, v9_13_8).
+cube(a9, b13, c9, v9_13_9).
+cube(a9, b13, c10, v9_13_10).
+cube(a9, b13, c11, v9_13_11).
+cube(a9, b13, c12, v9_13_12).
+cube(a9, b13, c13, v9_13_13).
+cube(a9, b13, c14, v9_13_14).
+cube(a9, b14, c0, v9_14_0).
+cube(a9, b14, c1, v9_14_1).
+cube(a9, b14, c2, v9_14_2).
+cube(a9, b14, c3, v9_14_3).
+cube(a9, b14, c4, v9_14_4).
+cube(a9, b14, c5, v9_14_5).
+cube(a9, b14, c6, v9_14_6).
+cube(a9, b14, c7, v9_14_7).
+cube(a9, b14, c8, v9_14_8).
+cube(a9, b14, c9, v9_14_9).
+cube(a9, b14, c10, v9_14_10).
+cube(a9, b14, c11, v9_14_11).
+cube(a9, b14, c12, v9_14_12).
+cube(a9, b14, c13, v9_14_13).
+cube(a9, b14, c14, v9_14_14).
+cube(a10, b0, c0, v10_0_0).
+cube(a10, b0, c1, v10_0_1).
+cube(a10, b0, c2, v10_0_2).
+cube(a10, b0, c3, v10_0_3).
+cube(a10, b0, c4, v10_0_4).
+cube(a10, b0, c5, v10_0_5).
+cube(a10, b0, c6, v10_0_6).
+cube(a10, b0, c7, v10_0_7).
+cube(a10, b0, c8, v10_0_8).
+cube(a10, b0, c9, v10_0_9).
+cube(a10, b0, c10, v10_0_10).
+cube(a10, b0, c11, v10_0_11).
+cube(a10, b0, c12, v10_0_12).
+cube(a10, b0, c13, v10_0_13).
+cube(a10, b0, c14, v10_0_14).
+cube(a10, b1, c0, v10_1_0).
+cube(a10, b1, c1, v10_1_1).
+cube(a10, b1, c2, v10_1_2).
+cube(a10, b1, c3, v10_1_3).
+cube(a10, b1, c4, v10_1_4).
+cube(a10, b1, c5, v10_1_5).
+cube(a10, b1, c6, v10_1_6).
+cube(a10, b1, c7, v10_1_7).
+cube(a10, b1, c8, v10_1_8).
+cube(a10, b1, c9, v10_1_9).
+cube(a10, b1, c10, v10_1_10).
+cube(a10, b1, c11, v10_1_11).
+cube(a10, b1, c12, v10_1_12).
+cube(a10, b1, c13, v10_1_13).
+cube(a10, b1, c14, v10_1_14).
+cube(a10, b2, c0, v10_2_0).
+cube(a10, b2, c1, v10_2_1).
+cube(a10, b2, c2, v10_2_2).
+cube(a10, b2, c3, v10_2_3).
+cube(a10, b2, c4, v10_2_4).
+cube(a10, b2, c5, v10_2_5).
+cube(a10, b2, c6, v10_2_6).
+cube(a10, b2, c7, v10_2_7).
+cube(a10, b2, c8, v10_2_8).
+cube(a10, b2, c9, v10_2_9).
+cube(a10, b2, c10, v10_2_10).
+cube(a10, b2, c11, v10_2_11).
+cube(a10, b2, c12, v10_2_12).
+cube(a10, b2, c13, v10_2_13).
+cube(a10, b2, c14, v10_2_14).
+cube(a10, b3, c0, v10_3_0).
+cube(a10, b3, c1, v10_3_1).
+cube(a10, b3, c2, v10_3_2).
+cube(a10, b3, c3, v10_3_3).
+cube(a10, b3, c4, v10_3_4).
+cube(a10, b3, c5, v10_3_5).
+cube(a10, b3, c6, v10_3_6).
+cube(a10, b3, c7, v10_3_7).
+cube(a10, b3, c8, v10_3_8).
+cube(a10, b3, c9, v10_3_9).
+cube(a10, b3, c10, v10_3_10).
+cube(a10, b3, c11, v10_3_11).
+cube(a10, b3, c12, v10_3_12).
+cube(a10, b3, c13, v10_3_13).
+cube(a10, b3, c14, v10_3_14).
+cube(a10, b4, c0, v10_4_0).
+cube(a10, b4, c1, v10_4_1).
+cube(a10, b4, c2, v10_4_2).
+cube(a10, b4, c3, v10_4_3).
+cube(a10, b4, c4, v10_4_4).
+cube(a10, b4, c5, v10_4_5).
+cube(a10, b4, c6, v10_4_6).
+cube(a10, b4, c7, v10_4_7).
+cube(a10, b4, c8, v10_4_8).
+cube(a10, b4, c9, v10_4_9).
+cube(a10, b4, c10, v10_4_10).
+cube(a10, b4, c11, v10_4_11).
+cube(a10, b4, c12, v10_4_12).
+cube(a10, b4, c13, v10_4_13).
+cube(a10, b4, c14, v10_4_14).
+cube(a10, b5, c0, v10_5_0).
+cube(a10, b5, c1, v10_5_1).
+cube(a10, b5, c2, v10_5_2).
+cube(a10, b5, c3, v10_5_3).
+cube(a10, b5, c4, v10_5_4).
+cube(a10, b5, c5, v10_5_5).
+cube(a10, b5, c6, v10_5_6).
+cube(a10, b5, c7, v10_5_7).
+cube(a10, b5, c8, v10_5_8).
+cube(a10, b5, c9, v10_5_9).
+cube(a10, b5, c10, v10_5_10).
+cube(a10, b5, c11, v10_5_11).
+cube(a10, b5, c12, v10_5_12).
+cube(a10, b5, c13, v10_5_13).
+cube(a10, b5, c14, v10_5_14).
+cube(a10, b6, c0, v10_6_0).
+cube(a10, b6, c1, v10_6_1).
+cube(a10, b6, c2, v10_6_2).
+cube(a10, b6, c3, v10_6_3).
+cube(a10, b6, c4, v10_6_4).
+cube(a10, b6, c5, v10_6_5).
+cube(a10, b6, c6, v10_6_6).
+cube(a10, b6, c7, v10_6_7).
+cube(a10, b6, c8, v10_6_8).
+cube(a10, b6, c9, v10_6_9).
+cube(a10, b6, c10, v10_6_10).
+cube(a10, b6, c11, v10_6_11).
+cube(a10, b6, c12, v10_6_12).
+cube(a10, b6, c13, v10_6_13).
+cube(a10, b6, c14, v10_6_14).
+cube(a10, b7, c0, v10_7_0).
+cube(a10, b7, c1, v10_7_1).
+cube(a10, b7, c2, v10_7_2).
+cube(a10, b7, c3, v10_7_3).
+cube(a10, b7, c4, v10_7_4).
+cube(a10, b7, c5, v10_7_5).
+cube(a10, b7, c6, v10_7_6).
+cube(a10, b7, c7, v10_7_7).
+cube(a10, b7, c8, v10_7_8).
+cube(a10, b7, c9, v10_7_9).
+cube(a10, b7, c10, v10_7_10).
+cube(a10, b7, c11, v10_7_11).
+cube(a10, b7, c12, v10_7_12).
+cube(a10, b7, c13, v10_7_13).
+cube(a10, b7, c14, v10_7_14).
+cube(a10, b8, c0, v10_8_0).
+cube(a10, b8, c1, v10_8_1).
+cube(a10, b8, c2, v10_8_2).
+cube(a10, b8, c3, v10_8_3).
+cube(a10, b8, c4, v10_8_4).
+cube(a10, b8, c5, v10_8_5).
+cube(a10, b8, c6, v10_8_6).
+cube(a10, b8, c7, v10_8_7).
+cube(a10, b8, c8, v10_8_8).
+cube(a10, b8, c9, v10_8_9).
+cube(a10, b8, c10, v10_8_10).
+cube(a10, b8, c11, v10_8_11).
+cube(a10, b8, c12, v10_8_12).
+cube(a10, b8, c13, v10_8_13).
+cube(a10, b8, c14, v10_8_14).
+cube(a10, b9, c0, v10_9_0).
+cube(a10, b9, c1, v10_9_1).
+cube(a10, b9, c2, v10_9_2).
+cube(a10, b9, c3, v10_9_3).
+cube(a10, b9, c4, v10_9_4).
+cube(a10, b9, c5, v10_9_5).
+cube(a10, b9, c6, v10_9_6).
+cube(a10, b9, c7, v10_9_7).
+cube(a10, b9, c8, v10_9_8).
+cube(a10, b9, c9, v10_9_9).
+cube(a10, b9, c10, v10_9_10).
+cube(a10, b9, c11, v10_9_11).
+cube(a10, b9, c12, v10_9_12).
+cube(a10, b9, c13, v10_9_13).
+cube(a10, b9, c14, v10_9_14).
+cube(a10, b10, c0, v10_10_0).
+cube(a10, b10, c1, v10_10_1).
+cube(a10, b10, c2, v10_10_2).
+cube(a10, b10, c3, v10_10_3).
+cube(a10, b10, c4, v10_10_4).
+cube(a10, b10, c5, v10_10_5).
+cube(a10, b10, c6, v10_10_6).
+cube(a10, b10, c7, v10_10_7).
+cube(a10, b10, c8, v10_10_8).
+cube(a10, b10, c9, v10_10_9).
+cube(a10, b10, c10, v10_10_10).
+cube(a10, b10, c11, v10_10_11).
+cube(a10, b10, c12, v10_10_12).
+cube(a10, b10, c13, v10_10_13).
+cube(a10, b10, c14, v10_10_14).
+cube(a10, b11, c0, v10_11_0).
+cube(a10, b11, c1, v10_11_1).
+cube(a10, b11, c2, v10_11_2).
+cube(a10, b11, c3, v10_11_3).
+cube(a10, b11, c4, v10_11_4).
+cube(a10, b11, c5, v10_11_5).
+cube(a10, b11, c6, v10_11_6).
+cube(a10, b11, c7, v10_11_7).
+cube(a10, b11, c8, v10_11_8).
+cube(a10, b11, c9, v10_11_9).
+cube(a10, b11, c10, v10_11_10).
+cube(a10, b11, c11, v10_11_11).
+cube(a10, b11, c12, v10_11_12).
+cube(a10, b11, c13, v10_11_13).
+cube(a10, b11, c14, v10_11_14).
+cube(a10, b12, c0, v10_12_0).
+cube(a10, b12, c1, v10_12_1).
+cube(a10, b12, c2, v10_12_2).
+cube(a10, b12, c3, v10_12_3).
+cube(a10, b12, c4, v10_12_4).
+cube(a10, b12, c5, v10_12_5).
+cube(a10, b12, c6, v10_12_6).
+cube(a10, b12, c7, v10_12_7).
+cube(a10, b12, c8, v10_12_8).
+cube(a10, b12, c9, v10_12_9).
+cube(a10, b12, c10, v10_12_10).
+cube(a10, b12, c11, v10_12_11).
+cube(a10, b12, c12, v10_12_12).
+cube(a10, b12, c13, v10_12_13).
+cube(a10, b12, c14, v10_12_14).
+cube(a10, b13, c0, v10_13_0).
+cube(a10, b13, c1, v10_13_1).
+cube(a10, b13, c2, v10_13_2).
+cube(a10, b13, c3, v10_13_3).
+cube(a10, b13, c4, v10_13_4).
+cube(a10, b13, c5, v10_13_5).
+cube(a10, b13, c6, v10_13_6).
+cube(a10, b13, c7, v10_13_7).
+cube(a10, b13, c8, v10_13_8).
+cube(a10, b13, c9, v10_13_9).
+cube(a10, b13, c10, v10_13_10).
+cube(a10, b13, c11, v10_13_11).
+cube(a10, b13, c12, v10_13_12).
+cube(a10, b13, c13, v10_13_13).
+cube(a10, b13, c14, v10_13_14).
+cube(a10, b14, c0, v10_14_0).
+cube(a10, b14, c1, v10_14_1).
+cube(a10, b14, c2, v10_14_2).
+cube(a10, b14, c3, v10_14_3).
+cube(a10, b14, c4, v10_14_4).
+cube(a10, b14, c5, v10_14_5).
+cube(a10, b14, c6, v10_14_6).
+cube(a10, b14, c7, v10_14_7).
+cube(a10, b14, c8, v10_14_8).
+cube(a10, b14, c9, v10_14_9).
+cube(a10, b14, c10, v10_14_10).
+cube(a10, b14, c11, v10_14_11).
+cube(a10, b14, c12, v10_14_12).
+cube(a10, b14, c13, v10_14_13).
+cube(a10, b14, c14, v10_14_14).
+cube(a11, b0, c0, v11_0_0).
+cube(a11, b0, c1, v11_0_1).
+cube(a11, b0, c2, v11_0_2).
+cube(a11, b0, c3, v11_0_3).
+cube(a11, b0, c4, v11_0_4).
+cube(a11, b0, c5, v11_0_5).
+cube(a11, b0, c6, v11_0_6).
+cube(a11, b0, c7, v11_0_7).
+cube(a11, b0, c8, v11_0_8).
+cube(a11, b0, c9, v11_0_9).
+cube(a11, b0, c10, v11_0_10).
+cube(a11, b0, c11, v11_0_11).
+cube(a11, b0, c12, v11_0_12).
+cube(a11, b0, c13, v11_0_13).
+cube(a11, b0, c14, v11_0_14).
+cube(a11, b1, c0, v11_1_0).
+cube(a11, b1, c1, v11_1_1).
+cube(a11, b1, c2, v11_1_2).
+cube(a11, b1, c3, v11_1_3).
+cube(a11, b1, c4, v11_1_4).
+cube(a11, b1, c5, v11_1_5).
+cube(a11, b1, c6, v11_1_6).
+cube(a11, b1, c7, v11_1_7).
+cube(a11, b1, c8, v11_1_8).
+cube(a11, b1, c9, v11_1_9).
+cube(a11, b1, c10, v11_1_10).
+cube(a11, b1, c11, v11_1_11).
+cube(a11, b1, c12, v11_1_12).
+cube(a11, b1, c13, v11_1_13).
+cube(a11, b1, c14, v11_1_14).
+cube(a11, b2, c0, v11_2_0).
+cube(a11, b2, c1, v11_2_1).
+cube(a11, b2, c2, v11_2_2).
+cube(a11, b2, c3, v11_2_3).
+cube(a11, b2, c4, v11_2_4).
+cube(a11, b2, c5, v11_2_5).
+cube(a11, b2, c6, v11_2_6).
+cube(a11, b2, c7, v11_2_7).
+cube(a11, b2, c8, v11_2_8).
+cube(a11, b2, c9, v11_2_9).
+cube(a11, b2, c10, v11_2_10).
+cube(a11, b2, c11, v11_2_11).
+cube(a11, b2, c12, v11_2_12).
+cube(a11, b2, c13, v11_2_13).
+cube(a11, b2, c14, v11_2_14).
+cube(a11, b3, c0, v11_3_0).
+cube(a11, b3, c1, v11_3_1).
+cube(a11, b3, c2, v11_3_2).
+cube(a11, b3, c3, v11_3_3).
+cube(a11, b3, c4, v11_3_4).
+cube(a11, b3, c5, v11_3_5).
+cube(a11, b3, c6, v11_3_6).
+cube(a11, b3, c7, v11_3_7).
+cube(a11, b3, c8, v11_3_8).
+cube(a11, b3, c9, v11_3_9).
+cube(a11, b3, c10, v11_3_10).
+cube(a11, b3, c11, v11_3_11).
+cube(a11, b3, c12, v11_3_12).
+cube(a11, b3, c13, v11_3_13).
+cube(a11, b3, c14, v11_3_14).
+cube(a11, b4, c0, v11_4_0).
+cube(a11, b4, c1, v11_4_1).
+cube(a11, b4, c2, v11_4_2).
+cube(a11, b4, c3, v11_4_3).
+cube(a11, b4, c4, v11_4_4).
+cube(a11, b4, c5, v11_4_5).
+cube(a11, b4, c6, v11_4_6).
+cube(a11, b4, c7, v11_4_7).
+cube(a11, b4, c8, v11_4_8).
+cube(a11, b4, c9, v11_4_9).
+cube(a11, b4, c10, v11_4_10).
+cube(a11, b4, c11, v11_4_11).
+cube(a11, b4, c12, v11_4_12).
+cube(a11, b4, c13, v11_4_13).
+cube(a11, b4, c14, v11_4_14).
+cube(a11, b5, c0, v11_5_0).
+cube(a11, b5, c1, v11_5_1).
+cube(a11, b5, c2, v11_5_2).
+cube(a11, b5, c3, v11_5_3).
+cube(a11, b5, c4, v11_5_4).
+cube(a11, b5, c5, v11_5_5).
+cube(a11, b5, c6, v11_5_6).
+cube(a11, b5, c7, v11_5_7).
+cube(a11, b5, c8, v11_5_8).
+cube(a11, b5, c9, v11_5_9).
+cube(a11, b5, c10, v11_5_10).
+cube(a11, b5, c11, v11_5_11).
+cube(a11, b5, c12, v11_5_12).
+cube(a11, b5, c13, v11_5_13).
+cube(a11, b5, c14, v11_5_14).
+cube(a11, b6, c0, v11_6_0).
+cube(a11, b6, c1, v11_6_1).
+cube(a11, b6, c2, v11_6_2).
+cube(a11, b6, c3, v11_6_3).
+cube(a11, b6, c4, v11_6_4).
+cube(a11, b6, c5, v11_6_5).
+cube(a11, b6, c6, v11_6_6).
+cube(a11, b6, c7, v11_6_7).
+cube(a11, b6, c8, v11_6_8).
+cube(a11, b6, c9, v11_6_9).
+cube(a11, b6, c10, v11_6_10).
+cube(a11, b6, c11, v11_6_11).
+cube(a11, b6, c12, v11_6_12).
+cube(a11, b6, c13, v11_6_13).
+cube(a11, b6, c14, v11_6_14).
+cube(a11, b7, c0, v11_7_0).
+cube(a11, b7, c1, v11_7_1).
+cube(a11, b7, c2, v11_7_2).
+cube(a11, b7, c3, v11_7_3).
+cube(a11, b7, c4, v11_7_4).
+cube(a11, b7, c5, v11_7_5).
+cube(a11, b7, c6, v11_7_6).
+cube(a11, b7, c7, v11_7_7).
+cube(a11, b7, c8, v11_7_8).
+cube(a11, b7, c9, v11_7_9).
+cube(a11, b7, c10, v11_7_10).
+cube(a11, b7, c11, v11_7_11).
+cube(a11, b7, c12, v11_7_12).
+cube(a11, b7, c13, v11_7_13).
+cube(a11, b7, c14, v11_7_14).
+cube(a11, b8, c0, v11_8_0).
+cube(a11, b8, c1, v11_8_1).
+cube(a11, b8, c2, v11_8_2).
+cube(a11, b8, c3, v11_8_3).
+cube(a11, b8, c4, v11_8_4).
+cube(a11, b8, c5, v11_8_5).
+cube(a11, b8, c6, v11_8_6).
+cube(a11, b8, c7, v11_8_7).
+cube(a11, b8, c8, v11_8_8).
+cube(a11, b8, c9, v11_8_9).
+cube(a11, b8, c10, v11_8_10).
+cube(a11, b8, c11, v11_8_11).
+cube(a11, b8, c12, v11_8_12).
+cube(a11, b8, c13, v11_8_13).
+cube(a11, b8, c14, v11_8_14).
+cube(a11, b9, c0, v11_9_0).
+cube(a11, b9, c1, v11_9_1).
+cube(a11, b9, c2, v11_9_2).
+cube(a11, b9, c3, v11_9_3).
+cube(a11, b9, c4, v11_9_4).
+cube(a11, b9, c5, v11_9_5).
+cube(a11, b9, c6, v11_9_6).
+cube(a11, b9, c7, v11_9_7).
+cube(a11, b9, c8, v11_9_8).
+cube(a11, b9, c9, v11_9_9).
+cube(a11, b9, c10, v11_9_10).
+cube(a11, b9, c11, v11_9_11).
+cube(a11, b9, c12, v11_9_12).
+cube(a11, b9, c13, v11_9_13).
+cube(a11, b9, c14, v11_9_14).
+cube(a11, b10, c0, v11_10_0).
+cube(a11, b10, c1, v11_10_1).
+cube(a11, b10, c2, v11_10_2).
+cube(a11, b10, c3, v11_10_3).
+cube(a11, b10, c4, v11_10_4).
+cube(a11, b10, c5, v11_10_5).
+cube(a11, b10, c6, v11_10_6).
+cube(a11, b10, c7, v11_10_7).
+cube(a11, b10, c8, v11_10_8).
+cube(a11, b10, c9, v11_10_9).
+cube(a11, b10, c10, v11_10_10).
+cube(a11, b10, c11, v11_10_11).
+cube(a11, b10, c12, v11_10_12).
+cube(a11, b10, c13, v11_10_13).
+cube(a11, b10, c14, v11_10_14).
+cube(a11, b11, c0, v11_11_0).
+cube(a11, b11, c1, v11_11_1).
+cube(a11, b11, c2, v11_11_2).
+cube(a11, b11, c3, v11_11_3).
+cube(a11, b11, c4, v11_11_4).
+cube(a11, b11, c5, v11_11_5).
+cube(a11, b11, c6, v11_11_6).
+cube(a11, b11, c7, v11_11_7).
+cube(a11, b11, c8, v11_11_8).
+cube(a11, b11, c9, v11_11_9).
+cube(a11, b11, c10, v11_11_10).
+cube(a11, b11, c11, v11_11_11).
+cube(a11, b11, c12, v11_11_12).
+cube(a11, b11, c13, v11_11_13).
+cube(a11, b11, c14, v11_11_14).
+cube(a11, b12, c0, v11_12_0).
+cube(a11, b12, c1, v11_12_1).
+cube(a11, b12, c2, v11_12_2).
+cube(a11, b12, c3, v11_12_3).
+cube(a11, b12, c4, v11_12_4).
+cube(a11, b12, c5, v11_12_5).
+cube(a11, b12, c6, v11_12_6).
+cube(a11, b12, c7, v11_12_7).
+cube(a11, b12, c8, v11_12_8).
+cube(a11, b12, c9, v11_12_9).
+cube(a11, b12, c10, v11_12_10).
+cube(a11, b12, c11, v11_12_11).
+cube(a11, b12, c12, v11_12_12).
+cube(a11, b12, c13, v11_12_13).
+cube(a11, b12, c14, v11_12_14).
+cube(a11, b13, c0, v11_13_0).
+cube(a11, b13, c1, v11_13_1).
+cube(a11, b13, c2, v11_13_2).
+cube(a11, b13, c3, v11_13_3).
+cube(a11, b13, c4, v11_13_4).
+cube(a11, b13, c5, v11_13_5).
+cube(a11, b13, c6, v11_13_6).
+cube(a11, b13, c7, v11_13_7).
+cube(a11, b13, c8, v11_13_8).
+cube(a11, b13, c9, v11_13_9).
+cube(a11, b13, c10, v11_13_10).
+cube(a11, b13, c11, v11_13_11).
+cube(a11, b13, c12, v11_13_12).
+cube(a11, b13, c13, v11_13_13).
+cube(a11, b13, c14, v11_13_14).
+cube(a11, b14, c0, v11_14_0).
+cube(a11, b14, c1, v11_14_1).
+cube(a11, b14, c2, v11_14_2).
+cube(a11, b14, c3, v11_14_3).
+cube(a11, b14, c4, v11_14_4).
+cube(a11, b14, c5, v11_14_5).
+cube(a11, b14, c6, v11_14_6).
+cube(a11, b14, c7, v11_14_7).
+cube(a11, b14, c8, v11_14_8).
+cube(a11, b14, c9, v11_14_9).
+cube(a11, b14, c10, v11_14_10).
+cube(a11, b14, c11, v11_14_11).
+cube(a11, b14, c12, v11_14_12).
+cube(a11, b14, c13, v11_14_13).
+cube(a11, b14, c14, v11_14_14).
+cube(a12, b0, c0, v12_0_0).
+cube(a12, b0, c1, v12_0_1).
+cube(a12, b0, c2, v12_0_2).
+cube(a12, b0, c3, v12_0_3).
+cube(a12, b0, c4, v12_0_4).
+cube(a12, b0, c5, v12_0_5).
+cube(a12, b0, c6, v12_0_6).
+cube(a12, b0, c7, v12_0_7).
+cube(a12, b0, c8, v12_0_8).
+cube(a12, b0, c9, v12_0_9).
+cube(a12, b0, c10, v12_0_10).
+cube(a12, b0, c11, v12_0_11).
+cube(a12, b0, c12, v12_0_12).
+cube(a12, b0, c13, v12_0_13).
+cube(a12, b0, c14, v12_0_14).
+cube(a12, b1, c0, v12_1_0).
+cube(a12, b1, c1, v12_1_1).
+cube(a12, b1, c2, v12_1_2).
+cube(a12, b1, c3, v12_1_3).
+cube(a12, b1, c4, v12_1_4).
+cube(a12, b1, c5, v12_1_5).
+cube(a12, b1, c6, v12_1_6).
+cube(a12, b1, c7, v12_1_7).
+cube(a12, b1, c8, v12_1_8).
+cube(a12, b1, c9, v12_1_9).
+cube(a12, b1, c10, v12_1_10).
+cube(a12, b1, c11, v12_1_11).
+cube(a12, b1, c12, v12_1_12).
+cube(a12, b1, c13, v12_1_13).
+cube(a12, b1, c14, v12_1_14).
+cube(a12, b2, c0, v12_2_0).
+cube(a12, b2, c1, v12_2_1).
+cube(a12, b2, c2, v12_2_2).
+cube(a12, b2, c3, v12_2_3).
+cube(a12, b2, c4, v12_2_4).
+cube(a12, b2, c5, v12_2_5).
+cube(a12, b2, c6, v12_2_6).
+cube(a12, b2, c7, v12_2_7).
+cube(a12, b2, c8, v12_2_8).
+cube(a12, b2, c9, v12_2_9).
+cube(a12, b2, c10, v12_2_10).
+cube(a12, b2, c11, v12_2_11).
+cube(a12, b2, c12, v12_2_12).
+cube(a12, b2, c13, v12_2_13).
+cube(a12, b2, c14, v12_2_14).
+cube(a12, b3, c0, v12_3_0).
+cube(a12, b3, c1, v12_3_1).
+cube(a12, b3, c2, v12_3_2).
+cube(a12, b3, c3, v12_3_3).
+cube(a12, b3, c4, v12_3_4).
+cube(a12, b3, c5, v12_3_5).
+cube(a12, b3, c6, v12_3_6).
+cube(a12, b3, c7, v12_3_7).
+cube(a12, b3, c8, v12_3_8).
+cube(a12, b3, c9, v12_3_9).
+cube(a12, b3, c10, v12_3_10).
+cube(a12, b3, c11, v12_3_11).
+cube(a12, b3, c12, v12_3_12).
+cube(a12, b3, c13, v12_3_13).
+cube(a12, b3, c14, v12_3_14).
+cube(a12, b4, c0, v12_4_0).
+cube(a12, b4, c1, v12_4_1).
+cube(a12, b4, c2, v12_4_2).
+cube(a12, b4, c3, v12_4_3).
+cube(a12, b4, c4, v12_4_4).
+cube(a12, b4, c5, v12_4_5).
+cube(a12, b4, c6, v12_4_6).
+cube(a12, b4, c7, v12_4_7).
+cube(a12, b4, c8, v12_4_8).
+cube(a12, b4, c9, v12_4_9).
+cube(a12, b4, c10, v12_4_10).
+cube(a12, b4, c11, v12_4_11).
+cube(a12, b4, c12, v12_4_12).
+cube(a12, b4, c13, v12_4_13).
+cube(a12, b4, c14, v12_4_14).
+cube(a12, b5, c0, v12_5_0).
+cube(a12, b5, c1, v12_5_1).
+cube(a12, b5, c2, v12_5_2).
+cube(a12, b5, c3, v12_5_3).
+cube(a12, b5, c4, v12_5_4).
+cube(a12, b5, c5, v12_5_5).
+cube(a12, b5, c6, v12_5_6).
+cube(a12, b5, c7, v12_5_7).
+cube(a12, b5, c8, v12_5_8).
+cube(a12, b5, c9, v12_5_9).
+cube(a12, b5, c10, v12_5_10).
+cube(a12, b5, c11, v12_5_11).
+cube(a12, b5, c12, v12_5_12).
+cube(a12, b5, c13, v12_5_13).
+cube(a12, b5, c14, v12_5_14).
+cube(a12, b6, c0, v12_6_0).
+cube(a12, b6, c1, v12_6_1).
+cube(a12, b6, c2, v12_6_2).
+cube(a12, b6, c3, v12_6_3).
+cube(a12, b6, c4, v12_6_4).
+cube(a12, b6, c5, v12_6_5).
+cube(a12, b6, c6, v12_6_6).
+cube(a12, b6, c7, v12_6_7).
+cube(a12, b6, c8, v12_6_8).
+cube(a12, b6, c9, v12_6_9).
+cube(a12, b6, c10, v12_6_10).
+cube(a12, b6, c11, v12_6_11).
+cube(a12, b6, c12, v12_6_12).
+cube(a12, b6, c13, v12_6_13).
+cube(a12, b6, c14, v12_6_14).
+cube(a12, b7, c0, v12_7_0).
+cube(a12, b7, c1, v12_7_1).
+cube(a12, b7, c2, v12_7_2).
+cube(a12, b7, c3, v12_7_3).
+cube(a12, b7, c4, v12_7_4).
+cube(a12, b7, c5, v12_7_5).
+cube(a12, b7, c6, v12_7_6).
+cube(a12, b7, c7, v12_7_7).
+cube(a12, b7, c8, v12_7_8).
+cube(a12, b7, c9, v12_7_9).
+cube(a12, b7, c10, v12_7_10).
+cube(a12, b7, c11, v12_7_11).
+cube(a12, b7, c12, v12_7_12).
+cube(a12, b7, c13, v12_7_13).
+cube(a12, b7, c14, v12_7_14).
+cube(a12, b8, c0, v12_8_0).
+cube(a12, b8, c1, v12_8_1).
+cube(a12, b8, c2, v12_8_2).
+cube(a12, b8, c3, v12_8_3).
+cube(a12, b8, c4, v12_8_4).
+cube(a12, b8, c5, v12_8_5).
+cube(a12, b8, c6, v12_8_6).
+cube(a12, b8, c7, v12_8_7).
+cube(a12, b8, c8, v12_8_8).
+cube(a12, b8, c9, v12_8_9).
+cube(a12, b8, c10, v12_8_10).
+cube(a12, b8, c11, v12_8_11).
+cube(a12, b8, c12, v12_8_12).
+cube(a12, b8, c13, v12_8_13).
+cube(a12, b8, c14, v12_8_14).
+cube(a12, b9, c0, v12_9_0).
+cube(a12, b9, c1, v12_9_1).
+cube(a12, b9, c2, v12_9_2).
+cube(a12, b9, c3, v12_9_3).
+cube(a12, b9, c4, v12_9_4).
+cube(a12, b9, c5, v12_9_5).
+cube(a12, b9, c6, v12_9_6).
+cube(a12, b9, c7, v12_9_7).
+cube(a12, b9, c8, v12_9_8).
+cube(a12, b9, c9, v12_9_9).
+cube(a12, b9, c10, v12_9_10).
+cube(a12, b9, c11, v12_9_11).
+cube(a12, b9, c12, v12_9_12).
+cube(a12, b9, c13, v12_9_13).
+cube(a12, b9, c14, v12_9_14).
+cube(a12, b10, c0, v12_10_0).
+cube(a12, b10, c1, v12_10_1).
+cube(a12, b10, c2, v12_10_2).
+cube(a12, b10, c3, v12_10_3).
+cube(a12, b10, c4, v12_10_4).
+cube(a12, b10, c5, v12_10_5).
+cube(a12, b10, c6, v12_10_6).
+cube(a12, b10, c7, v12_10_7).
+cube(a12, b10, c8, v12_10_8).
+cube(a12, b10, c9, v12_10_9).
+cube(a12, b10, c10, v12_10_10).
+cube(a12, b10, c11, v12_10_11).
+cube(a12, b10, c12, v12_10_12).
+cube(a12, b10, c13, v12_10_13).
+cube(a12, b10, c14, v12_10_14).
+cube(a12, b11, c0, v12_11_0).
+cube(a12, b11, c1, v12_11_1).
+cube(a12, b11, c2, v12_11_2).
+cube(a12, b11, c3, v12_11_3).
+cube(a12, b11, c4, v12_11_4).
+cube(a12, b11, c5, v12_11_5).
+cube(a12, b11, c6, v12_11_6).
+cube(a12, b11, c7, v12_11_7).
+cube(a12, b11, c8, v12_11_8).
+cube(a12, b11, c9, v12_11_9).
+cube(a12, b11, c10, v12_11_10).
+cube(a12, b11, c11, v12_11_11).
+cube(a12, b11, c12, v12_11_12).
+cube(a12, b11, c13, v12_11_13).
+cube(a12, b11, c14, v12_11_14).
+cube(a12, b12, c0, v12_12_0).
+cube(a12, b12, c1, v12_12_1).
+cube(a12, b12, c2, v12_12_2).
+cube(a12, b12, c3, v12_12_3).
+cube(a12, b12, c4, v12_12_4).
+cube(a12, b12, c5, v12_12_5).
+cube(a12, b12, c6, v12_12_6).
+cube(a12, b12, c7, v12_12_7).
+cube(a12, b12, c8, v12_12_8).
+cube(a12, b12, c9, v12_12_9).
+cube(a12, b12, c10, v12_12_10).
+cube(a12, b12, c11, v12_12_11).
+cube(a12, b12, c12, v12_12_12).
+cube(a12, b12, c13, v12_12_13).
+cube(a12, b12, c14, v12_12_14).
+cube(a12, b13, c0, v12_13_0).
+cube(a12, b13, c1, v12_13_1).
+cube(a12, b13, c2, v12_13_2).
+cube(a12, b13, c3, v12_13_3).
+cube(a12, b13, c4, v12_13_4).
+cube(a12, b13, c5, v12_13_5).
+cube(a12, b13, c6, v12_13_6).
+cube(a12, b13, c7, v12_13_7).
+cube(a12, b13, c8, v12_13_8).
+cube(a12, b13, c9, v12_13_9).
+cube(a12, b13, c10, v12_13_10).
+cube(a12, b13, c11, v12_13_11).
+cube(a12, b13, c12, v12_13_12).
+cube(a12, b13, c13, v12_13_13).
+cube(a12, b13, c14, v12_13_14).
+cube(a12, b14, c0, v12_14_0).
+cube(a12, b14, c1, v12_14_1).
+cube(a12, b14, c2, v12_14_2).
+cube(a12, b14, c3, v12_14_3).
+cube(a12, b14, c4, v12_14_4).
+cube(a12, b14, c5, v12_14_5).
+cube(a12, b14, c6, v12_14_6).
+cube(a12, b14, c7, v12_14_7).
+cube(a12, b14, c8, v12_14_8).
+cube(a12, b14, c9, v12_14_9).
+cube(a12, b14, c10, v12_14_10).
+cube(a12, b14, c11, v12_14_11).
+cube(a12, b14, c12, v12_14_12).
+cube(a12, b14, c13, v12_14_13).
+cube(a12, b14, c14, v12_14_14).
+cube(a13, b0, c0, v13_0_0).
+cube(a13, b0, c1, v13_0_1).
+cube(a13, b0, c2, v13_0_2).
+cube(a13, b0, c3, v13_0_3).
+cube(a13, b0, c4, v13_0_4).
+cube(a13, b0, c5, v13_0_5).
+cube(a13, b0, c6, v13_0_6).
+cube(a13, b0, c7, v13_0_7).
+cube(a13, b0, c8, v13_0_8).
+cube(a13, b0, c9, v13_0_9).
+cube(a13, b0, c10, v13_0_10).
+cube(a13, b0, c11, v13_0_11).
+cube(a13, b0, c12, v13_0_12).
+cube(a13, b0, c13, v13_0_13).
+cube(a13, b0, c14, v13_0_14).
+cube(a13, b1, c0, v13_1_0).
+cube(a13, b1, c1, v13_1_1).
+cube(a13, b1, c2, v13_1_2).
+cube(a13, b1, c3, v13_1_3).
+cube(a13, b1, c4, v13_1_4).
+cube(a13, b1, c5, v13_1_5).
+cube(a13, b1, c6, v13_1_6).
+cube(a13, b1, c7, v13_1_7).
+cube(a13, b1, c8, v13_1_8).
+cube(a13, b1, c9, v13_1_9).
+cube(a13, b1, c10, v13_1_10).
+cube(a13, b1, c11, v13_1_11).
+cube(a13, b1, c12, v13_1_12).
+cube(a13, b1, c13, v13_1_13).
+cube(a13, b1, c14, v13_1_14).
+cube(a13, b2, c0, v13_2_0).
+cube(a13, b2, c1, v13_2_1).
+cube(a13, b2, c2, v13_2_2).
+cube(a13, b2, c3, v13_2_3).
+cube(a13, b2, c4, v13_2_4).
+cube(a13, b2, c5, v13_2_5).
+cube(a13, b2, c6, v13_2_6).
+cube(a13, b2, c7, v13_2_7).
+cube(a13, b2, c8, v13_2_8).
+cube(a13, b2, c9, v13_2_9).
+cube(a13, b2, c10, v13_2_10).
+cube(a13, b2, c11, v13_2_11).
+cube(a13, b2, c12, v13_2_12).
+cube(a13, b2, c13, v13_2_13).
+cube(a13, b2, c14, v13_2_14).
+cube(a13, b3, c0, v13_3_0).
+cube(a13, b3, c1, v13_3_1).
+cube(a13, b3, c2, v13_3_2).
+cube(a13, b3, c3, v13_3_3).
+cube(a13, b3, c4, v13_3_4).
+cube(a13, b3, c5, v13_3_5).
+cube(a13, b3, c6, v13_3_6).
+cube(a13, b3, c7, v13_3_7).
+cube(a13, b3, c8, v13_3_8).
+cube(a13, b3, c9, v13_3_9).
+cube(a13, b3, c10, v13_3_10).
+cube(a13, b3, c11, v13_3_11).
+cube(a13, b3, c12, v13_3_12).
+cube(a13, b3, c13, v13_3_13).
+cube(a13, b3, c14, v13_3_14).
+cube(a13, b4, c0, v13_4_0).
+cube(a13, b4, c1, v13_4_1).
+cube(a13, b4, c2, v13_4_2).
+cube(a13, b4, c3, v13_4_3).
+cube(a13, b4, c4, v13_4_4).
+cube(a13, b4, c5, v13_4_5).
+cube(a13, b4, c6, v13_4_6).
+cube(a13, b4, c7, v13_4_7).
+cube(a13, b4, c8, v13_4_8).
+cube(a13, b4, c9, v13_4_9).
+cube(a13, b4, c10, v13_4_10).
+cube(a13, b4, c11, v13_4_11).
+cube(a13, b4, c12, v13_4_12).
+cube(a13, b4, c13, v13_4_13).
+cube(a13, b4, c14, v13_4_14).
+cube(a13, b5, c0, v13_5_0).
+cube(a13, b5, c1, v13_5_1).
+cube(a13, b5, c2, v13_5_2).
+cube(a13, b5, c3, v13_5_3).
+cube(a13, b5, c4, v13_5_4).
+cube(a13, b5, c5, v13_5_5).
+cube(a13, b5, c6, v13_5_6).
+cube(a13, b5, c7, v13_5_7).
+cube(a13, b5, c8, v13_5_8).
+cube(a13, b5, c9, v13_5_9).
+cube(a13, b5, c10, v13_5_10).
+cube(a13, b5, c11, v13_5_11).
+cube(a13, b5, c12, v13_5_12).
+cube(a13, b5, c13, v13_5_13).
+cube(a13, b5, c14, v13_5_14).
+cube(a13, b6, c0, v13_6_0).
+cube(a13, b6, c1, v13_6_1).
+cube(a13, b6, c2, v13_6_2).
+cube(a13, b6, c3, v13_6_3).
+cube(a13, b6, c4, v13_6_4).
+cube(a13, b6, c5, v13_6_5).
+cube(a13, b6, c6, v13_6_6).
+cube(a13, b6, c7, v13_6_7).
+cube(a13, b6, c8, v13_6_8).
+cube(a13, b6, c9, v13_6_9).
+cube(a13, b6, c10, v13_6_10).
+cube(a13, b6, c11, v13_6_11).
+cube(a13, b6, c12, v13_6_12).
+cube(a13, b6, c13, v13_6_13).
+cube(a13, b6, c14, v13_6_14).
+cube(a13, b7, c0, v13_7_0).
+cube(a13, b7, c1, v13_7_1).
+cube(a13, b7, c2, v13_7_2).
+cube(a13, b7, c3, v13_7_3).
+cube(a13, b7, c4, v13_7_4).
+cube(a13, b7, c5, v13_7_5).
+cube(a13, b7, c6, v13_7_6).
+cube(a13, b7, c7, v13_7_7).
+cube(a13, b7, c8, v13_7_8).
+cube(a13, b7, c9, v13_7_9).
+cube(a13, b7, c10, v13_7_10).
+cube(a13, b7, c11, v13_7_11).
+cube(a13, b7, c12, v13_7_12).
+cube(a13, b7, c13, v13_7_13).
+cube(a13, b7, c14, v13_7_14).
+cube(a13, b8, c0, v13_8_0).
+cube(a13, b8, c1, v13_8_1).
+cube(a13, b8, c2, v13_8_2).
+cube(a13, b8, c3, v13_8_3).
+cube(a13, b8, c4, v13_8_4).
+cube(a13, b8, c5, v13_8_5).
+cube(a13, b8, c6, v13_8_6).
+cube(a13, b8, c7, v13_8_7).
+cube(a13, b8, c8, v13_8_8).
+cube(a13, b8, c9, v13_8_9).
+cube(a13, b8, c10, v13_8_10).
+cube(a13, b8, c11, v13_8_11).
+cube(a13, b8, c12, v13_8_12).
+cube(a13, b8, c13, v13_8_13).
+cube(a13, b8, c14, v13_8_14).
+cube(a13, b9, c0, v13_9_0).
+cube(a13, b9, c1, v13_9_1).
+cube(a13, b9, c2, v13_9_2).
+cube(a13, b9, c3, v13_9_3).
+cube(a13, b9, c4, v13_9_4).
+cube(a13, b9, c5, v13_9_5).
+cube(a13, b9, c6, v13_9_6).
+cube(a13, b9, c7, v13_9_7).
+cube(a13, b9, c8, v13_9_8).
+cube(a13, b9, c9, v13_9_9).
+cube(a13, b9, c10, v13_9_10).
+cube(a13, b9, c11, v13_9_11).
+cube(a13, b9, c12, v13_9_12).
+cube(a13, b9, c13, v13_9_13).
+cube(a13, b9, c14, v13_9_14).
+cube(a13, b10, c0, v13_10_0).
+cube(a13, b10, c1, v13_10_1).
+cube(a13, b10, c2, v13_10_2).
+cube(a13, b10, c3, v13_10_3).
+cube(a13, b10, c4, v13_10_4).
+cube(a13, b10, c5, v13_10_5).
+cube(a13, b10, c6, v13_10_6).
+cube(a13, b10, c7, v13_10_7).
+cube(a13, b10, c8, v13_10_8).
+cube(a13, b10, c9, v13_10_9).
+cube(a13, b10, c10, v13_10_10).
+cube(a13, b10, c11, v13_10_11).
+cube(a13, b10, c12, v13_10_12).
+cube(a13, b10, c13, v13_10_13).
+cube(a13, b10, c14, v13_10_14).
+cube(a13, b11, c0, v13_11_0).
+cube(a13, b11, c1, v13_11_1).
+cube(a13, b11, c2, v13_11_2).
+cube(a13, b11, c3, v13_11_3).
+cube(a13, b11, c4, v13_11_4).
+cube(a13, b11, c5, v13_11_5).
+cube(a13, b11, c6, v13_11_6).
+cube(a13, b11, c7, v13_11_7).
+cube(a13, b11, c8, v13_11_8).
+cube(a13, b11, c9, v13_11_9).
+cube(a13, b11, c10, v13_11_10).
+cube(a13, b11, c11, v13_11_11).
+cube(a13, b11, c12, v13_11_12).
+cube(a13, b11, c13, v13_11_13).
+cube(a13, b11, c14, v13_11_14).
+cube(a13, b12, c0, v13_12_0).
+cube(a13, b12, c1, v13_12_1).
+cube(a13, b12, c2, v13_12_2).
+cube(a13, b12, c3, v13_12_3).
+cube(a13, b12, c4, v13_12_4).
+cube(a13, b12, c5, v13_12_5).
+cube(a13, b12, c6, v13_12_6).
+cube(a13, b12, c7, v13_12_7).
+cube(a13, b12, c8, v13_12_8).
+cube(a13, b12, c9, v13_12_9).
+cube(a13, b12, c10, v13_12_10).
+cube(a13, b12, c11, v13_12_11).
+cube(a13, b12, c12, v13_12_12).
+cube(a13, b12, c13, v13_12_13).
+cube(a13, b12, c14, v13_12_14).
+cube(a13, b13, c0, v13_13_0).
+cube(a13, b13, c1, v13_13_1).
+cube(a13, b13, c2, v13_13_2).
+cube(a13, b13, c3, v13_13_3).
+cube(a13, b13, c4, v13_13_4).
+cube(a13, b13, c5, v13_13_5).
+cube(a13, b13, c6, v13_13_6).
+cube(a13, b13, c7, v13_13_7).
+cube(a13, b13, c8, v13_13_8).
+cube(a13, b13, c9, v13_13_9).
+cube(a13, b13, c10, v13_13_10).
+cube(a13, b13, c11, v13_13_11).
+cube(a13, b13, c12, v13_13_12).
+cube(a13, b13, c13, v13_13_13).
+cube(a13, b13, c14, v13_13_14).
+cube(a13, b14, c0, v13_14_0).
+cube(a13, b14, c1, v13_14_1).
+cube(a13, b14, c2, v13_14_2).
+cube(a13, b14, c3, v13_14_3).
+cube(a13, b14, c4, v13_14_4).
+cube(a13, b14, c5, v13_14_5).
+cube(a13, b14, c6, v13_14_6).
+cube(a13, b14, c7, v13_14_7).
+cube(a13, b14, c8, v13_14_8).
+cube(a13, b14, c9, v13_14_9).
+cube(a13, b14, c10, v13_14_10).
+cube(a13, b14, c11, v13_14_11).
+cube(a13, b14, c12, v13_14_12).
+cube(a13, b14, c13, v13_14_13).
+cube(a13, b14, c14, v13_14_14).
+cube(a14, b0, c0, v14_0_0).
+cube(a14, b0, c1, v14_0_1).
+cube(a14, b0, c2, v14_0_2).
+cube(a14, b0, c3, v14_0_3).
+cube(a14, b0, c4, v14_0_4).
+cube(a14, b0, c5, v14_0_5).
+cube(a14, b0, c6, v14_0_6).
+cube(a14, b0, c7, v14_0_7).
+cube(a14, b0, c8, v14_0_8).
+cube(a14, b0, c9, v14_0_9).
+cube(a14, b0, c10, v14_0_10).
+cube(a14, b0, c11, v14_0_11).
+cube(a14, b0, c12, v14_0_12).
+cube(a14, b0, c13, v14_0_13).
+cube(a14, b0, c14, v14_0_14).
+cube(a14, b1, c0, v14_1_0).
+cube(a14, b1, c1, v14_1_1).
+cube(a14, b1, c2, v14_1_2).
+cube(a14, b1, c3, v14_1_3).
+cube(a14, b1, c4, v14_1_4).
+cube(a14, b1, c5, v14_1_5).
+cube(a14, b1, c6, v14_1_6).
+cube(a14, b1, c7, v14_1_7).
+cube(a14, b1, c8, v14_1_8).
+cube(a14, b1, c9, v14_1_9).
+cube(a14, b1, c10, v14_1_10).
+cube(a14, b1, c11, v14_1_11).
+cube(a14, b1, c12, v14_1_12).
+cube(a14, b1, c13, v14_1_13).
+cube(a14, b1, c14, v14_1_14).
+cube(a14, b2, c0, v14_2_0).
+cube(a14, b2, c1, v14_2_1).
+cube(a14, b2, c2, v14_2_2).
+cube(a14, b2, c3, v14_2_3).
+cube(a14, b2, c4, v14_2_4).
+cube(a14, b2, c5, v14_2_5).
+cube(a14, b2, c6, v14_2_6).
+cube(a14, b2, c7, v14_2_7).
+cube(a14, b2, c8, v14_2_8).
+cube(a14, b2, c9, v14_2_9).
+cube(a14, b2, c10, v14_2_10).
+cube(a14, b2, c11, v14_2_11).
+cube(a14, b2, c12, v14_2_12).
+cube(a14, b2, c13, v14_2_13).
+cube(a14, b2, c14, v14_2_14).
+cube(a14, b3, c0, v14_3_0).
+cube(a14, b3, c1, v14_3_1).
+cube(a14, b3, c2, v14_3_2).
+cube(a14, b3, c3, v14_3_3).
+cube(a14, b3, c4, v14_3_4).
+cube(a14, b3, c5, v14_3_5).
+cube(a14, b3, c6, v14_3_6).
+cube(a14, b3, c7, v14_3_7).
+cube(a14, b3, c8, v14_3_8).
+cube(a14, b3, c9, v14_3_9).
+cube(a14, b3, c10, v14_3_10).
+cube(a14, b3, c11, v14_3_11).
+cube(a14, b3, c12, v14_3_12).
+cube(a14, b3, c13, v14_3_13).
+cube(a14, b3, c14, v14_3_14).
+cube(a14, b4, c0, v14_4_0).
+cube(a14, b4, c1, v14_4_1).
+cube(a14, b4, c2, v14_4_2).
+cube(a14, b4, c3, v14_4_3).
+cube(a14, b4, c4, v14_4_4).
+cube(a14, b4, c5, v14_4_5).
+cube(a14, b4, c6, v14_4_6).
+cube(a14, b4, c7, v14_4_7).
+cube(a14, b4, c8, v14_4_8).
+cube(a14, b4, c9, v14_4_9).
+cube(a14, b4, c10, v14_4_10).
+cube(a14, b4, c11, v14_4_11).
+cube(a14, b4, c12, v14_4_12).
+cube(a14, b4, c13, v14_4_13).
+cube(a14, b4, c14, v14_4_14).
+cube(a14, b5, c0, v14_5_0).
+cube(a14, b5, c1, v14_5_1).
+cube(a14, b5, c2, v14_5_2).
+cube(a14, b5, c3, v14_5_3).
+cube(a14, b5, c4, v14_5_4).
+cube(a14, b5, c5, v14_5_5).
+cube(a14, b5, c6, v14_5_6).
+cube(a14, b5, c7, v14_5_7).
+cube(a14, b5, c8, v14_5_8).
+cube(a14, b5, c9, v14_5_9).
+cube(a14, b5, c10, v14_5_10).
+cube(a14, b5, c11, v14_5_11).
+cube(a14, b5, c12, v14_5_12).
+cube(a14, b5, c13, v14_5_13).
+cube(a14, b5, c14, v14_5_14).
+cube(a14, b6, c0, v14_6_0).
+cube(a14, b6, c1, v14_6_1).
+cube(a14, b6, c2, v14_6_2).
+cube(a14, b6, c3, v14_6_3).
+cube(a14, b6, c4, v14_6_4).
+cube(a14, b6, c5, v14_6_5).
+cube(a14, b6, c6, v14_6_6).
+cube(a14, b6, c7, v14_6_7).
+cube(a14, b6, c8, v14_6_8).
+cube(a14, b6, c9, v14_6_9).
+cube(a14, b6, c10, v14_6_10).
+cube(a14, b6, c11, v14_6_11).
+cube(a14, b6, c12, v14_6_12).
+cube(a14, b6, c13, v14_6_13).
+cube(a14, b6, c14, v14_6_14).
+cube(a14, b7, c0, v14_7_0).
+cube(a14, b7, c1, v14_7_1).
+cube(a14, b7, c2, v14_7_2).
+cube(a14, b7, c3, v14_7_3).
+cube(a14, b7, c4, v14_7_4).
+cube(a14, b7, c5, v14_7_5).
+cube(a14, b7, c6, v14_7_6).
+cube(a14, b7, c7, v14_7_7).
+cube(a14, b7, c8, v14_7_8).
+cube(a14, b7, c9, v14_7_9).
+cube(a14, b7, c10, v14_7_10).
+cube(a14, b7, c11, v14_7_11).
+cube(a14, b7, c12, v14_7_12).
+cube(a14, b7, c13, v14_7_13).
+cube(a14, b7, c14, v14_7_14).
+cube(a14, b8, c0, v14_8_0).
+cube(a14, b8, c1, v14_8_1).
+cube(a14, b8, c2, v14_8_2).
+cube(a14, b8, c3, v14_8_3).
+cube(a14, b8, c4, v14_8_4).
+cube(a14, b8, c5, v14_8_5).
+cube(a14, b8, c6, v14_8_6).
+cube(a14, b8, c7, v14_8_7).
+cube(a14, b8, c8, v14_8_8).
+cube(a14, b8, c9, v14_8_9).
+cube(a14, b8, c10, v14_8_10).
+cube(a14, b8, c11, v14_8_11).
+cube(a14, b8, c12, v14_8_12).
+cube(a14, b8, c13, v14_8_13).
+cube(a14, b8, c14, v14_8_14).
+cube(a14, b9, c0, v14_9_0).
+cube(a14, b9, c1, v14_9_1).
+cube(a14, b9, c2, v14_9_2).
+cube(a14, b9, c3, v14_9_3).
+cube(a14, b9, c4, v14_9_4).
+cube(a14, b9, c5, v14_9_5).
+cube(a14, b9, c6, v14_9_6).
+cube(a14, b9, c7, v14_9_7).
+cube(a14, b9, c8, v14_9_8).
+cube(a14, b9, c9, v14_9_9).
+cube(a14, b9, c10, v14_9_10).
+cube(a14, b9, c11, v14_9_11).
+cube(a14, b9, c12, v14_9_12).
+cube(a14, b9, c13, v14_9_13).
+cube(a14, b9, c14, v14_9_14).
+cube(a14, b10, c0, v14_10_0).
+cube(a14, b10, c1, v14_10_1).
+cube(a14, b10, c2, v14_10_2).
+cube(a14, b10, c3, v14_10_3).
+cube(a14, b10, c4, v14_10_4).
+cube(a14, b10, c5, v14_10_5).
+cube(a14, b10, c6, v14_10_6).
+cube(a14, b10, c7, v14_10_7).
+cube(a14, b10, c8, v14_10_8).
+cube(a14, b10, c9, v14_10_9).
+cube(a14, b10, c10, v14_10_10).
+cube(a14, b10, c11, v14_10_11).
+cube(a14, b10, c12, v14_10_12).
+cube(a14, b10, c13, v14_10_13).
+cube(a14, b10, c14, v14_10_14).
+cube(a14, b11, c0, v14_11_0).
+cube(a14, b11, c1, v14_11_1).
+cube(a14, b11, c2, v14_11_2).
+cube(a14, b11, c3, v14_11_3).
+cube(a14, b11, c4, v14_11_4).
+cube(a14, b11, c5, v14_11_5).
+cube(a14, b11, c6, v14_11_6).
+cube(a14, b11, c7, v14_11_7).
+cube(a14, b11, c8, v14_11_8).
+cube(a14, b11, c9, v14_11_9).
+cube(a14, b11, c10, v14_11_10).
+cube(a14, b11, c11, v14_11_11).
+cube(a14, b11, c12, v14_11_12).
+cube(a14, b11, c13, v14_11_13).
+cube(a14, b11, c14, v14_11_14).
+cube(a14, b12, c0, v14_12_0).
+cube(a14, b12, c1, v14_12_1).
+cube(a14, b12, c2, v14_12_2).
+cube(a14, b12, c3, v14_12_3).
+cube(a14, b12, c4, v14_12_4).
+cube(a14, b12, c5, v14_12_5).
+cube(a14, b12, c6, v14_12_6).
+cube(a14, b12, c7, v14_12_7).
+cube(a14, b12, c8, v14_12_8).
+cube(a14, b12, c9, v14_12_9).
+cube(a14, b12, c10, v14_12_10).
+cube(a14, b12, c11, v14_12_11).
+cube(a14, b12, c12, v14_12_12).
+cube(a14, b12, c13, v14_12_13).
+cube(a14, b12, c14, v14_12_14).
+cube(a14, b13, c0, v14_13_0).
+cube(a14, b13, c1, v14_13_1).
+cube(a14, b13, c2, v14_13_2).
+cube(a14, b13, c3, v14_13_3).
+cube(a14, b13, c4, v14_13_4).
+cube(a14, b13, c5, v14_13_5).
+cube(a14, b13, c6, v14_13_6).
+cube(a14, b13, c7, v14_13_7).
+cube(a14, b13, c8, v14_13_8).
+cube(a14, b13, c9, v14_13_9).
+cube(a14, b13, c10, v14_13_10).
+cube(a14, b13, c11, v14_13_11).
+cube(a14, b13, c12, v14_13_12).
+cube(a14, b13, c13, v14_13_13).
+cube(a14, b13, c14, v14_13_14).
+cube(a14, b14, c0, v14_14_0).
+cube(a14, b14, c1, v14_14_1).
+cube(a14, b14, c2, v14_14_2).
+cube(a14, b14, c3, v14_14_3).
+cube(a14, b14, c4, v14_14_4).
+cube(a14, b14, c5, v14_14_5).
+cube(a14, b14, c6, v14_14_6).
+cube(a14, b14, c7, v14_14_7).
+cube(a14, b14, c8, v14_14_8).
+cube(a14, b14, c9, v14_14_9).
+cube(a14, b14, c10, v14_14_10).
+cube(a14, b14, c11, v14_14_11).
+cube(a14, b14, c12, v14_14_12).
+cube(a14, b14, c13, v14_14_13).
+cube(a14, b14, c14, v14_14_14).
+
+lookupResult(case, passed) :-
+  cube(a0, b0, c0, _),
+  cube(a14, b2, c5, _),
+  cube(a13, b5, c10, _),
+  cube(a12, b8, c0, _),
+  cube(a11, b11, c5, _),
+  cube(a10, b14, c10, _),
+  cube(a9, b2, c1, _),
+  cube(a8, b5, c6, _),
+  cube(a7, b8, c11, _),
+  cube(a6, b11, c1, _),
+  cube(a5, b14, c6, _),
+  cube(a4, b2, c12, _),
+  cube(a3, b5, c2, _),
+  cube(a2, b8, c7, _),
+  cube(a1, b11, c12, _),
+  cube(a0, b14, c2, _),
+  cube(a14, b1, c8, _),
+  cube(a13, b4, c13, _),
+  cube(a12, b7, c3, _),
+  cube(a11, b10, c8, _),
+  cube(a10, b13, c13, _),
+  cube(a9, b1, c4, _),
+  cube(a8, b4, c9, _),
+  cube(a7, b7, c14, _),
+  cube(a6, b10, c4, _),
+  cube(a5, b13, c9, _),
+  cube(a4, b1, c0, _),
+  cube(a3, b4, c5, _),
+  cube(a2, b7, c10, _),
+  cube(a1, b10, c0, _),
+  cube(a0, b13, c5, _),
+  cube(a14, b0, c11, _),
+  cube(a13, b3, c1, _),
+  cube(a12, b6, c6, _),
+  cube(a11, b9, c11, _),
+  cube(a10, b12, c1, _),
+  cube(a9, b0, c7, _),
+  cube(a8, b3, c12, _),
+  cube(a7, b6, c2, _),
+  cube(a6, b9, c7, _),
+  cube(a5, b12, c12, _),
+  cube(a4, b0, c3, _),
+  cube(a3, b3, c8, _),
+  cube(a2, b6, c13, _),
+  cube(a1, b9, c3, _),
+  cube(a0, b12, c8, _),
+  cube(a14, b14, c13, _),
+  cube(a13, b2, c4, _),
+  cube(a12, b5, c9, _),
+  cube(a11, b8, c14, _),
+  cube(a10, b11, c4, _),
+  cube(a9, b14, c9, _),
+  cube(a8, b2, c0, _),
+  cube(a7, b5, c5, _),
+  cube(a6, b8, c10, _),
+  cube(a5, b11, c0, _),
+  cube(a4, b14, c5, _),
+  cube(a3, b2, c11, _),
+  cube(a2, b5, c1, _),
+  cube(a1, b8, c6, _),
+  cube(a0, b11, c11, _),
+  cube(a14, b13, c1, _),
+  cube(a13, b1, c7, _),
+  cube(a12, b4, c12, _),
+  cube(a11, b7, c2, _),
+  cube(a10, b10, c7, _),
+  cube(a9, b13, c12, _),
+  cube(a8, b1, c3, _),
+  cube(a7, b4, c8, _),
+  cube(a6, b7, c13, _),
+  cube(a5, b10, c3, _),
+  cube(a4, b13, c8, _),
+  cube(a3, b1, c14, _),
+  cube(a2, b4, c4, _),
+  cube(a1, b7, c9, _),
+  cube(a0, b10, c14, _),
+  cube(a14, b12, c4, _),
+  cube(a13, b0, c10, _),
+  cube(a12, b3, c0, _),
+  cube(a11, b6, c5, _),
+  cube(a10, b9, c10, _),
+  cube(a9, b12, c0, _),
+  cube(a8, b0, c6, _),
+  cube(a7, b3, c11, _),
+  cube(a6, b6, c1, _),
+  cube(a5, b9, c6, _),
+  cube(a4, b12, c11, _),
+  cube(a3, b0, c2, _),
+  cube(a2, b3, c7, _),
+  cube(a1, b6, c12, _),
+  cube(a0, b9, c2, _),
+  cube(a14, b11, c7, _),
+  cube(a13, b14, c12, _),
+  cube(a12, b2, c3, _),
+  cube(a11, b5, c8, _),
+  cube(a10, b8, c13, _),
+  cube(a9, b11, c3, _),
+  cube(a8, b14, c8, _),
+  cube(a7, b2, c14, _),
+  cube(a6, b5, c4, _),
+  cube(a5, b8, c9, _),
+  cube(a4, b11, c14, _),
+  cube(a3, b14, c4, _),
+  cube(a2, b2, c10, _),
+  cube(a1, b5, c0, _),
+  cube(a0, b8, c5, _),
+  cube(a14, b10, c10, _),
+  cube(a13, b13, c0, _),
+  cube(a12, b1, c6, _),
+  cube(a11, b4, c11, _),
+  cube(a10, b7, c1, _),
+  cube(a9, b10, c6, _),
+  cube(a8, b13, c11, _),
+  cube(a7, b1, c2, _),
+  cube(a6, b4, c7, _),
+  cube(a5, b7, c12, _),
+  cube(a4, b10, c2, _),
+  cube(a3, b13, c7, _),
+  cube(a2, b1, c13, _),
+  cube(a1, b4, c3, _),
+  cube(a0, b7, c8, _),
+  cube(a14, b9, c13, _),
+  cube(a13, b12, c3, _),
+  cube(a12, b0, c9, _),
+  cube(a11, b3, c14, _),
+  cube(a10, b6, c4, _),
+  cube(a9, b9, c9, _),
+  cube(a8, b12, c14, _),
+  cube(a7, b0, c5, _),
+  cube(a6, b3, c10, _),
+  cube(a5, b6, c0, _),
+  cube(a4, b9, c5, _),
+  cube(a3, b12, c10, _),
+  cube(a2, b0, c1, _),
+  cube(a1, b3, c6, _),
+  cube(a0, b6, c11, _),
+  cube(a14, b8, c1, _),
+  cube(a13, b11, c6, _),
+  cube(a12, b14, c11, _),
+  cube(a11, b2, c2, _),
+  cube(a10, b5, c7, _),
+  cube(a9, b8, c12, _),
+  cube(a8, b11, c2, _),
+  cube(a7, b14, c7, _),
+  cube(a6, b2, c13, _),
+  cube(a5, b5, c3, _),
+  cube(a4, b8, c8, _),
+  cube(a3, b11, c13, _),
+  cube(a2, b14, c3, _),
+  cube(a1, b2, c9, _),
+  cube(a0, b5, c14, _),
+  cube(a14, b7, c4, _),
+  cube(a13, b10, c9, _),
+  cube(a12, b13, c14, _),
+  cube(a11, b1, c5, _),
+  cube(a10, b4, c10, _),
+  cube(a9, b7, c0, _),
+  cube(a8, b10, c5, _),
+  cube(a7, b13, c10, _),
+  cube(a6, b1, c1, _),
+  cube(a5, b4, c6, _),
+  cube(a4, b7, c11, _),
+  cube(a3, b10, c1, _),
+  cube(a2, b13, c6, _),
+  cube(a1, b1, c12, _),
+  cube(a0, b4, c2, _),
+  cube(a14, b6, c7, _),
+  cube(a13, b9, c12, _),
+  cube(a12, b12, c2, _),
+  cube(a11, b0, c8, _),
+  cube(a10, b3, c13, _),
+  cube(a9, b6, c3, _),
+  cube(a8, b9, c8, _),
+  cube(a7, b12, c13, _),
+  cube(a6, b0, c4, _),
+  cube(a5, b3, c9, _),
+  cube(a4, b6, c14, _),
+  cube(a3, b9, c4, _),
+  cube(a2, b12, c9, _),
+  cube(a1, b0, c0, _),
+  cube(a0, b3, c5, _),
+  cube(a14, b5, c10, _),
+  cube(a13, b8, c0, _),
+  cube(a12, b11, c5, _),
+  cube(a11, b14, c10, _),
+  cube(a10, b2, c1, _),
+  cube(a9, b5, c6, _),
+  cube(a8, b8, c11, _),
+  cube(a7, b11, c1, _),
+  cube(a6, b14, c6, _),
+  cube(a5, b2, c12, _),
+  cube(a4, b5, c2, _),
+  cube(a3, b8, c7, _),
+  cube(a2, b11, c12, _),
+  cube(a1, b14, c2, _),
+  cube(a0, b2, c8, _),
+  cube(a14, b4, c13, _),
+  cube(a13, b7, c3, _),
+  cube(a12, b10, c8, _),
+  cube(a11, b13, c13, _),
+  cube(a10, b1, c4, _),
+  cube(a9, b4, c9, _),
+  cube(a8, b7, c14, _),
+  cube(a7, b10, c4, _),
+  cube(a6, b13, c9, _),
+  cube(a5, b1, c0, _),
+  cube(a4, b4, c5, _),
+  cube(a3, b7, c10, _),
+  cube(a2, b10, c0, _),
+  cube(a1, b13, c5, _),
+  cube(a0, b1, c11, _),
+  cube(a14, b3, c1, _),
+  cube(a13, b6, c6, _),
+  cube(a12, b9, c11, _),
+  cube(a11, b12, c1, _),
+  cube(a10, b0, c7, _),
+  cube(a9, b3, c12, _),
+  cube(a8, b6, c2, _),
+  cube(a7, b9, c7, _),
+  cube(a6, b12, c12, _),
+  cube(a5, b0, c3, _),
+  cube(a4, b3, c8, _),
+  cube(a3, b6, c13, _),
+  cube(a2, b9, c3, _),
+  cube(a1, b12, c8, _),
+  cube(a0, b0, c14, _),
+  cube(a14, b2, c4, _),
+  cube(a13, b5, c9, _),
+  cube(a12, b8, c14, _),
+  cube(a11, b11, c4, _),
+  cube(a10, b14, c9, _),
+  cube(a9, b2, c0, _),
+  cube(a8, b5, c5, _),
+  cube(a7, b8, c10, _),
+  cube(a6, b11, c0, _),
+  cube(a5, b14, c5, _),
+  cube(a4, b2, c11, _),
+  cube(a3, b5, c1, _),
+  cube(a2, b8, c6, _),
+  cube(a1, b11, c11, _),
+  cube(a0, b14, c1, _),
+  cube(a14, b1, c7, _),
+  cube(a13, b4, c12, _),
+  cube(a12, b7, c2, _),
+  cube(a11, b10, c7, _),
+  cube(a10, b13, c12, _),
+  cube(a9, b1, c3, _),
+  cube(a8, b4, c8, _),
+  cube(a7, b7, c13, _),
+  cube(a6, b10, c3, _),
+  cube(a5, b13, c8, _),
+  cube(a4, b1, c14, _),
+  cube(a3, b4, c4, _),
+  cube(a2, b7, c9, _),
+  cube(a1, b10, c14, _),
+  cube(a0, b13, c4, _),
+  cube(a14, b0, c10, _),
+  cube(a13, b3, c0, _),
+  cube(a12, b6, c5, _),
+  cube(a11, b9, c10, _),
+  cube(a10, b12, c0, _),
+  cube(a9, b0, c6, _),
+  cube(a8, b3, c11, _),
+  cube(a7, b6, c1, _),
+  cube(a6, b9, c6, _),
+  cube(a5, b12, c11, _),
+  cube(a4, b0, c2, _),
+  cube(a3, b3, c7, _),
+  cube(a2, b6, c12, _),
+  cube(a1, b9, c2, _),
+  cube(a0, b12, c7, _),
+  cube(a14, b14, c12, _),
+  cube(a13, b2, c3, _),
+  cube(a12, b5, c8, _),
+  cube(a11, b8, c13, _),
+  cube(a10, b11, c3, _),
+  cube(a9, b14, c8, _),
+  cube(a8, b2, c14, _),
+  cube(a7, b5, c4, _),
+  cube(a6, b8, c9, _),
+  cube(a5, b11, c14, _),
+  cube(a4, b14, c4, _),
+  cube(a3, b2, c10, _),
+  cube(a2, b5, c0, _),
+  cube(a1, b8, c5, _),
+  cube(a0, b11, c10, _),
+  cube(a14, b13, c0, _),
+  cube(a13, b1, c6, _),
+  cube(a12, b4, c11, _),
+  cube(a11, b7, c1, _),
+  cube(a10, b10, c6, _),
+  cube(a9, b13, c11, _),
+  cube(a8, b1, c2, _),
+  cube(a7, b4, c7, _),
+  cube(a6, b7, c12, _),
+  cube(a5, b10, c2, _),
+  cube(a4, b13, c7, _),
+  cube(a3, b1, c13, _),
+  cube(a2, b4, c3, _),
+  cube(a1, b7, c8, _),
+  cube(a0, b10, c13, _),
+  cube(a14, b12, c3, _),
+  cube(a13, b0, c9, _),
+  cube(a12, b3, c14, _),
+  cube(a11, b6, c4, _),
+  cube(a10, b9, c9, _),
+  cube(a9, b12, c14, _),
+  cube(a8, b0, c5, _),
+  cube(a7, b3, c10, _),
+  cube(a6, b6, c0, _),
+  cube(a5, b9, c5, _),
+  cube(a4, b12, c10, _),
+  cube(a3, b0, c1, _),
+  cube(a2, b3, c6, _),
+  cube(a1, b6, c11, _),
+  cube(a0, b9, c1, _),
+  cube(a14, b11, c6, _),
+  cube(a13, b14, c11, _),
+  cube(a12, b2, c2, _),
+  cube(a11, b5, c7, _),
+  cube(a10, b8, c12, _),
+  cube(a9, b11, c2, _),
+  cube(a8, b14, c7, _),
+  cube(a7, b2, c13, _),
+  cube(a6, b5, c3, _),
+  cube(a5, b8, c8, _),
+  cube(a4, b11, c13, _),
+  cube(a3, b14, c3, _),
+  cube(a2, b2, c9, _),
+  cube(a1, b5, c14, _),
+  cube(a0, b8, c4, _),
+  cube(a14, b10, c9, _),
+  cube(a13, b13, c14, _),
+  cube(a12, b1, c5, _),
+  cube(a11, b4, c10, _),
+  cube(a10, b7, c0, _),
+  cube(a9, b10, c5, _),
+  cube(a8, b13, c10, _),
+  cube(a7, b1, c1, _),
+  cube(a6, b4, c6, _),
+  cube(a5, b7, c11, _),
+  cube(a4, b10, c1, _),
+  cube(a3, b13, c6, _),
+  cube(a2, b1, c12, _),
+  cube(a1, b4, c2, _),
+  cube(a0, b7, c7, _),
+  cube(a14, b9, c12, _),
+  cube(a13, b12, c2, _),
+  cube(a12, b0, c8, _),
+  cube(a11, b3, c13, _),
+  cube(a10, b6, c3, _),
+  cube(a9, b9, c8, _),
+  cube(a8, b12, c13, _),
+  cube(a7, b0, c4, _),
+  cube(a6, b3, c9, _),
+  cube(a5, b6, c14, _),
+  cube(a4, b9, c4, _),
+  cube(a3, b12, c9, _),
+  cube(a2, b0, c0, _),
+  cube(a1, b3, c5, _),
+  cube(a0, b6, c10, _),
+  cube(a14, b8, c0, _),
+  cube(a13, b11, c5, _),
+  cube(a12, b14, c10, _),
+  cube(a11, b2, c1, _),
+  cube(a10, b5, c6, _),
+  cube(a9, b8, c11, _),
+  cube(a8, b11, c1, _),
+  cube(a7, b14, c6, _),
+  cube(a6, b2, c12, _),
+  cube(a5, b5, c2, _),
+  cube(a4, b8, c7, _),
+  cube(a3, b11, c12, _),
+  cube(a2, b14, c2, _),
+  cube(a1, b2, c8, _),
+  cube(a0, b5, c13, _),
+  cube(a14, b7, c3, _),
+  cube(a13, b10, c8, _),
+  cube(a12, b13, c13, _),
+  cube(a11, b1, c4, _),
+  cube(a10, b4, c9, _),
+  cube(a9, b7, c14, _),
+  cube(a8, b10, c4, _),
+  cube(a7, b13, c9, _),
+  cube(a6, b1, c0, _),
+  cube(a5, b4, c5, _),
+  cube(a4, b7, c10, _),
+  cube(a3, b10, c0, _),
+  cube(a2, b13, c5, _),
+  cube(a1, b1, c11, _),
+  cube(a0, b4, c1, _),
+  cube(a14, b6, c6, _),
+  cube(a13, b9, c11, _),
+  cube(a12, b12, c1, _),
+  cube(a11, b0, c7, _),
+  cube(a10, b3, c12, _),
+  cube(a9, b6, c2, _),
+  cube(a8, b9, c7, _),
+  cube(a7, b12, c12, _),
+  cube(a6, b0, c3, _),
+  cube(a5, b3, c8, _),
+  cube(a4, b6, c13, _),
+  cube(a3, b9, c3, _),
+  cube(a2, b12, c8, _),
+  cube(a1, b0, c14, _),
+  cube(a0, b3, c4, _),
+  cube(a14, b5, c9, _),
+  cube(a13, b8, c14, _),
+  cube(a12, b11, c4, _),
+  cube(a11, b14, c9, _),
+  cube(a10, b2, c0, _),
+  cube(a9, b5, c5, _),
+  cube(a8, b8, c10, _),
+  cube(a7, b11, c0, _),
+  cube(a6, b14, c5, _),
+  cube(a5, b2, c11, _),
+  cube(a4, b5, c1, _),
+  cube(a3, b8, c6, _),
+  cube(a2, b11, c11, _),
+  cube(a1, b14, c1, _),
+  cube(a0, b2, c7, _),
+  cube(a14, b4, c12, _),
+  cube(a13, b7, c2, _),
+  cube(a12, b10, c7, _),
+  cube(a11, b13, c12, _),
+  cube(a10, b1, c3, _),
+  cube(a9, b4, c8, _),
+  cube(a8, b7, c13, _),
+  cube(a7, b10, c3, _),
+  cube(a6, b13, c8, _),
+  cube(a5, b1, c14, _),
+  cube(a4, b4, c4, _),
+  cube(a3, b7, c9, _),
+  cube(a2, b10, c14, _),
+  cube(a1, b13, c4, _),
+  cube(a0, b1, c10, _),
+  cube(a14, b3, c0, _),
+  cube(a13, b6, c5, _),
+  cube(a12, b9, c10, _),
+  cube(a11, b12, c0, _),
+  cube(a10, b0, c6, _),
+  cube(a9, b3, c11, _),
+  cube(a8, b6, c1, _),
+  cube(a7, b9, c6, _),
+  cube(a6, b12, c11, _),
+  cube(a5, b0, c2, _),
+  cube(a4, b3, c7, _),
+  cube(a3, b6, c12, _),
+  cube(a2, b9, c2, _),
+  cube(a1, b12, c7, _),
+  cube(a0, b0, c13, _),
+  cube(a14, b2, c3, _),
+  cube(a13, b5, c8, _),
+  cube(a12, b8, c13, _),
+  cube(a11, b11, c3, _),
+  cube(a10, b14, c8, _),
+  cube(a9, b2, c14, _),
+  cube(a8, b5, c4, _),
+  cube(a7, b8, c9, _),
+  cube(a6, b11, c14, _),
+  cube(a5, b14, c4, _),
+  cube(a4, b2, c10, _),
+  cube(a3, b5, c0, _),
+  cube(a2, b8, c5, _),
+  cube(a1, b11, c10, _),
+  cube(a0, b14, c0, _),
+  cube(a14, b1, c6, _),
+  cube(a13, b4, c11, _),
+  cube(a12, b7, c1, _),
+  cube(a11, b10, c6, _),
+  cube(a10, b13, c11, _),
+  cube(a9, b1, c2, _),
+  cube(a8, b4, c7, _),
+  cube(a7, b7, c12, _),
+  cube(a6, b10, c2, _),
+  cube(a5, b13, c7, _),
+  cube(a4, b1, c13, _),
+  cube(a3, b4, c3, _),
+  cube(a2, b7, c8, _),
+  cube(a1, b10, c13, _),
+  cube(a0, b13, c3, _),
+  cube(a14, b0, c9, _),
+  cube(a13, b3, c14, _),
+  cube(a12, b6, c4, _),
+  cube(a11, b9, c9, _),
+  cube(a10, b12, c14, _),
+  cube(a9, b0, c5, _),
+  cube(a8, b3, c10, _),
+  cube(a7, b6, c0, _),
+  cube(a6, b9, c5, _),
+  cube(a5, b12, c10, _),
+  cube(a4, b0, c1, _),
+  cube(a3, b3, c6, _),
+  cube(a2, b6, c11, _),
+  cube(a1, b9, c1, _),
+  cube(a0, b12, c6, _),
+  cube(a14, b14, c11, _),
+  cube(a13, b2, c2, _),
+  cube(a12, b5, c7, _),
+  cube(a11, b8, c12, _),
+  cube(a10, b11, c2, _),
+  cube(a9, b14, c7, _),
+  cube(a8, b2, c13, _),
+  cube(a7, b5, c3, _),
+  cube(a6, b8, c8, _),
+  cube(a5, b11, c13, _),
+  cube(a4, b14, c3, _),
+  cube(a3, b2, c9, _),
+  cube(a2, b5, c14, _),
+  cube(a1, b8, c4, _),
+  cube(a0, b11, c9, _),
+  cube(a14, b13, c14, _),
+  cube(a13, b1, c5, _),
+  cube(a12, b4, c10, _),
+  cube(a11, b7, c0, _),
+  cube(a10, b10, c5, _),
+  cube(a9, b13, c10, _),
+  cube(a8, b1, c1, _),
+  cube(a7, b4, c6, _),
+  cube(a6, b7, c11, _),
+  cube(a5, b10, c1, _),
+  cube(a4, b13, c6, _),
+  cube(a3, b1, c12, _),
+  cube(a2, b4, c2, _),
+  cube(a1, b7, c7, _),
+  cube(a0, b10, c12, _),
+  cube(a14, b12, c2, _),
+  cube(a13, b0, c8, _),
+  cube(a12, b3, c13, _),
+  cube(a11, b6, c3, _),
+  cube(a10, b9, c8, _),
+  cube(a9, b12, c13, _),
+  cube(a8, b0, c4, _),
+  cube(a7, b3, c9, _),
+  cube(a6, b6, c14, _),
+  cube(a5, b9, c4, _),
+  cube(a4, b12, c9, _),
+  cube(a3, b0, c0, _),
+  cube(a2, b3, c5, _),
+  cube(a1, b6, c10, _),
+  cube(a0, b9, c0, _),
+  cube(a14, b11, c5, _),
+  cube(a13, b14, c10, _),
+  cube(a12, b2, c1, _),
+  cube(a11, b5, c6, _),
+  cube(a10, b8, c11, _),
+  cube(a9, b11, c1, _),
+  cube(a8, b14, c6, _),
+  cube(a7, b2, c12, _),
+  cube(a6, b5, c2, _),
+  cube(a5, b8, c7, _),
+  cube(a4, b11, c12, _),
+  cube(a3, b14, c2, _),
+  cube(a2, b2, c8, _),
+  cube(a1, b5, c13, _),
+  cube(a0, b8, c3, _),
+  cube(a14, b10, c8, _),
+  cube(a13, b13, c13, _),
+  cube(a12, b1, c4, _),
+  cube(a11, b4, c9, _),
+  cube(a10, b7, c14, _),
+  cube(a9, b10, c4, _),
+  cube(a8, b13, c9, _),
+  cube(a7, b1, c0, _),
+  cube(a6, b4, c5, _),
+  cube(a5, b7, c10, _),
+  cube(a4, b10, c0, _),
+  cube(a3, b13, c5, _),
+  cube(a2, b1, c11, _),
+  cube(a1, b4, c1, _),
+  cube(a0, b7, c6, _),
+  cube(a14, b9, c11, _),
+  cube(a13, b12, c1, _),
+  cube(a12, b0, c7, _),
+  cube(a11, b3, c12, _),
+  cube(a10, b6, c2, _),
+  cube(a9, b9, c7, _),
+  cube(a8, b12, c12, _),
+  cube(a7, b0, c3, _),
+  cube(a6, b3, c8, _),
+  cube(a5, b6, c13, _),
+  cube(a4, b9, c3, _),
+  cube(a3, b12, c8, _),
+  cube(a2, b0, c14, _),
+  cube(a1, b3, c4, _),
+  cube(a0, b6, c9, _),
+  cube(a14, b8, c14, _),
+  cube(a13, b11, c4, _),
+  cube(a12, b14, c9, _),
+  cube(a11, b2, c0, _),
+  cube(a10, b5, c5, _),
+  cube(a9, b8, c10, _),
+  cube(a8, b11, c0, _),
+  cube(a7, b14, c5, _),
+  cube(a6, b2, c11, _),
+  cube(a5, b5, c1, _),
+  cube(a4, b8, c6, _),
+  cube(a3, b11, c11, _),
+  cube(a2, b14, c1, _),
+  cube(a1, b2, c7, _),
+  cube(a0, b5, c12, _),
+  cube(a14, b7, c2, _),
+  cube(a13, b10, c7, _),
+  cube(a12, b13, c12, _),
+  cube(a11, b1, c3, _),
+  cube(a10, b4, c8, _),
+  cube(a9, b7, c13, _),
+  cube(a8, b10, c3, _),
+  cube(a7, b13, c8, _),
+  cube(a6, b1, c14, _),
+  cube(a5, b4, c4, _),
+  cube(a4, b7, c9, _),
+  cube(a3, b10, c14, _),
+  cube(a2, b13, c4, _),
+  cube(a1, b1, c10, _),
+  cube(a0, b4, c0, _),
+  cube(a14, b6, c5, _),
+  cube(a13, b9, c10, _),
+  cube(a12, b12, c0, _),
+  cube(a11, b0, c6, _),
+  cube(a10, b3, c11, _),
+  cube(a9, b6, c1, _),
+  cube(a8, b9, c6, _),
+  cube(a7, b12, c11, _),
+  cube(a6, b0, c2, _),
+  cube(a5, b3, c7, _),
+  cube(a4, b6, c12, _),
+  cube(a3, b9, c2, _),
+  cube(a2, b12, c7, _),
+  cube(a1, b0, c13, _),
+  cube(a0, b3, c3, _),
+  cube(a14, b5, c8, _),
+  cube(a13, b8, c13, _),
+  cube(a12, b11, c3, _),
+  cube(a11, b14, c8, _),
+  cube(a10, b2, c14, _),
+  cube(a9, b5, c4, _),
+  cube(a8, b8, c9, _),
+  cube(a7, b11, c14, _),
+  cube(a6, b14, c4, _),
+  cube(a5, b2, c10, _),
+  cube(a4, b5, c0, _),
+  cube(a3, b8, c5, _),
+  cube(a2, b11, c10, _),
+  cube(a1, b14, c0, _),
+  cube(a0, b2, c6, _),
+  cube(a14, b4, c11, _),
+  cube(a13, b7, c1, _),
+  cube(a12, b10, c6, _),
+  cube(a11, b13, c11, _),
+  cube(a10, b1, c2, _),
+  cube(a9, b4, c7, _),
+  cube(a8, b7, c12, _),
+  cube(a7, b10, c2, _),
+  cube(a6, b13, c7, _),
+  cube(a5, b1, c13, _),
+  cube(a4, b4, c3, _),
+  cube(a3, b7, c8, _),
+  cube(a2, b10, c13, _),
+  cube(a1, b13, c3, _),
+  cube(a0, b1, c9, _),
+  cube(a14, b3, c14, _),
+  cube(a13, b6, c4, _),
+  cube(a12, b9, c9, _),
+  cube(a11, b12, c14, _),
+  cube(a10, b0, c5, _),
+  cube(a9, b3, c10, _),
+  cube(a8, b6, c0, _),
+  cube(a7, b9, c5, _),
+  cube(a6, b12, c10, _),
+  cube(a5, b0, c1, _),
+  cube(a4, b3, c6, _),
+  cube(a3, b6, c11, _),
+  cube(a2, b9, c1, _),
+  cube(a1, b12, c6, _),
+  cube(a0, b0, c12, _),
+  cube(a14, b2, c2, _),
+  cube(a13, b5, c7, _),
+  cube(a12, b8, c12, _),
+  cube(a11, b11, c2, _),
+  cube(a10, b14, c7, _),
+  cube(a9, b2, c13, _),
+  cube(a8, b5, c3, _),
+  cube(a7, b8, c8, _),
+  cube(a6, b11, c13, _),
+  cube(a5, b14, c3, _),
+  cube(a4, b2, c9, _),
+  cube(a3, b5, c14, _),
+  cube(a2, b8, c4, _),
+  cube(a1, b11, c9, _),
+  cube(a0, b14, c14, _),
+  cube(a14, b1, c5, _),
+  cube(a13, b4, c10, _),
+  cube(a12, b7, c0, _),
+  cube(a11, b10, c5, _),
+  cube(a10, b13, c10, _),
+  cube(a9, b1, c1, _),
+  cube(a8, b4, c6, _),
+  cube(a7, b7, c11, _),
+  cube(a6, b10, c1, _),
+  cube(a5, b13, c6, _),
+  cube(a4, b1, c12, _),
+  cube(a3, b4, c2, _),
+  cube(a2, b7, c7, _),
+  cube(a1, b10, c12, _),
+  cube(a0, b13, c2, _),
+  cube(a14, b0, c8, _),
+  cube(a13, b3, c13, _),
+  cube(a12, b6, c3, _),
+  cube(a11, b9, c8, _),
+  cube(a10, b12, c13, _),
+  cube(a9, b0, c4, _),
+  cube(a8, b3, c9, _),
+  cube(a7, b6, c14, _),
+  cube(a6, b9, c4, _),
+  cube(a5, b12, c9, _),
+  cube(a4, b0, c0, _),
+  cube(a3, b3, c5, _),
+  cube(a2, b6, c10, _),
+  cube(a1, b9, c0, _),
+  cube(a0, b12, c5, _),
+  cube(a14, b14, c10, _),
+  cube(a13, b2, c1, _),
+  cube(a12, b5, c6, _),
+  cube(a11, b8, c11, _),
+  cube(a10, b11, c1, _),
+  cube(a9, b14, c6, _),
+  cube(a8, b2, c12, _),
+  cube(a7, b5, c2, _),
+  cube(a6, b8, c7, _),
+  cube(a5, b11, c12, _),
+  cube(a4, b14, c2, _),
+  cube(a3, b2, c8, _),
+  cube(a2, b5, c13, _),
+  cube(a1, b8, c3, _),
+  cube(a0, b11, c8, _),
+  cube(a14, b13, c13, _),
+  cube(a13, b1, c4, _),
+  cube(a12, b4, c9, _),
+  cube(a11, b7, c14, _),
+  cube(a10, b10, c4, _),
+  cube(a9, b13, c9, _),
+  cube(a8, b1, c0, _),
+  cube(a7, b4, c5, _),
+  cube(a6, b7, c10, _),
+  cube(a5, b10, c0, _),
+  cube(a4, b13, c5, _),
+  cube(a3, b1, c11, _),
+  cube(a2, b4, c1, _),
+  cube(a1, b7, c6, _),
+  cube(a0, b10, c11, _),
+  cube(a14, b12, c1, _),
+  cube(a13, b0, c7, _),
+  cube(a12, b3, c12, _),
+  cube(a11, b6, c2, _),
+  cube(a10, b9, c7, _),
+  cube(a9, b12, c12, _),
+  cube(a8, b0, c3, _),
+  cube(a7, b3, c8, _),
+  cube(a6, b6, c13, _),
+  cube(a5, b9, c3, _),
+  cube(a4, b12, c8, _),
+  cube(a3, b0, c14, _),
+  cube(a2, b3, c4, _),
+  cube(a1, b6, c9, _),
+  cube(a0, b9, c14, _),
+  cube(a14, b11, c4, _),
+  cube(a13, b14, c9, _),
+  cube(a12, b2, c0, _),
+  cube(a11, b5, c5, _),
+  cube(a10, b8, c10, _),
+  cube(a9, b11, c0, _),
+  cube(a8, b14, c5, _),
+  cube(a7, b2, c11, _),
+  cube(a6, b5, c1, _),
+  cube(a5, b8, c6, _),
+  cube(a4, b11, c11, _),
+  cube(a3, b14, c1, _),
+  cube(a2, b2, c7, _),
+  cube(a1, b5, c12, _),
+  cube(a0, b8, c2, _),
+  cube(a14, b10, c7, _),
+  cube(a13, b13, c12, _),
+  cube(a12, b1, c3, _),
+  cube(a11, b4, c8, _),
+  cube(a10, b7, c13, _),
+  cube(a9, b10, c3, _),
+  cube(a8, b13, c8, _),
+  cube(a7, b1, c14, _),
+  cube(a6, b4, c4, _),
+  cube(a5, b7, c9, _),
+  cube(a4, b10, c14, _),
+  cube(a3, b13, c4, _),
+  cube(a2, b1, c10, _),
+  cube(a1, b4, c0, _),
+  cube(a0, b7, c5, _),
+  cube(a14, b9, c10, _),
+  cube(a13, b12, c0, _),
+  cube(a12, b0, c6, _),
+  cube(a11, b3, c11, _),
+  cube(a10, b6, c1, _),
+  cube(a9, b9, c6, _),
+  cube(a8, b12, c11, _),
+  cube(a7, b0, c2, _),
+  cube(a6, b3, c7, _),
+  cube(a5, b6, c12, _),
+  cube(a4, b9, c2, _),
+  cube(a3, b12, c7, _),
+  cube(a2, b0, c13, _),
+  cube(a1, b3, c3, _),
+  cube(a0, b6, c8, _),
+  cube(a14, b8, c13, _),
+  cube(a13, b11, c3, _),
+  cube(a12, b14, c8, _),
+  cube(a11, b2, c14, _),
+  cube(a10, b5, c4, _),
+  cube(a9, b8, c9, _),
+  cube(a8, b11, c14, _),
+  cube(a7, b14, c4, _),
+  cube(a6, b2, c10, _),
+  cube(a5, b5, c0, _),
+  cube(a4, b8, c5, _),
+  cube(a3, b11, c10, _),
+  cube(a2, b14, c0, _),
+  cube(a1, b2, c6, _),
+  cube(a0, b5, c11, _),
+  cube(a14, b7, c1, _),
+  cube(a13, b10, c6, _),
+  cube(a12, b13, c11, _),
+  cube(a11, b1, c2, _),
+  cube(a10, b4, c7, _),
+  cube(a9, b7, c12, _),
+  cube(a8, b10, c2, _),
+  cube(a7, b13, c7, _),
+  cube(a6, b1, c13, _),
+  cube(a5, b4, c3, _),
+  cube(a4, b7, c8, _),
+  cube(a3, b10, c13, _),
+  cube(a2, b13, c3, _),
+  cube(a1, b1, c9, _),
+  cube(a0, b4, c14, _),
+  cube(a14, b6, c4, _),
+  cube(a13, b9, c9, _),
+  cube(a12, b12, c14, _),
+  cube(a11, b0, c5, _),
+  cube(a10, b3, c10, _),
+  cube(a9, b6, c0, _),
+  cube(a8, b9, c5, _),
+  cube(a7, b12, c10, _),
+  cube(a6, b0, c1, _),
+  cube(a5, b3, c6, _),
+  cube(a4, b6, c11, _),
+  cube(a3, b9, c1, _),
+  cube(a2, b12, c6, _),
+  cube(a1, b0, c12, _),
+  cube(a0, b3, c2, _),
+  cube(a14, b5, c7, _),
+  cube(a13, b8, c12, _),
+  cube(a12, b11, c2, _),
+  cube(a11, b14, c7, _),
+  cube(a10, b2, c13, _),
+  cube(a9, b5, c3, _),
+  cube(a8, b8, c8, _),
+  cube(a7, b11, c13, _),
+  cube(a6, b14, c3, _),
+  cube(a5, b2, c9, _),
+  cube(a4, b5, c14, _),
+  cube(a3, b8, c4, _),
+  cube(a2, b11, c9, _),
+  cube(a1, b14, c14, _),
+  cube(a0, b2, c5, _),
+  cube(a14, b4, c10, _),
+  cube(a13, b7, c0, _),
+  cube(a12, b10, c5, _),
+  cube(a11, b13, c10, _),
+  cube(a10, b1, c1, _),
+  cube(a9, b4, c6, _),
+  cube(a8, b7, c11, _),
+  cube(a7, b10, c1, _),
+  cube(a6, b13, c6, _),
+  cube(a5, b1, c12, _),
+  cube(a4, b4, c2, _),
+  cube(a3, b7, c7, _),
+  cube(a2, b10, c12, _),
+  cube(a1, b13, c2, _),
+  cube(a0, b1, c8, _),
+  cube(a14, b3, c13, _),
+  cube(a13, b6, c3, _),
+  cube(a12, b9, c8, _),
+  cube(a11, b12, c13, _),
+  cube(a10, b0, c4, _),
+  cube(a9, b3, c9, _),
+  cube(a8, b6, c14, _),
+  cube(a7, b9, c4, _),
+  cube(a6, b12, c9, _),
+  cube(a5, b0, c0, _),
+  cube(a4, b3, c5, _),
+  cube(a3, b6, c10, _),
+  cube(a2, b9, c0, _),
+  cube(a1, b12, c5, _),
+  cube(a0, b0, c11, _),
+  cube(a14, b2, c1, _),
+  cube(a13, b5, c6, _),
+  cube(a12, b8, c11, _),
+  cube(a11, b11, c1, _),
+  cube(a10, b14, c6, _),
+  cube(a9, b2, c12, _),
+  cube(a8, b5, c2, _),
+  cube(a7, b8, c7, _),
+  cube(a6, b11, c12, _),
+  cube(a5, b14, c2, _),
+  cube(a4, b2, c8, _),
+  cube(a3, b5, c13, _),
+  cube(a2, b8, c3, _),
+  cube(a1, b11, c8, _),
+  cube(a0, b14, c13, _),
+  cube(a14, b1, c4, _),
+  cube(a13, b4, c9, _),
+  cube(a12, b7, c14, _),
+  cube(a11, b10, c4, _),
+  cube(a10, b13, c9, _),
+  cube(a9, b1, c0, _),
+  cube(a8, b4, c5, _),
+  cube(a7, b7, c10, _),
+  cube(a6, b10, c0, _),
+  cube(a5, b13, c5, _),
+  cube(a4, b1, c11, _),
+  cube(a3, b4, c1, _),
+  cube(a2, b7, c6, _),
+  cube(a1, b10, c11, _),
+  cube(a0, b13, c1, _),
+  cube(a14, b0, c7, _),
+  cube(a13, b3, c12, _),
+  cube(a12, b6, c2, _),
+  cube(a11, b9, c7, _),
+  cube(a10, b12, c12, _),
+  cube(a9, b0, c3, _),
+  cube(a8, b3, c8, _),
+  cube(a7, b6, c13, _),
+  cube(a6, b9, c3, _),
+  cube(a5, b12, c8, _),
+  cube(a4, b0, c14, _),
+  cube(a3, b3, c4, _),
+  cube(a2, b6, c9, _),
+  cube(a1, b9, c14, _),
+  cube(a0, b12, c4, _),
+  cube(a14, b14, c9, _),
+  cube(a13, b2, c0, _),
+  cube(a12, b5, c5, _),
+  cube(a11, b8, c10, _),
+  cube(a10, b11, c0, _),
+  cube(a9, b14, c5, _),
+  cube(a8, b2, c11, _),
+  cube(a7, b5, c1, _),
+  cube(a6, b8, c6, _),
+  cube(a5, b11, c11, _),
+  cube(a4, b14, c1, _),
+  cube(a3, b2, c7, _),
+  cube(a2, b5, c12, _),
+  cube(a1, b8, c2, _),
+  cube(a0, b11, c7, _),
+  cube(a14, b13, c12, _),
+  cube(a13, b1, c3, _),
+  cube(a12, b4, c8, _),
+  cube(a11, b7, c13, _),
+  cube(a10, b10, c3, _),
+  cube(a9, b13, c8, _),
+  cube(a8, b1, c14, _),
+  cube(a7, b4, c4, _),
+  cube(a6, b7, c9, _),
+  cube(a5, b10, c14, _),
+  cube(a4, b13, c4, _),
+  cube(a3, b1, c10, _),
+  cube(a2, b4, c0, _),
+  cube(a1, b7, c5, _),
+  cube(a0, b10, c10, _),
+  cube(a14, b12, c0, _),
+  cube(a13, b0, c6, _),
+  cube(a12, b3, c11, _),
+  cube(a11, b6, c1, _),
+  cube(a10, b9, c6, _),
+  cube(a9, b12, c11, _),
+  cube(a8, b0, c2, _),
+  cube(a7, b3, c7, _),
+  cube(a6, b6, c12, _),
+  cube(a5, b9, c2, _),
+  cube(a4, b12, c7, _),
+  cube(a3, b0, c13, _),
+  cube(a2, b3, c3, _),
+  cube(a1, b6, c8, _),
+  cube(a0, b9, c13, _),
+  cube(a14, b11, c3, _),
+  cube(a13, b14, c8, _),
+  cube(a12, b2, c14, _),
+  cube(a11, b5, c4, _),
+  cube(a10, b8, c9, _),
+  cube(a9, b11, c14, _),
+  cube(a8, b14, c4, _),
+  cube(a7, b2, c10, _),
+  cube(a6, b5, c0, _),
+  cube(a5, b8, c5, _),
+  cube(a4, b11, c10, _),
+  cube(a3, b14, c0, _),
+  cube(a2, b2, c6, _),
+  cube(a1, b5, c11, _),
+  cube(a0, b8, c1, _),
+  cube(a14, b10, c6, _),
+  cube(a13, b13, c11, _),
+  cube(a12, b1, c2, _),
+  cube(a11, b4, c7, _),
+  cube(a10, b7, c12, _),
+  cube(a9, b10, c2, _),
+  cube(a8, b13, c7, _),
+  cube(a7, b1, c13, _),
+  cube(a6, b4, c3, _),
+  cube(a5, b7, c8, _),
+  cube(a4, b10, c13, _),
+  cube(a3, b13, c3, _),
+  cube(a2, b1, c9, _),
+  cube(a1, b4, c14, _),
+  cube(a0, b7, c4, _),
+  cube(a14, b9, c9, _),
+  cube(a13, b12, c14, _),
+  cube(a12, b0, c5, _),
+  cube(a11, b3, c10, _),
+  cube(a10, b6, c0, _),
+  cube(a9, b9, c5, _),
+  cube(a8, b12, c10, _),
+  cube(a7, b0, c1, _),
+  cube(a6, b3, c6, _),
+  cube(a5, b6, c11, _),
+  cube(a4, b9, c1, _),
+  cube(a3, b12, c6, _),
+  cube(a2, b0, c12, _),
+  cube(a1, b3, c2, _),
+  cube(a0, b6, c7, _),
+  cube(a14, b8, c12, _),
+  cube(a13, b11, c2, _),
+  cube(a12, b14, c7, _),
+  cube(a11, b2, c13, _),
+  cube(a10, b5, c3, _),
+  cube(a9, b8, c8, _),
+  cube(a8, b11, c13, _),
+  cube(a7, b14, c3, _),
+  cube(a6, b2, c9, _),
+  cube(a5, b5, c14, _),
+  cube(a4, b8, c4, _),
+  cube(a3, b11, c9, _),
+  cube(a2, b14, c14, _),
+  cube(a1, b2, c5, _),
+  cube(a0, b5, c10, _),
+  cube(a14, b7, c0, _),
+  cube(a13, b10, c5, _),
+  cube(a12, b13, c10, _),
+  cube(a11, b1, c1, _),
+  cube(a10, b4, c6, _),
+  cube(a9, b7, c11, _),
+  cube(a8, b10, c1, _),
+  cube(a7, b13, c6, _),
+  cube(a6, b1, c12, _),
+  cube(a5, b4, c2, _),
+  cube(a4, b7, c7, _),
+  cube(a3, b10, c12, _),
+  cube(a2, b13, c2, _),
+  cube(a1, b1, c8, _),
+  cube(a0, b4, c13, _),
+  cube(a14, b6, c3, _),
+  cube(a13, b9, c8, _),
+  cube(a12, b12, c13, _),
+  cube(a11, b0, c4, _),
+  cube(a10, b3, c9, _),
+  cube(a9, b6, c14, _),
+  cube(a8, b9, c4, _),
+  cube(a7, b12, c9, _),
+  cube(a6, b0, c0, _),
+  cube(a5, b3, c5, _),
+  cube(a4, b6, c10, _),
+  cube(a3, b9, c0, _),
+  cube(a2, b12, c5, _),
+  cube(a1, b0, c11, _),
+  cube(a0, b3, c1, _),
+  cube(a14, b5, c6, _),
+  cube(a13, b8, c11, _),
+  cube(a12, b11, c1, _),
+  cube(a11, b14, c6, _),
+  cube(a10, b2, c12, _),
+  cube(a9, b5, c2, _),
+  cube(a8, b8, c7, _),
+  cube(a7, b11, c12, _),
+  cube(a6, b14, c2, _),
+  cube(a5, b2, c8, _),
+  cube(a4, b5, c13, _),
+  cube(a3, b8, c3, _),
+  cube(a2, b11, c8, _),
+  cube(a1, b14, c13, _),
+  cube(a0, b2, c4, _),
+  cube(a14, b4, c9, _),
+  cube(a13, b7, c14, _),
+  cube(a12, b10, c4, _),
+  cube(a11, b13, c9, _),
+  cube(a10, b1, c0, _),
+  cube(a9, b4, c5, _),
+  cube(a8, b7, c10, _),
+  cube(a7, b10, c0, _),
+  cube(a6, b13, c5, _),
+  cube(a5, b1, c11, _),
+  cube(a4, b4, c1, _),
+  cube(a3, b7, c6, _),
+  cube(a2, b10, c11, _),
+  cube(a1, b13, c1, _),
+  cube(a0, b1, c7, _),
+  cube(a14, b3, c12, _),
+  cube(a13, b6, c2, _),
+  cube(a12, b9, c7, _),
+  cube(a11, b12, c12, _),
+  cube(a10, b0, c3, _),
+  cube(a9, b3, c8, _),
+  cube(a8, b6, c13, _),
+  cube(a7, b9, c3, _),
+  cube(a6, b12, c8, _),
+  cube(a5, b0, c14, _),
+  cube(a4, b3, c4, _),
+  cube(a3, b6, c9, _),
+  cube(a2, b9, c14, _),
+  cube(a1, b12, c4, _),
+  cube(a0, b0, c10, _),
+  cube(a14, b2, c0, _),
+  cube(a13, b5, c5, _),
+  cube(a12, b8, c10, _),
+  cube(a11, b11, c0, _),
+  cube(a10, b14, c5, _),
+  cube(a9, b2, c11, _),
+  cube(a8, b5, c1, _),
+  cube(a7, b8, c6, _),
+  cube(a6, b11, c11, _),
+  cube(a5, b14, c1, _),
+  cube(a4, b2, c7, _),
+  cube(a3, b5, c12, _),
+  cube(a2, b8, c2, _),
+  cube(a1, b11, c7, _),
+  cube(a0, b14, c12, _),
+  cube(a14, b1, c3, _),
+  cube(a13, b4, c8, _),
+  cube(a12, b7, c13, _),
+  cube(a11, b10, c3, _),
+  cube(a10, b13, c8, _),
+  cube(a9, b1, c14, _),
+  cube(a8, b4, c4, _),
+  cube(a7, b7, c9, _),
+  cube(a6, b10, c14, _),
+  cube(a5, b13, c4, _),
+  cube(a4, b1, c10, _),
+  cube(a3, b4, c0, _),
+  cube(a2, b7, c5, _),
+  cube(a1, b10, c10, _),
+  cube(a0, b13, c0, _),
+  cube(a14, b0, c6, _),
+  cube(a13, b3, c11, _),
+  cube(a12, b6, c1, _),
+  cube(a11, b9, c6, _),
+  cube(a10, b12, c11, _),
+  cube(a9, b0, c2, _),
+  cube(a8, b3, c7, _),
+  cube(a7, b6, c12, _),
+  cube(a6, b9, c2, _),
+  cube(a5, b12, c7, _),
+  cube(a4, b0, c13, _),
+  cube(a3, b3, c3, _),
+  cube(a2, b6, c8, _),
+  cube(a1, b9, c13, _),
+  cube(a0, b12, c3, _),
+  cube(a14, b14, c8, _),
+  cube(a13, b2, c14, _),
+  cube(a12, b5, c4, _),
+  cube(a11, b8, c9, _),
+  cube(a10, b11, c14, _),
+  cube(a9, b14, c4, _),
+  cube(a8, b2, c10, _),
+  cube(a7, b5, c0, _),
+  cube(a6, b8, c5, _),
+  cube(a5, b11, c10, _),
+  cube(a4, b14, c0, _),
+  cube(a3, b2, c6, _),
+  cube(a2, b5, c11, _),
+  cube(a1, b8, c1, _),
+  cube(a0, b11, c6, _),
+  cube(a14, b13, c11, _),
+  cube(a13, b1, c2, _),
+  cube(a12, b4, c7, _),
+  cube(a11, b7, c12, _),
+  cube(a10, b10, c2, _),
+  cube(a9, b13, c7, _),
+  cube(a8, b1, c13, _),
+  cube(a7, b4, c3, _),
+  cube(a6, b7, c8, _),
+  cube(a5, b10, c13, _),
+  cube(a4, b13, c3, _),
+  cube(a3, b1, c9, _),
+  cube(a2, b4, c14, _),
+  cube(a1, b7, c4, _),
+  cube(a0, b10, c9, _),
+  cube(a14, b12, c14, _),
+  cube(a13, b0, c5, _),
+  cube(a12, b3, c10, _),
+  cube(a11, b6, c0, _),
+  cube(a10, b9, c5, _),
+  cube(a9, b12, c10, _),
+  cube(a8, b0, c1, _),
+  cube(a7, b3, c6, _),
+  cube(a6, b6, c11, _),
+  cube(a5, b9, c1, _),
+  cube(a4, b12, c6, _),
+  cube(a3, b0, c12, _),
+  cube(a2, b3, c2, _),
+  cube(a1, b6, c7, _),
+  cube(a0, b9, c12, _),
+  cube(a14, b11, c2, _),
+  cube(a13, b14, c7, _),
+  cube(a12, b2, c13, _),
+  cube(a11, b5, c3, _),
+  cube(a10, b8, c8, _),
+  cube(a9, b11, c13, _),
+  cube(a8, b14, c3, _),
+  cube(a7, b2, c9, _),
+  cube(a6, b5, c14, _),
+  cube(a5, b8, c4, _),
+  cube(a4, b11, c9, _),
+  cube(a3, b14, c14, _),
+  cube(a2, b2, c5, _),
+  cube(a1, b5, c10, _),
+  cube(a0, b8, c0, _),
+  cube(a14, b10, c5, _),
+  cube(a13, b13, c10, _),
+  cube(a12, b1, c1, _),
+  cube(a11, b4, c6, _),
+  cube(a10, b7, c11, _),
+  cube(a9, b10, c1, _),
+  cube(a8, b13, c6, _),
+  cube(a7, b1, c12, _),
+  cube(a6, b4, c2, _),
+  cube(a5, b7, c7, _),
+  cube(a4, b10, c12, _),
+  cube(a3, b13, c2, _),
+  cube(a2, b1, c8, _),
+  cube(a1, b4, c13, _),
+  cube(a0, b7, c3, _),
+  cube(a14, b9, c8, _),
+  cube(a13, b12, c13, _),
+  cube(a12, b0, c4, _),
+  cube(a11, b3, c9, _),
+  cube(a10, b6, c14, _),
+  cube(a9, b9, c4, _),
+  cube(a8, b12, c9, _),
+  cube(a7, b0, c0, _),
+  cube(a6, b3, c5, _),
+  cube(a5, b6, c10, _),
+  cube(a4, b9, c0, _),
+  cube(a3, b12, c5, _),
+  cube(a2, b0, c11, _),
+  cube(a1, b3, c1, _),
+  cube(a0, b6, c6, _),
+  cube(a14, b8, c11, _),
+  cube(a13, b11, c1, _),
+  cube(a12, b14, c6, _),
+  cube(a11, b2, c12, _),
+  cube(a10, b5, c2, _),
+  cube(a9, b8, c7, _),
+  cube(a8, b11, c12, _),
+  cube(a7, b14, c2, _),
+  cube(a6, b2, c8, _),
+  cube(a5, b5, c13, _),
+  cube(a4, b8, c3, _),
+  cube(a3, b11, c8, _),
+  cube(a2, b14, c13, _),
+  cube(a1, b2, c4, _),
+  cube(a0, b5, c9, _),
+  cube(a14, b7, c14, _),
+  cube(a13, b10, c4, _),
+  cube(a12, b13, c9, _),
+  cube(a11, b1, c0, _),
+  cube(a10, b4, c5, _),
+  cube(a9, b7, c10, _),
+  cube(a8, b10, c0, _),
+  cube(a7, b13, c5, _),
+  cube(a6, b1, c11, _),
+  cube(a5, b4, c1, _),
+  cube(a4, b7, c6, _),
+  cube(a3, b10, c11, _),
+  cube(a2, b13, c1, _),
+  cube(a1, b1, c7, _),
+  cube(a0, b4, c12, _),
+  cube(a14, b6, c2, _),
+  cube(a13, b9, c7, _),
+  cube(a12, b12, c12, _),
+  cube(a11, b0, c3, _),
+  cube(a10, b3, c8, _),
+  cube(a9, b6, c13, _),
+  cube(a8, b9, c3, _),
+  cube(a7, b12, c8, _),
+  cube(a6, b0, c14, _),
+  cube(a5, b3, c4, _),
+  cube(a4, b6, c9, _),
+  cube(a3, b9, c14, _),
+  cube(a2, b12, c4, _),
+  cube(a1, b0, c10, _),
+  cube(a0, b3, c0, _),
+  cube(a14, b5, c5, _),
+  cube(a13, b8, c10, _),
+  cube(a12, b11, c0, _),
+  cube(a11, b14, c5, _),
+  cube(a10, b2, c11, _),
+  cube(a9, b5, c1, _),
+  cube(a8, b8, c6, _),
+  cube(a7, b11, c11, _),
+  cube(a6, b14, c1, _),
+  cube(a5, b2, c7, _),
+  cube(a4, b5, c12, _),
+  cube(a3, b8, c2, _),
+  cube(a2, b11, c7, _),
+  cube(a1, b14, c12, _),
+  cube(a0, b2, c3, _),
+  cube(a14, b4, c8, _),
+  cube(a13, b7, c13, _),
+  cube(a12, b10, c3, _),
+  cube(a11, b13, c8, _),
+  cube(a10, b1, c14, _),
+  cube(a9, b4, c4, _),
+  cube(a8, b7, c9, _),
+  cube(a7, b10, c14, _),
+  cube(a6, b13, c4, _),
+  cube(a5, b1, c10, _),
+  cube(a4, b4, c0, _),
+  cube(a3, b7, c5, _),
+  cube(a2, b10, c10, _),
+  cube(a1, b13, c0, _),
+  cube(a0, b1, c6, _),
+  cube(a14, b3, c11, _),
+  cube(a13, b6, c1, _),
+  cube(a12, b9, c6, _),
+  cube(a11, b12, c11, _),
+  cube(a10, b0, c2, _),
+  cube(a9, b3, c7, _),
+  cube(a8, b6, c12, _),
+  cube(a7, b9, c2, _),
+  cube(a6, b12, c7, _),
+  cube(a5, b0, c13, _),
+  cube(a4, b3, c3, _),
+  cube(a3, b6, c8, _),
+  cube(a2, b9, c13, _),
+  cube(a1, b12, c3, _),
+  cube(a0, b0, c9, _),
+  cube(a14, b2, c14, _),
+  cube(a13, b5, c4, _),
+  cube(a12, b8, c9, _),
+  cube(a11, b11, c14, _),
+  cube(a10, b14, c4, _),
+  cube(a9, b2, c10, _),
+  cube(a8, b5, c0, _),
+  cube(a7, b8, c5, _),
+  cube(a6, b11, c10, _),
+  cube(a5, b14, c0, _),
+  cube(a4, b2, c6, _),
+  cube(a3, b5, c11, _),
+  cube(a2, b8, c1, _),
+  cube(a1, b11, c6, _),
+  cube(a0, b14, c11, _),
+  cube(a14, b1, c2, _),
+  cube(a13, b4, c7, _),
+  cube(a12, b7, c12, _),
+  cube(a11, b10, c2, _),
+  cube(a10, b13, c7, _),
+  cube(a9, b1, c13, _),
+  cube(a8, b4, c3, _),
+  cube(a7, b7, c8, _),
+  cube(a6, b10, c13, _),
+  cube(a5, b13, c3, _),
+  cube(a4, b1, c9, _),
+  cube(a3, b4, c14, _),
+  cube(a2, b7, c4, _),
+  cube(a1, b10, c9, _),
+  cube(a0, b13, c14, _),
+  cube(a14, b0, c5, _),
+  cube(a13, b3, c10, _),
+  cube(a12, b6, c0, _),
+  cube(a11, b9, c5, _),
+  cube(a10, b12, c10, _),
+  cube(a9, b0, c1, _),
+  cube(a8, b3, c6, _),
+  cube(a7, b6, c11, _),
+  cube(a6, b9, c1, _),
+  cube(a5, b12, c6, _),
+  cube(a4, b0, c12, _),
+  cube(a3, b3, c2, _),
+  cube(a2, b6, c7, _),
+  cube(a1, b9, c12, _),
+  cube(a0, b12, c2, _),
+  cube(a14, b14, c7, _),
+  cube(a13, b2, c13, _),
+  cube(a12, b5, c3, _),
+  cube(a11, b8, c8, _),
+  cube(a10, b11, c13, _),
+  cube(a9, b14, c3, _),
+  cube(a8, b2, c9, _),
+  cube(a7, b5, c14, _),
+  cube(a6, b8, c4, _),
+  cube(a5, b11, c9, _),
+  cube(a4, b14, c14, _),
+  cube(a3, b2, c5, _),
+  cube(a2, b5, c10, _),
+  cube(a1, b8, c0, _),
+  cube(a0, b11, c5, _),
+  cube(a14, b13, c10, _),
+  cube(a13, b1, c1, _),
+  cube(a12, b4, c6, _),
+  cube(a11, b7, c11, _),
+  cube(a10, b10, c1, _),
+  cube(a9, b13, c6, _),
+  cube(a8, b1, c12, _),
+  cube(a7, b4, c2, _),
+  cube(a6, b7, c7, _),
+  cube(a5, b10, c12, _),
+  cube(a4, b13, c2, _),
+  cube(a3, b1, c8, _),
+  cube(a2, b4, c13, _),
+  cube(a1, b7, c3, _),
+  cube(a0, b10, c8, _),
+  cube(a14, b12, c13, _),
+  cube(a13, b0, c4, _),
+  cube(a12, b3, c9, _),
+  cube(a11, b6, c14, _),
+  cube(a10, b9, c4, _),
+  cube(a9, b12, c9, _),
+  cube(a8, b0, c0, _),
+  cube(a7, b3, c5, _),
+  cube(a6, b6, c10, _),
+  cube(a5, b9, c0, _),
+  cube(a4, b12, c5, _),
+  cube(a3, b0, c11, _),
+  cube(a2, b3, c1, _),
+  cube(a1, b6, c6, _),
+  cube(a0, b9, c11, _),
+  cube(a14, b11, c1, _),
+  cube(a13, b14, c6, _),
+  cube(a12, b2, c12, _),
+  cube(a11, b5, c2, _),
+  cube(a10, b8, c7, _),
+  cube(a9, b11, c12, _),
+  cube(a8, b14, c2, _),
+  cube(a7, b2, c8, _),
+  cube(a6, b5, c13, _),
+  cube(a5, b8, c3, _),
+  cube(a4, b11, c8, _),
+  cube(a3, b14, c13, _),
+  cube(a2, b2, c4, _),
+  cube(a1, b5, c9, _),
+  cube(a0, b8, c14, _),
+  cube(a14, b10, c4, _),
+  cube(a13, b13, c9, _),
+  cube(a12, b1, c0, _),
+  cube(a11, b4, c5, _),
+  cube(a10, b7, c10, _),
+  cube(a9, b10, c0, _),
+  cube(a8, b13, c5, _),
+  cube(a7, b1, c11, _),
+  cube(a6, b4, c1, _),
+  cube(a5, b7, c6, _),
+  cube(a4, b10, c11, _),
+  cube(a3, b13, c1, _),
+  cube(a2, b1, c7, _),
+  cube(a1, b4, c12, _),
+  cube(a0, b7, c2, _),
+  cube(a14, b9, c7, _),
+  cube(a13, b12, c12, _),
+  cube(a12, b0, c3, _),
+  cube(a11, b3, c8, _),
+  cube(a10, b6, c13, _),
+  cube(a9, b9, c3, _),
+  cube(a8, b12, c8, _),
+  cube(a7, b0, c14, _),
+  cube(a6, b3, c4, _),
+  cube(a5, b6, c9, _),
+  cube(a4, b9, c14, _),
+  cube(a3, b12, c4, _),
+  cube(a2, b0, c10, _),
+  cube(a1, b3, c0, _),
+  cube(a0, b6, c5, _),
+  cube(a14, b8, c10, _),
+  cube(a13, b11, c0, _),
+  cube(a12, b14, c5, _),
+  cube(a11, b2, c11, _),
+  cube(a10, b5, c1, _),
+  cube(a9, b8, c6, _),
+  cube(a8, b11, c11, _),
+  cube(a7, b14, c1, _),
+  cube(a6, b2, c7, _),
+  cube(a5, b5, c12, _),
+  cube(a4, b8, c2, _),
+  cube(a3, b11, c7, _),
+  cube(a2, b14, c12, _),
+  cube(a1, b2, c3, _),
+  cube(a0, b5, c8, _),
+  cube(a14, b7, c13, _),
+  cube(a13, b10, c3, _),
+  cube(a12, b13, c8, _),
+  cube(a11, b1, c14, _),
+  cube(a10, b4, c4, _),
+  cube(a9, b7, c9, _),
+  cube(a8, b10, c14, _),
+  cube(a7, b13, c4, _),
+  cube(a6, b1, c10, _),
+  cube(a5, b4, c0, _),
+  cube(a4, b7, c5, _),
+  cube(a3, b10, c10, _),
+  cube(a2, b13, c0, _),
+  cube(a1, b1, c6, _),
+  cube(a0, b4, c11, _),
+  cube(a14, b6, c1, _),
+  cube(a13, b9, c6, _),
+  cube(a12, b12, c11, _),
+  cube(a11, b0, c2, _),
+  cube(a10, b3, c7, _),
+  cube(a9, b6, c12, _),
+  cube(a8, b9, c2, _),
+  cube(a7, b12, c7, _),
+  cube(a6, b0, c13, _),
+  cube(a5, b3, c3, _),
+  cube(a4, b6, c8, _),
+  cube(a3, b9, c13, _),
+  cube(a2, b12, c3, _),
+  cube(a1, b0, c9, _),
+  cube(a0, b3, c14, _),
+  cube(a14, b5, c4, _),
+  cube(a13, b8, c9, _),
+  cube(a12, b11, c14, _),
+  cube(a11, b14, c4, _),
+  cube(a10, b2, c10, _),
+  cube(a9, b5, c0, _),
+  cube(a8, b8, c5, _),
+  cube(a7, b11, c10, _),
+  cube(a6, b14, c0, _),
+  cube(a5, b2, c6, _),
+  cube(a4, b5, c11, _),
+  cube(a3, b8, c1, _),
+  cube(a2, b11, c6, _),
+  cube(a1, b14, c11, _),
+  cube(a0, b2, c2, _),
+  cube(a14, b4, c7, _),
+  cube(a13, b7, c12, _),
+  cube(a12, b10, c2, _),
+  cube(a11, b13, c7, _),
+  cube(a10, b1, c13, _),
+  cube(a9, b4, c3, _),
+  cube(a8, b7, c8, _),
+  cube(a7, b10, c13, _),
+  cube(a6, b13, c3, _),
+  cube(a5, b1, c9, _),
+  cube(a4, b4, c14, _),
+  cube(a3, b7, c4, _),
+  cube(a2, b10, c9, _),
+  cube(a1, b13, c14, _),
+  cube(a0, b1, c5, _),
+  cube(a14, b3, c10, _),
+  cube(a13, b6, c0, _),
+  cube(a12, b9, c5, _),
+  cube(a11, b12, c10, _),
+  cube(a10, b0, c1, _),
+  cube(a9, b3, c6, _),
+  cube(a8, b6, c11, _),
+  cube(a7, b9, c1, _),
+  cube(a6, b12, c6, _),
+  cube(a5, b0, c12, _),
+  cube(a4, b3, c2, _),
+  cube(a3, b6, c7, _),
+  cube(a2, b9, c12, _),
+  cube(a1, b12, c2, _),
+  cube(a0, b0, c8, _),
+  cube(a14, b2, c13, _),
+  cube(a13, b5, c3, _),
+  cube(a12, b8, c8, _),
+  cube(a11, b11, c13, _),
+  cube(a10, b14, c3, _),
+  cube(a9, b2, c9, _),
+  cube(a8, b5, c14, _),
+  cube(a7, b8, c4, _),
+  cube(a6, b11, c9, _),
+  cube(a5, b14, c14, _),
+  cube(a4, b2, c5, _),
+  cube(a3, b5, c10, _),
+  cube(a2, b8, c0, _),
+  cube(a1, b11, c5, _),
+  cube(a0, b14, c10, _),
+  cube(a14, b1, c1, _),
+  cube(a13, b4, c6, _),
+  cube(a12, b7, c11, _),
+  cube(a11, b10, c1, _),
+  cube(a10, b13, c6, _),
+  cube(a9, b1, c12, _),
+  cube(a8, b4, c2, _),
+  cube(a7, b7, c7, _),
+  cube(a6, b10, c12, _),
+  cube(a5, b13, c2, _),
+  cube(a4, b1, c8, _),
+  cube(a3, b4, c13, _),
+  cube(a2, b7, c3, _),
+  cube(a1, b10, c8, _),
+  cube(a0, b13, c13, _),
+  cube(a14, b0, c4, _),
+  cube(a13, b3, c9, _),
+  cube(a12, b6, c14, _),
+  cube(a11, b9, c4, _),
+  cube(a10, b12, c9, _),
+  cube(a9, b0, c0, _),
+  cube(a8, b3, c5, _),
+  cube(a7, b6, c10, _),
+  cube(a6, b9, c0, _),
+  cube(a5, b12, c5, _),
+  cube(a4, b0, c11, _),
+  cube(a3, b3, c1, _),
+  cube(a2, b6, c6, _),
+  cube(a1, b9, c11, _),
+  cube(a0, b12, c1, _),
+  cube(a14, b14, c6, _),
+  cube(a13, b2, c12, _),
+  cube(a12, b5, c2, _),
+  cube(a11, b8, c7, _),
+  cube(a10, b11, c12, _),
+  cube(a9, b14, c2, _),
+  cube(a8, b2, c8, _),
+  cube(a7, b5, c13, _),
+  cube(a6, b8, c3, _),
+  cube(a5, b11, c8, _),
+  cube(a4, b14, c13, _),
+  cube(a3, b2, c4, _),
+  cube(a2, b5, c9, _),
+  cube(a1, b8, c14, _),
+  cube(a0, b11, c4, _),
+  cube(a14, b13, c9, _),
+  cube(a13, b1, c0, _),
+  cube(a12, b4, c5, _),
+  cube(a11, b7, c10, _),
+  cube(a10, b10, c0, _),
+  cube(a9, b13, c5, _),
+  cube(a8, b1, c11, _),
+  cube(a7, b4, c1, _),
+  cube(a6, b7, c6, _),
+  cube(a5, b10, c11, _),
+  cube(a4, b13, c1, _),
+  cube(a3, b1, c7, _),
+  cube(a2, b4, c12, _),
+  cube(a1, b7, c2, _),
+  cube(a0, b10, c7, _),
+  cube(a14, b12, c12, _),
+  cube(a13, b0, c3, _),
+  cube(a12, b3, c8, _),
+  cube(a11, b6, c13, _),
+  cube(a10, b9, c3, _),
+  cube(a9, b12, c8, _),
+  cube(a8, b0, c14, _),
+  cube(a7, b3, c4, _),
+  cube(a6, b6, c9, _),
+  cube(a5, b9, c14, _),
+  cube(a4, b12, c4, _),
+  cube(a3, b0, c10, _),
+  cube(a2, b3, c0, _),
+  cube(a1, b6, c5, _),
+  cube(a0, b9, c10, _),
+  cube(a14, b11, c0, _),
+  cube(a13, b14, c5, _),
+  cube(a12, b2, c11, _),
+  cube(a11, b5, c1, _),
+  cube(a10, b8, c6, _),
+  cube(a9, b11, c11, _),
+  cube(a8, b14, c1, _),
+  cube(a7, b2, c7, _),
+  cube(a6, b5, c12, _),
+  cube(a5, b8, c2, _),
+  cube(a4, b11, c7, _),
+  cube(a3, b14, c12, _),
+  cube(a2, b2, c3, _),
+  cube(a1, b5, c8, _),
+  cube(a0, b8, c13, _),
+  cube(a14, b10, c3, _),
+  cube(a13, b13, c8, _),
+  cube(a12, b1, c14, _),
+  cube(a11, b4, c4, _),
+  cube(a10, b7, c9, _),
+  cube(a9, b10, c14, _),
+  cube(a8, b13, c4, _),
+  cube(a7, b1, c10, _),
+  cube(a6, b4, c0, _),
+  cube(a5, b7, c5, _),
+  cube(a4, b10, c10, _),
+  cube(a3, b13, c0, _),
+  cube(a2, b1, c6, _),
+  cube(a1, b4, c11, _),
+  cube(a0, b7, c1, _),
+  cube(a14, b9, c6, _),
+  cube(a13, b12, c11, _),
+  cube(a12, b0, c2, _),
+  cube(a11, b3, c7, _),
+  cube(a10, b6, c12, _),
+  cube(a9, b9, c2, _),
+  cube(a8, b12, c7, _),
+  cube(a7, b0, c13, _),
+  cube(a6, b3, c3, _),
+  cube(a5, b6, c8, _),
+  cube(a4, b9, c13, _),
+  cube(a3, b12, c3, _),
+  cube(a2, b0, c9, _),
+  cube(a1, b3, c14, _),
+  cube(a0, b6, c4, _),
+  cube(a14, b8, c9, _),
+  cube(a13, b11, c14, _),
+  cube(a12, b14, c4, _),
+  cube(a11, b2, c10, _),
+  cube(a10, b5, c0, _),
+  cube(a9, b8, c5, _),
+  cube(a8, b11, c10, _),
+  cube(a7, b14, c0, _),
+  cube(a6, b2, c6, _),
+  cube(a5, b5, c11, _),
+  cube(a4, b8, c1, _),
+  cube(a3, b11, c6, _),
+  cube(a2, b14, c11, _),
+  cube(a1, b2, c2, _),
+  cube(a0, b5, c7, _),
+  cube(a14, b7, c12, _),
+  cube(a13, b10, c2, _),
+  cube(a12, b13, c7, _),
+  cube(a11, b1, c13, _),
+  cube(a10, b4, c3, _),
+  cube(a9, b7, c8, _),
+  cube(a8, b10, c13, _),
+  cube(a7, b13, c3, _),
+  cube(a6, b1, c9, _),
+  cube(a5, b4, c14, _),
+  cube(a4, b7, c4, _),
+  cube(a3, b10, c9, _),
+  cube(a2, b13, c14, _),
+  cube(a1, b1, c5, _),
+  cube(a0, b4, c10, _),
+  cube(a14, b6, c0, _),
+  cube(a13, b9, c5, _),
+  cube(a12, b12, c10, _),
+  cube(a11, b0, c1, _),
+  cube(a10, b3, c6, _),
+  cube(a9, b6, c11, _),
+  cube(a8, b9, c1, _),
+  cube(a7, b12, c6, _),
+  cube(a6, b0, c12, _),
+  cube(a5, b3, c2, _),
+  cube(a4, b6, c7, _),
+  cube(a3, b9, c12, _),
+  cube(a2, b12, c2, _),
+  cube(a1, b0, c8, _),
+  cube(a0, b3, c13, _),
+  cube(a14, b5, c3, _),
+  cube(a13, b8, c8, _),
+  cube(a12, b11, c13, _),
+  cube(a11, b14, c3, _),
+  cube(a10, b2, c9, _),
+  cube(a9, b5, c14, _),
+  cube(a8, b8, c4, _),
+  cube(a7, b11, c9, _),
+  cube(a6, b14, c14, _),
+  cube(a5, b2, c5, _),
+  cube(a4, b5, c10, _),
+  cube(a3, b8, c0, _),
+  cube(a2, b11, c5, _),
+  cube(a1, b14, c10, _),
+  cube(a0, b2, c1, _),
+  cube(a14, b4, c6, _),
+  cube(a13, b7, c11, _),
+  cube(a12, b10, c1, _),
+  cube(a11, b13, c6, _),
+  cube(a10, b1, c12, _),
+  cube(a9, b4, c2, _),
+  cube(a8, b7, c7, _),
+  cube(a7, b10, c12, _),
+  cube(a6, b13, c2, _),
+  cube(a5, b1, c8, _),
+  cube(a4, b4, c13, _),
+  cube(a3, b7, c3, _),
+  cube(a2, b10, c8, _),
+  cube(a1, b13, c13, _),
+  cube(a0, b1, c4, _),
+  cube(a14, b3, c9, _),
+  cube(a13, b6, c14, _),
+  cube(a12, b9, c4, _),
+  cube(a11, b12, c9, _),
+  cube(a10, b0, c0, _),
+  cube(a9, b3, c5, _),
+  cube(a8, b6, c10, _),
+  cube(a7, b9, c0, _),
+  cube(a6, b12, c5, _),
+  cube(a5, b0, c11, _),
+  cube(a4, b3, c1, _),
+  cube(a3, b6, c6, _),
+  cube(a2, b9, c11, _),
+  cube(a1, b12, c1, _),
+  cube(a0, b0, c7, _),
+  cube(a14, b2, c12, _),
+  cube(a13, b5, c2, _),
+  cube(a12, b8, c7, _),
+  cube(a11, b11, c12, _),
+  cube(a10, b14, c2, _),
+  cube(a9, b2, c8, _),
+  cube(a8, b5, c13, _),
+  cube(a7, b8, c3, _),
+  cube(a6, b11, c8, _),
+  cube(a5, b14, c13, _),
+  cube(a4, b2, c4, _),
+  cube(a3, b5, c9, _),
+  cube(a2, b8, c14, _),
+  cube(a1, b11, c4, _),
+  cube(a0, b14, c9, _),
+  cube(a14, b1, c0, _),
+  cube(a13, b4, c5, _),
+  cube(a12, b7, c10, _),
+  cube(a11, b10, c0, _),
+  cube(a10, b13, c5, _),
+  cube(a9, b1, c11, _),
+  cube(a8, b4, c1, _),
+  cube(a7, b7, c6, _),
+  cube(a6, b10, c11, _),
+  cube(a5, b13, c1, _),
+  cube(a4, b1, c7, _),
+  cube(a3, b4, c12, _),
+  cube(a2, b7, c2, _),
+  cube(a1, b10, c7, _),
+  cube(a0, b13, c12, _),
+  cube(a14, b0, c3, _),
+  cube(a13, b3, c8, _),
+  cube(a12, b6, c13, _),
+  cube(a11, b9, c3, _),
+  cube(a10, b12, c8, _),
+  cube(a9, b0, c14, _),
+  cube(a8, b3, c4, _),
+  cube(a7, b6, c9, _),
+  cube(a6, b9, c14, _),
+  cube(a5, b12, c4, _),
+  cube(a4, b0, c10, _),
+  cube(a3, b3, c0, _),
+  cube(a2, b6, c5, _),
+  cube(a1, b9, c10, _),
+  cube(a0, b12, c0, _),
+  cube(a14, b14, c5, _),
+  cube(a13, b2, c11, _),
+  cube(a12, b5, c1, _),
+  cube(a11, b8, c6, _),
+  cube(a10, b11, c11, _),
+  cube(a9, b14, c1, _),
+  cube(a8, b2, c7, _),
+  cube(a7, b5, c12, _),
+  cube(a6, b8, c2, _),
+  cube(a5, b11, c7, _),
+  cube(a4, b14, c12, _),
+  cube(a3, b2, c3, _),
+  cube(a2, b5, c8, _),
+  cube(a1, b8, c13, _),
+  cube(a0, b11, c3, _),
+  cube(a14, b13, c8, _),
+  cube(a13, b1, c14, _),
+  cube(a12, b4, c4, _),
+  cube(a11, b7, c9, _),
+  cube(a10, b10, c14, _),
+  cube(a9, b13, c4, _),
+  cube(a8, b1, c10, _),
+  cube(a7, b4, c0, _),
+  cube(a6, b7, c5, _),
+  cube(a5, b10, c10, _),
+  cube(a4, b13, c0, _),
+  cube(a3, b1, c6, _),
+  cube(a2, b4, c11, _),
+  cube(a1, b7, c1, _),
+  cube(a0, b10, c6, _),
+  cube(a14, b12, c11, _),
+  cube(a13, b0, c2, _),
+  cube(a12, b3, c7, _),
+  cube(a11, b6, c12, _),
+  cube(a10, b9, c2, _),
+  cube(a9, b12, c7, _),
+  cube(a8, b0, c13, _),
+  cube(a7, b3, c3, _),
+  cube(a6, b6, c8, _),
+  cube(a5, b9, c13, _),
+  cube(a4, b12, c3, _),
+  cube(a3, b0, c9, _),
+  cube(a2, b3, c14, _),
+  cube(a1, b6, c4, _),
+  cube(a0, b9, c9, _),
+  cube(a14, b11, c14, _),
+  cube(a13, b14, c4, _),
+  cube(a12, b2, c10, _),
+  cube(a11, b5, c0, _),
+  cube(a10, b8, c5, _),
+  cube(a9, b11, c10, _),
+  cube(a8, b14, c0, _),
+  cube(a7, b2, c6, _),
+  cube(a6, b5, c11, _),
+  cube(a5, b8, c1, _),
+  cube(a4, b11, c6, _),
+  cube(a3, b14, c11, _),
+  cube(a2, b2, c2, _),
+  cube(a1, b5, c7, _),
+  cube(a0, b8, c12, _),
+  cube(a14, b10, c2, _),
+  cube(a13, b13, c7, _),
+  cube(a12, b1, c13, _),
+  cube(a11, b4, c3, _),
+  cube(a10, b7, c8, _),
+  cube(a9, b10, c13, _),
+  cube(a8, b13, c3, _),
+  cube(a7, b1, c9, _),
+  cube(a6, b4, c14, _),
+  cube(a5, b7, c4, _),
+  cube(a4, b10, c9, _),
+  cube(a3, b13, c14, _),
+  cube(a2, b1, c5, _),
+  cube(a1, b4, c10, _),
+  cube(a0, b7, c0, _),
+  cube(a14, b9, c5, _),
+  cube(a13, b12, c10, _),
+  cube(a12, b0, c1, _),
+  cube(a11, b3, c6, _),
+  cube(a10, b6, c11, _),
+  cube(a9, b9, c1, _),
+  cube(a8, b12, c6, _),
+  cube(a7, b0, c12, _),
+  cube(a6, b3, c2, _),
+  cube(a5, b6, c7, _),
+  cube(a4, b9, c12, _),
+  cube(a3, b12, c2, _),
+  cube(a2, b0, c8, _),
+  cube(a1, b3, c13, _),
+  cube(a0, b6, c3, _),
+  cube(a14, b8, c8, _),
+  cube(a13, b11, c13, _),
+  cube(a12, b14, c3, _),
+  cube(a11, b2, c9, _),
+  cube(a10, b5, c14, _),
+  cube(a9, b8, c4, _),
+  cube(a8, b11, c9, _),
+  cube(a7, b14, c14, _),
+  cube(a6, b2, c5, _),
+  cube(a5, b5, c10, _),
+  cube(a4, b8, c0, _),
+  cube(a3, b11, c5, _),
+  cube(a2, b14, c10, _),
+  cube(a1, b2, c1, _),
+  cube(a0, b5, c6, _),
+  cube(a14, b7, c11, _),
+  cube(a13, b10, c1, _),
+  cube(a12, b13, c6, _),
+  cube(a11, b1, c12, _),
+  cube(a10, b4, c2, _),
+  cube(a9, b7, c7, _),
+  cube(a8, b10, c12, _),
+  cube(a7, b13, c2, _),
+  cube(a6, b1, c8, _),
+  cube(a5, b4, c13, _),
+  cube(a4, b7, c3, _),
+  cube(a3, b10, c8, _),
+  cube(a2, b13, c13, _),
+  cube(a1, b1, c4, _),
+  cube(a0, b4, c9, _),
+  cube(a14, b6, c14, _),
+  cube(a13, b9, c4, _),
+  cube(a12, b12, c9, _),
+  cube(a11, b0, c0, _),
+  cube(a10, b3, c5, _),
+  cube(a9, b6, c10, _),
+  cube(a8, b9, c0, _),
+  cube(a7, b12, c5, _),
+  cube(a6, b0, c11, _),
+  cube(a5, b3, c1, _),
+  cube(a4, b6, c6, _),
+  cube(a3, b9, c11, _),
+  cube(a2, b12, c1, _),
+  cube(a1, b0, c7, _),
+  cube(a0, b3, c12, _),
+  cube(a14, b5, c2, _),
+  cube(a13, b8, c7, _),
+  cube(a12, b11, c12, _),
+  cube(a11, b14, c2, _),
+  cube(a10, b2, c8, _),
+  cube(a9, b5, c13, _),
+  cube(a8, b8, c3, _),
+  cube(a7, b11, c8, _),
+  cube(a6, b14, c13, _),
+  cube(a5, b2, c4, _),
+  cube(a4, b5, c9, _),
+  cube(a3, b8, c14, _),
+  cube(a2, b11, c4, _),
+  cube(a1, b14, c9, _),
+  cube(a0, b2, c0, _),
+  cube(a14, b4, c5, _),
+  cube(a13, b7, c10, _),
+  cube(a12, b10, c0, _),
+  cube(a11, b13, c5, _).
+
+reason(case, "2000 lookups use one clause each instead of 225 single-key candidates") :-
+  lookupResult(case, passed).

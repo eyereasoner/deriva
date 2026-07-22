@@ -430,6 +430,7 @@ Use `holds/2` when you want to match the member term directly, for example `name
 | [`d3-group.pl`](../examples/d3-group.pl) | Enumerates subgroups of the D3 group. | [`output/d3-group.pl`](../examples/output/d3-group.pl) |
 | [`dairy-energy-balance.pl`](../examples/dairy-energy-balance.pl) | Classifies dairy cow energy balance. | [`output/dairy-energy-balance.pl`](../examples/output/dairy-energy-balance.pl) |
 | [`data-negotiation.pl`](../examples/data-negotiation.pl) | Chooses an accepted data-negotiation offer. | [`output/data-negotiation.pl`](../examples/output/data-negotiation.pl) |
+| [`relational-cube-lookup.pl`](../examples/relational-cube-lookup.pl) | Benchmarks 2,000 multi-key lookups over a relational cube containing 3,375 facts. | [`output/relational-cube-lookup.pl`](../examples/output/relational-cube-lookup.pl) |
 | [`deep-taxonomy-10.pl`](../examples/deep-taxonomy-10.pl) | Stress-tests recursive taxonomy depth 10. | [`output/deep-taxonomy-10.pl`](../examples/output/deep-taxonomy-10.pl) |
 | [`deep-taxonomy-100.pl`](../examples/deep-taxonomy-100.pl) | Stress-tests recursive taxonomy depth 100. | [`output/deep-taxonomy-100.pl`](../examples/output/deep-taxonomy-100.pl) |
 | [`deep-taxonomy-1000.pl`](../examples/deep-taxonomy-1000.pl) | Stress-tests recursive taxonomy depth 1000. | [`output/deep-taxonomy-1000.pl`](../examples/output/deep-taxonomy-1000.pl) |
