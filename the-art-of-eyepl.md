@@ -137,6 +137,14 @@ Appendix D gives further routes through the material.
 24. [Designing finite search](#24-designing-finite-search)
 25. [Case study: an auditable decision service](#25-case-study-an-auditable-decision-service)
 
+### Part VI — Mathematics made executable
+
+26. [A proof can be a computation](#26-a-proof-can-be-a-computation)
+27. [Recursion is induction in motion](#27-recursion-is-induction-in-motion)
+28. [Algebra, symmetry, and representation](#28-algebra-symmetry-and-representation)
+29. [Search as experimental mathematics](#29-search-as-experimental-mathematics)
+30. [What mathematics promises](#30-what-mathematics-promises)
+
 ### Appendices
 
 - [A. Language summary](#appendix-a-language-summary)
@@ -2461,6 +2469,764 @@ decision can be reconstructed under the rules that actually governed it.
 5. Design a source socket for badge facts and state what the host must validate.
 6. Run the case with `--proof` and decide which helpers improve the explanation.
 
+---
+
+# Part VI — Mathematics made executable
+
+Mathematics appears throughout this book as subject matter: arithmetic,
+combinatorics, graphs, geometry, algebra, statistics, and physical models. But
+its deeper presence is structural. A logic program is possible because parts
+of mathematical reasoning can be represented as finite symbols, transformed
+by explicit rules, and checked step by step.
+
+In that qualified sense, the history of logic programming belongs inside the
+history of mathematics. It inherits the mathematician's old practices of
+definition, proof, construction, abstraction, and counterexample. It also
+inherits the twentieth century's harder questions. What counts as a formal
+proof? What is an effective procedure? Which truths follow from a finite set
+of axioms? Which questions cannot be decided by any uniform mechanical method?
+
+Eyepl is a very small descendant of those questions. It is not a foundation
+for all mathematics, a computer algebra system, or an interactive theorem
+prover. Its definite clauses cover only a disciplined fragment of logic.
+Precisely because the fragment is small, however, one can see the ancient
+mathematical acts inside the running machine:
+
+| Mathematical act | Eyepl form | Operational consequence |
+| --- | --- | --- |
+| Define a class | facts and clauses | enumerate its instances |
+| Introduce an unknown | a variable | seek a substitution |
+| Use a lemma | call a helper relation | open a subgoal |
+| Split into cases | multiple clauses | create alternatives |
+| Perform induction | base and recursive clauses | reduce to smaller calls |
+| Construct a witness | bind an output term | return evidence, not only truth |
+| Refute a universal guess | search for a counterexample | one answer is enough |
+| Check consistency | an inference fuse | reject the theory before querying |
+| Explain a conclusion | a proof term | expose the successful derivation |
+
+The table is a correspondence, not an identity. A mathematical proof and an
+Eyepl execution answer different questions unless the encoding between them is
+itself justified. This Part develops both the power and the limit of the
+correspondence.
+
+## 26. A proof can be a computation
+
+For most of mathematical history, an algorithm and a proof could live close
+together without being regarded as the same kind of object. Euclid's
+algorithm computes a greatest common divisor, while Euclid's propositions
+justify why the procedure works. A geometrical construction produces an
+object, while an argument establishes that it has the required properties.
+The distinction remains useful, but modern logic revealed increasingly exact
+connections among a proposition, its proof, and the construction carried by
+that proof.
+
+Logic programming enters through one particular connection. A definite clause
+
+```eyepl
+mortal(X) :- human(X).
+```
+
+is at once an implication-like statement and an instruction for reducing the
+question `mortal(socrates)` to the subquestion `human(socrates)`. A successful
+derivation does not merely return `true`; it records a sequence of justified
+reductions and the substitutions that made them fit.
+
+### From axioms to effective procedure
+
+The route was neither straight nor inevitable. A compact historical spine is:
+
+1. **Axiomatization.** Nineteenth- and early-twentieth-century mathematics
+   sharpened the demand that assumptions and inference rules be stated
+   explicitly. Hilbert's program made formal proof and consistency central
+   mathematical subjects.
+2. **Limits of formal systems.** Gödel showed that sufficiently expressive,
+   effectively axiomatized consistent systems cannot capture every
+   arithmetical truth within themselves. Formalization acquired proven limits,
+   not merely engineering difficulties.
+3. **Effective calculability.** Church and Turing gave exact, extensionally
+   equivalent accounts of effective computation and established that some
+   decision problems have no general algorithm.
+4. **Ground instances.** Herbrand connected quantified first-order statements
+   to finite combinations of ground instances. The terms used to instantiate
+   variables became central proof objects.
+5. **Machine-oriented inference.** Robinson's resolution principle combined
+   clauses and unification into a small general proof mechanism.
+6. **Logic as a programming language.** Prolog specialized these ideas into an
+   executable discipline, and the least-model and fixed-point semantics of
+   van Emden and Kowalski explained how definite programs denote their ground
+   consequences.
+
+Each step narrowed one ambiguity while uncovering another. Formal syntax made
+proofs mechanically inspectable, but Gödel marked the boundary of formal
+completeness. Models of computation made “algorithm” exact, but Church and
+Turing marked the boundary of decidability. Resolution made inference uniform,
+but a proof procedure still needed control: selection order, clause order,
+termination discipline, and eventually tabling.
+
+Logic programming is therefore not the historical triumph of machinery over
+mathematics. It is one result of mathematics becoming reflective about its own
+methods.
+
+### Answers are existential witnesses
+
+Consider a relation for a Pythagorean triple:
+
+```eyepl
+triple(A, B, C) :-
+  between(1, 20, A),
+  between(A, 20, B),
+  between(B, 20, C),
+  mul(A, A, AA),
+  mul(B, B, BB),
+  add(AA, BB, Sum),
+  mul(C, C, Sum).
+
+query(triple(A, B, C)).
+```
+
+The open query asks an existential question over a finite domain: find values
+for which the equation holds. Each printed ground answer is a witness. The
+substitution is not an incidental side effect; it is the computational content
+of the existential claim.
+
+A verifier and a generator are logically close but operationally different.
+If `A`, `B`, and `C` are already known, the arithmetic goals check a candidate.
+If they are unknown, the bounded `between/3` calls create candidates first.
+The equation alone does not tell a mode-sensitive evaluator where numbers
+should come from.
+
+This is an important distinction between mathematical existence and
+executable witness production. A classical proof may establish that something
+exists without furnishing an efficient construction. An Eyepl query produces
+a witness only when its clauses and control actually reach one.
+
+### Proof objects and proof checking
+
+The normal answer
+
+```eyepl
+triple(3, 4, 5).
+```
+
+states the result. Proof output adds the successful chain of facts, rule uses,
+built-ins, and bindings. That evidence supports three different activities:
+
+- **rechecking:** verify that every step follows from the supplied theory and
+  built-in contract;
+- **auditing:** identify which premises were actually used;
+- **explanation:** translate a derivation into domain reasons a person can
+  inspect.
+
+These activities must not be conflated. A derivation can be mechanically valid
+but pedagogically obscure. It can be clear but depend on an untrustworthy
+source fact. It can be valid in the implemented arithmetic but fail to express
+the intended physical quantity. Proof output makes scrutiny possible; it does
+not perform all scrutiny on the reader's behalf.
+
+### The least model as mathematical closure
+
+For a definite program, begin with its ground facts. Repeatedly add every
+ground rule head whose ground body is already satisfied. The least fixed point
+of this operation is the least Herbrand model.
+
+For
+
+```eyepl
+edge(a, b).
+edge(b, c).
+
+path(X, Y) :- edge(X, Y).
+path(X, Z) :- edge(X, Y), path(Y, Z).
+```
+
+the closure first contains the two edges, then the corresponding direct paths,
+then `path(a, c)`. No unsupported path is added. Bottom-up closure and
+goal-directed proof search approach the same declarative meaning from opposite
+directions: one asks what follows globally, the other asks what is needed for
+this goal.
+
+Automatic tabling makes the connection visible. A table for a recursive
+component grows monotonically with newly discovered answers until no rule adds
+another. The implementation is performing a local, demand-driven fixed-point
+calculation.
+
+**Exercises.**
+
+1. Run the triple program with one, two, and three arguments bound. Compare the
+   logical question, answer set, and search size.
+2. Add a primitive-triple test by rejecting triples whose three values share a
+   divisor. State exactly which finite generators make the negation safe.
+3. Inspect `examples/fundamental-theorem-arithmetic.pl`. Separate the witness
+   it constructs from the property it verifies.
+4. Draw the fixed-point stages for a four-edge graph containing one cycle.
+5. Find a proof whose machine form is correct but whose helper names make it a
+   poor human explanation.
+
+## 27. Recursion is induction in motion
+
+Recursion and mathematical induction are not identical, but they are natural
+partners. Induction justifies a statement for every object generated by a
+finite construction. Recursion defines a result by following that same
+construction toward smaller objects.
+
+For natural numbers represented as `z`, `s(z)`, `s(s(z))`, and so on:
+
+```eyepl
+natural(z).
+natural(s(N)) :- natural(N).
+
+plus(z, Y, Y).
+plus(s(X), Y, s(Z)) :- plus(X, Y, Z).
+```
+
+The clauses for `plus/3` say:
+
+- adding zero to `Y` produces `Y`;
+- adding the successor of `X` to `Y` produces the successor of the result of
+  adding `X` to `Y`.
+
+Operationally, the first argument decreases by one constructor until it reaches
+`z`. Mathematically, the clauses mirror a recursive definition. To prove a
+property of `plus/3` for all Peano naturals, induction on that first argument is
+the obvious proof shape.
+
+### Three obligations, not one
+
+A recursive mathematical program invites three separate arguments:
+
+1. **Partial correctness:** if the relation returns an answer, does the answer
+   satisfy the intended specification?
+2. **Completeness for the intended mode:** if an answer satisfies the
+   specification, will this program find it?
+3. **Termination:** will search finish for calls in the intended mode?
+
+They are logically independent. A program can terminate and return the wrong
+answer. It can return only correct answers while missing some. It can describe
+the correct relation and still diverge before producing it.
+
+For `plus(+,+,-)`, a termination measure is the number of `s/1` constructors in
+the first argument. Every recursive call strictly decreases that natural
+number. The measure is well-founded: there is no infinite descending sequence
+of natural numbers.
+
+That last sentence is the mathematical heart of a termination proof.
+“It seems to get smaller” is not enough. Name a set with no infinite descent,
+give a measure into that set, and show strict decrease on every recursive
+branch.
+
+### Structural induction and data design
+
+Lists carry their induction principle in their syntax:
+
+- base object: `[]`;
+- constructor: `[Head | Tail]`.
+
+A relation following that structure is easy to reason about:
+
+```eyepl
+list_length([], 0).
+list_length([_ | Tail], N) :-
+  list_length(Tail, M),
+  add(M, 1, N).
+```
+
+To prove that `list_length(List, N)` returns the number of cells in a finite
+proper list, prove the empty case, then assume the claim for `Tail` and prove
+it for `[Head | Tail]`. The recursive program and inductive proof share a
+skeleton because both respect the same constructors.
+
+Representation can either expose or obscure this skeleton. A syntax tree built
+from `number/1`, `plus/2`, and `times/2` supports structural recursion directly.
+A flat token string requires parsing before the same argument becomes visible.
+Good representations do not merely save code; they make invariants and proof
+principles available.
+
+### Accumulators and strengthened invariants
+
+An accumulator often improves control but makes the induction hypothesis more
+subtle:
+
+```eyepl
+reverse_acc(List, Reversed) :-
+  reverse_go(List, [], Reversed).
+
+reverse_go([], Acc, Acc).
+reverse_go([X | Xs], Acc, Reversed) :-
+  reverse_go(Xs, [X | Acc], Reversed).
+```
+
+The useful invariant is not merely “`Reversed` is the reverse of `Xs`.” It is:
+
+> `reverse_go(Xs, Acc, Reversed)` holds when `Reversed` is the reverse of
+> `Xs` placed before `Acc`.
+
+Strengthening the statement makes the recursive step provable. This is a
+classic mathematical move: a theorem that is too weak to support induction is
+generalized until the induction hypothesis contains what the next step needs.
+Program transformation and proof discovery meet at the invariant.
+
+### Tabling changes the termination argument
+
+Ordinary structural recursion terminates by decreasing a term. Graph
+reachability on a cyclic finite graph has no such simple decrease: following
+an edge can return to an earlier vertex. Tabling supplies a different
+well-founded argument.
+
+If the graph has finitely many vertices, then there are finitely many possible
+ground `path/2` answers. A table only grows; each productive iteration adds a
+previously unseen answer; therefore only finitely many productive iterations
+are possible. Termination follows from finiteness of the answer space rather
+than structural descent of each call.
+
+The proof also states its boundary. If rules construct terms of unbounded
+depth, the set of possible calls or answers may be infinite, and tabling no
+longer supplies a finite bound.
+
+**Exercises.**
+
+1. State partial correctness, completeness, and termination claims for
+   `plus(+,+,-)` separately.
+2. Define multiplication over Peano naturals and give its decreasing measure.
+3. Prove the strengthened `reverse_go/3` invariant on paper.
+4. Compare the termination arguments for list membership and cyclic graph
+   reachability.
+5. Study `examples/peano-calculus.pl` and identify where the data constructors
+   determine the available induction.
+
+## 28. Algebra, symmetry, and representation
+
+Algebra studies operations by the laws they satisfy rather than by the material
+of the objects being operated on. Logic programming has a similar appetite
+for structure. Unification ignores the private identity of a variable name and
+asks whether two terms have a common instance. A relational program often
+works over lists, trees, graphs, substitutions, or group elements because the
+clauses depend only on their constructors and laws.
+
+### Unification is structural equation solving
+
+The goal
+
+```eyepl
+eq(pair(X, f(Y)), pair(g(a), f(b))).
+```
+
+decomposes into structural equations. The outer functors and arities agree,
+so corresponding arguments must agree; the resulting substitution is
+`X = g(a)` and `Y = b`.
+
+This resembles algebraic equation solving, but unification is more specific.
+It operates in the free term algebra: different constructors are distinct,
+and two constructed terms agree only when their outer symbols and corresponding
+arguments agree. It does not know, unless clauses or built-ins say so, that
+`add(2, 3, X)` and `add(3, 2, X)` express a commutative operation.
+
+The distinction prevents a common conceptual error:
+
+- **syntactic equality** comes from identical term structure or unification;
+- **domain equality** may require mathematical laws, normalization, or a
+  decision procedure.
+
+For polynomials, matrices, groups, or sets, choosing a canonical representation
+can turn some domain equalities into syntactic equalities. But the
+normalization algorithm then carries a proof obligation: equivalent objects
+must normalize alike, and normalization must not identify inequivalent ones.
+
+### Symmetry reduces search
+
+Suppose a triangle is represented by three side lengths. Searching all
+permutations repeats the same geometric object six times. Ordering the sides
+removes the symmetry:
+
+```eyepl
+triangle(A, B, C) :-
+  between(1, 20, A),
+  between(A, 20, B),
+  between(B, 20, C),
+  add(A, B, Sum),
+  gt(Sum, C).
+```
+
+The constraints `A =< B =< C` select one representative from each permutation
+class. This is more than a performance trick. It is a quotient-like move:
+identify descriptions related by a symmetry, then search canonical
+representatives.
+
+Mathematics repeatedly advances by finding the right equivalence relation.
+Fractions are identified when cross-products agree; graphs may be identified
+up to renaming; group presentations may denote isomorphic structures; logical
+formulas may be identified up to variable renaming. Logic programs must decide
+which distinctions belong to the problem and which are artifacts of notation.
+
+### Relations reveal inverse problems
+
+A function privileges one direction. An equation or relation contains several:
+
+```eyepl
+rectangle(W, H, Area) :- mul(W, H, Area).
+```
+
+In a supported arithmetic mode, this relation may verify an area or calculate
+it from width and height. With a finite generator it can also search for
+factorizations:
+
+```eyepl
+integer_rectangle(Area, W, H) :-
+  between(1, Area, W),
+  between(W, Area, H),
+  mul(W, H, Area).
+
+query(integer_rectangle(24, W, H)).
+```
+
+The relational view makes inverse questions conceptually ordinary, even when
+the implementation still needs an explicit finite direction. Mathematics has
+long moved between direct and inverse problems: multiply versus factor,
+evaluate versus interpolate, evolve a system versus infer its initial state.
+A relational vocabulary lets both questions share a specification where their
+common structure genuinely permits it.
+
+### Composition, homomorphism, and reusable laws
+
+Well-designed relations compose because variables carry outputs from one
+statement into another. Mathematical structure tells us what composition
+should preserve.
+
+If a mapping is claimed to preserve an operation, write the preservation law
+as a testable relation. For a symbolic mapping `image/2` and operation
+`combine/3`:
+
+```eyepl
+preserves_combine(X, Y) :-
+  combine(X, Y, XY),
+  image(X, IX),
+  image(Y, IY),
+  image(XY, IXY),
+  combine(IX, IY, CombinedImages),
+  eq(IXY, CombinedImages).
+```
+
+Over a finite carrier, `forall/2` can test the law for every generated pair.
+Over an infinite carrier, finite testing is evidence, not proof. The algebraic
+law must instead follow from definitions or a stronger proof system.
+
+The examples `d3-group.pl`, `matrix-noncommutativity.pl`,
+`group-inverse-uniqueness.pl`, and
+`composition-of-injective-functions-is-injective.pl` show different roles:
+computing a finite operation table, finding a counterexample to commutativity,
+proving uniqueness from axioms, and composing preserved properties.
+
+### Representation is a mathematical commitment
+
+Representing a rational number as `fraction(N, D)` raises immediate questions:
+may `D` be zero, must signs be normalized, and are `fraction(1, 2)` and
+`fraction(2, 4)` identical or merely equivalent? These are not serialization
+details. They determine the equality relation, the search space, and the
+meaning of every later proof.
+
+Before selecting a representation, state:
+
+1. its valid inhabitants;
+2. its equivalence relation;
+3. whether it has a canonical form;
+4. the operations that must be efficient;
+5. the induction or decomposition principle it exposes.
+
+That checklist joins abstract algebra, data modeling, and program design.
+
+**Exercises.**
+
+1. Modify the triangle generator to enumerate only primitive Pythagorean
+   triples and explain every removed symmetry.
+2. Give two representations of an undirected edge. Compare their equality and
+   indexing behavior.
+3. Design a normalized rational representation and write fuses for invalid
+   denominators and noncanonical zero.
+4. Use `examples/d3-group.pl` to test identity, inverses, and associativity.
+   Which checks are exhaustive, and why?
+5. Find a matrix counterexample showing that multiplication is not
+   commutative. Explain why one witness refutes a universal law.
+
+## 29. Search as experimental mathematics
+
+Mathematicians do not prove only by moving forward from axioms. They calculate
+small cases, draw figures, search for patterns, try extreme examples, and hunt
+for counterexamples. Computation greatly enlarges this experimental practice.
+Logic programming contributes a particularly transparent form: generate a
+finite mathematical world, state the property relationally, and ask for
+witnesses or failures.
+
+### Examples suggest; proofs compel
+
+The first values of a sequence can suggest a recurrence. Exhaustive search up
+to a bound can destroy a false conjecture. Neither establishes a universal
+theorem over an unbounded domain.
+
+This boundary can be written directly:
+
+```eyepl
+counterexample_to_odd_square(N) :-
+  between(1, 10000, N),
+  mod(N, 2, 1),
+  mul(N, N, Square),
+  mod(Square, 2, Remainder),
+  neq(Remainder, 1).
+
+query(counterexample_to_odd_square(N)).
+```
+
+No answer means only that no counterexample was found in the generated range
+under the implemented arithmetic. The theorem that every odd integer has an
+odd square needs an algebraic argument valid for an arbitrary integer:
+`(2k+1)^2 = 2(2k^2+2k)+1`.
+
+By contrast, if the claim concerns exactly the integers from 1 through 10,000,
+the finite exhaustive search can be a proof—provided the generator is complete,
+the predicate expresses the property correctly, and the arithmetic
+implementation is trusted.
+
+### One counterexample has asymmetric power
+
+A universal statement falls to one valid counterexample. This makes finite
+search especially valuable for criticism. Testing associativity over random
+inputs offers evidence; finding one triple where associativity fails settles
+the negative question.
+
+```eyepl
+noncommuting_pair(A, B) :-
+  matrix(A),
+  matrix(B),
+  matrix_multiply(A, B, AB),
+  matrix_multiply(B, A, BA),
+  neq(AB, BA).
+```
+
+The example need not explain every failure of commutativity. Its existence is
+enough to refute the universal claim. This asymmetry between confirmation and
+refutation is one reason constraint solving, model finding, and property-based
+testing are so productive.
+
+### Finite model exploration
+
+A finite structure consists of a finite carrier and interpretations of its
+operations and relations. Eyepl can enumerate candidates, apply axioms as
+filters, and return models or countermodels. The method is mathematically
+serious because the scope is explicit.
+
+For a carrier of three named elements, a binary operation table has nine
+entries. Searching all possible tables is finite but large. Algebraic laws can
+prune partial or complete candidates:
+
+- closure restricts every output to the carrier;
+- an identity fixes an entire row and column;
+- commutativity identifies mirrored entries;
+- associativity checks triples;
+- inverse requirements constrain remaining cells.
+
+The order of these constraints is operational mathematics. A strong law
+applied early may collapse the search space; the same law applied after full
+generation merely rejects enormous numbers of candidates.
+
+### Combinatorics is the anatomy of search
+
+Search complexity is often a counting problem before it is a programming
+problem. If a choice has `n` alternatives at each of `k` positions, naive
+generation contains `n^k` leaves. If order does not matter, permutations may
+be redundant. If partial choices already violate a constraint, pruning saves
+an entire subtree.
+
+This is why combinatorial examples are not toys. `n-queens-8.pl`,
+`send-more-money.pl`, `integer-partitions.pl`, `stirling-bell-numbers.pl`, and
+`weighted-interval-scheduling.pl` expose different geometries of choice:
+permutations, digit assignments, recursive decompositions, set partitions, and
+ordered optimization.
+
+For each search program, ask a mathematical question before a performance
+question:
+
+> What objects are being counted, and when do two execution branches denote
+> the same mathematical object?
+
+Only after answering that should one add indexing, reorder goals, or introduce
+an accumulator. Otherwise the program may optimize accidental multiplicity.
+
+### Numerical models and epistemic humility
+
+The scientific examples combine logical rules with floating-point
+calculations. `beam-deflection.pl`, `orbital-transfer-design.pl`,
+`competitive-enzyme-kinetics.pl`, and `least-squares-regression.pl` encode
+mathematical models of physical or statistical relationships.
+
+A correct derivation inside such a model establishes a conditional:
+
+> given these measurements, equations, units, approximations, and thresholds,
+> this conclusion follows under the implementation's numeric semantics.
+
+It does not establish that the sensor was calibrated, the model applies in
+this regime, omitted variables are negligible, or a floating-point result is
+an exact real number. The proof boundary should name these conditions rather
+than conceal them.
+
+**Exercises.**
+
+1. Turn a familiar universal conjecture into a bounded counterexample search.
+   State what a failure to find an answer does and does not prove.
+2. Estimate the naive search space of `send-more-money.pl`, then identify each
+   constraint that removes branches.
+3. Use `examples/stirling-bell-numbers.pl` to connect a recurrence with the
+   combinatorial objects it counts.
+4. Design a finite carrier and search for a noncommutative operation with an
+   identity.
+5. Choose one scientific example and list every premise outside pure logic:
+   measurements, units, empirical law, approximation, and numeric behavior.
+
+## 30. What mathematics promises
+
+Mathematics earns unusual trust because it makes its conditions inspectable.
+Once definitions, axioms, and inference rules are fixed, a valid proof does
+not negotiate with status, rhetoric, fashion, or desire. The conclusion either
+follows by the accepted rules or it does not.
+
+That is perhaps the precise sense in which mathematics does not cheat us. It
+does not promise that our premises describe the world. It promises that we can
+ask whether the conclusion follows from them.
+
+### Conditional certainty
+
+Every theorem is conditional, even when the conditions have become culturally
+invisible:
+
+```text
+axioms + definitions + inference rules
+  -> theorem
+```
+
+Every trustworthy Eyepl conclusion has the same broad shape:
+
+```text
+source facts + clauses + built-in semantics + execution assumptions
+  -> ground answer + proof
+```
+
+The arrows are where rigor lives. A proof disciplines the transition from
+premises to conclusion. It cannot authenticate the premises merely by using
+them.
+
+This yields four layers of trust:
+
+1. **Source trust:** are facts authentic, current, complete enough, and
+   represented with the correct units and identity?
+2. **Model trust:** do the predicates and rules express the intended domain?
+3. **Engine trust:** do parsing, unification, built-ins, tabling, and proof
+   generation implement the stated language?
+4. **Derivation trust:** does this answer have a valid proof from this exact
+   theory?
+
+Inference fuses address contradictions and invalid states inside the supplied
+theory. Conformance tests address the implementation. Proof output addresses
+the derivation. Provenance, signatures, calibration, peer review, and domain
+validation address other layers. No single mechanism replaces the rest.
+
+### The dignity of a counterexample
+
+Mathematics corrects itself through definitions and counterexamples. A false
+conjecture is not rescued by the beauty of its statement. One legitimate
+counterexample has standing against a thousand confirming cases.
+
+Logic programming should preserve this culture. Write negative tests before
+the theory becomes emotionally expensive. Search boundary cases. Ask for
+forbidden states. Turn domain invariants into fuses. Keep the failed model that
+forced a redesign.
+
+A knowledge system becomes trustworthy not when it never changes, but when it
+can say:
+
+- what it assumed;
+- what followed;
+- which evidence was used;
+- which counterexample broke the former rule;
+- when the theory changed; and
+- which past conclusions belonged to which version.
+
+This is mathematical honesty translated into engineering practice.
+
+### The limits are part of the truth
+
+Gödel, Church, and Turing did not diminish mathematics by proving limits.
+They made informal hopes precise enough to refute. There is no complete
+effective method that settles every sufficiently expressive mathematical
+question. No amount of faster hardware turns an undecidable general problem
+into a decidable one.
+
+Eyepl has smaller, immediate limits:
+
+- some relations have infinitely many answers;
+- depth-first search may pursue an unproductive branch;
+- mode-sensitive built-ins are not omnidirectional equations;
+- negation as failure is not classical negation;
+- floating-point arithmetic is not exact real arithmetic;
+- tabling terminates only when the relevant call and answer spaces stabilize;
+- proof output explains successful derivations, not every failed search path;
+- the language cannot prove arbitrary metatheorems about its own programs.
+
+Naming these limits is not an apology. A trustworthy formal tool states the
+edge of its guarantee.
+
+### Mathematics as a style of care
+
+The deepest lesson is methodological. Mathematics asks us to separate:
+
+- a name from its definition;
+- an example from a proof;
+- existence from construction;
+- a theorem from its converse;
+- syntax from semantics;
+- equality from resemblance;
+- local evidence from a universal claim;
+- correctness from termination;
+- the model from the world.
+
+Those separations are exactly what good logic programming requires. A predicate
+must have a sentence. A recursive clause must have an invariant and a
+termination argument. A finite search must declare its domain. An aggregate
+must have a bounded subsearch. A decision must retain its premises. A proof
+must remain attached to the theory version that licensed it.
+
+The result is not certainty about everything. It is something more useful:
+certainty whose boundary is visible.
+
+### A final program-reading ritual
+
+Before trusting an Eyepl conclusion, ask:
+
+1. What does the ground answer say in the domain?
+2. Which facts and rules support it?
+3. Which facts came from outside the theory?
+4. Which built-ins contribute extra semantics?
+5. Was the search domain finite, and why?
+6. Could goal or clause order hide an answer?
+7. Does negation mean absence of proof or an explicit opposite?
+8. What invariant justifies each recursive relation?
+9. What counterexample would overturn the model?
+10. Can the result be reconstructed under the same source and theory version?
+
+That ritual is the book in miniature. State a small theory. Ask a precise
+question. Let the machine search. Inspect the witness. Challenge the premises.
+Preserve the proof.
+
+**Exercises.**
+
+1. Take one policy example and classify every dependency under the four layers
+   of trust.
+2. Write a conclusion that is logically valid from false premises. Explain why
+   proof checking alone cannot repair it.
+3. Add version and provenance facts to a scientific example and make them
+   visible in its explanation.
+4. Find one claim in your own program for which tests provide evidence but not
+   proof. State the missing universal argument.
+5. Write a one-page “trust contract” for an embedded Eyepl service: accepted
+   sources, model scope, numeric assumptions, resource bounds, proof retention,
+   and known limits.
+
 # Appendix A. Language summary
 
 Eyepl source is UTF-8. `%` starts a line comment. Plain atoms begin with a
@@ -2855,6 +3621,13 @@ Algorithm students should study `graph-reachability.pl`,
 `type-inference.pl`. For each, identify the finite domain, branching relation,
 pruning goals, witness, and termination argument.
 
+Mathematics students should read Chapters 3, 19, and 26–30 together, then study
+`peano-calculus.pl`, `fundamental-theorem-arithmetic.pl`,
+`stirling-bell-numbers.pl`, `d3-group.pl`, and
+`matrix-noncommutativity.pl`. For each program, distinguish definition from
+theorem, computation from justification, finite evidence from universal proof,
+and syntactic equality from the domain's mathematical equality.
+
 Review questions:
 
 1. What distinguishes an atom constant from an atomic formula?
@@ -2865,6 +3638,13 @@ Review questions:
 6. Why is proof output useful when the answer is already known?
 7. When is a fuse preferable to an ordinary `invalid/1` conclusion?
 8. What does an explicit RDF adapter preserve about the core language?
+9. In what sense is a ground query answer an existential witness?
+10. Why are partial correctness, completeness, and termination three different
+    claims?
+11. When can exhaustive computation constitute a proof, and when is it only
+    evidence?
+12. Which parts of an answer's trust come from its proof, and which remain
+    outside the formal theory?
 
 # Appendix E. Further examples
 
@@ -2943,6 +3723,40 @@ The book is self-contained as an Eyepl guide. These sources provide historical
 and technical background for the ideas that Eyepl adapts. They describe larger
 languages and theories, so they should not be read as additional Eyepl
 specifications.
+
+- David Hilbert,
+  [“Mathematical Problems”](https://www.gutenberg.org/ebooks/71655), address
+  to the International Congress of Mathematicians, Paris, 1900; English
+  translation published in 1902. The address exemplifies the axiomatic,
+  problem-directed mathematical culture from which the later formal study of
+  proof grew. Part VI places logic programming within that longer development
+  without reducing the history of mathematics to formalism.
+
+- Kurt Gödel,
+  [“Über formal unentscheidbare Sätze der *Principia Mathematica* und
+  verwandter Systeme I”](https://doi.org/10.1007/BF01700692),
+  *Monatshefte für Mathematik und Physik* 38, 1931, pp. 173–198. The
+  incompleteness theorems establish intrinsic limits for sufficiently
+  expressive effectively axiomatized formal systems. Chapter 30 treats such
+  limits as part of mathematical rigor, not as a failure of it.
+
+- Alonzo Church,
+  [“An Unsolvable Problem of Elementary Number
+  Theory”](https://www.cis.upenn.edu/~cis5110/Church-UnsolvableProblemElementary-1936.pdf),
+  *American Journal of Mathematics* 58(2), 1936, pp. 345–363. Church's
+  lambda-definability account of effective calculability and his negative
+  solution concerning general decision procedures helped make the boundary of
+  algorithmic method mathematically exact.
+
+- Alan M. Turing,
+  [“On Computable Numbers, with an Application to the
+  Entscheidungsproblem”](https://doi.org/10.1112/plms/s2-42.1.230),
+  *Proceedings of the London Mathematical Society* 42, 1936–1937,
+  pp. 230–265. Turing's machine model gave an independent analysis of
+  effective computation and another route to the undecidability of the general
+  decision problem. It supplies historical context for the distinction in
+  Part VI between a mathematical relation and a procedure guaranteed to decide
+  it.
 
 - Jacques Herbrand,
   [*Recherches sur la théorie de la
