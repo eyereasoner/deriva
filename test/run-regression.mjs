@@ -1063,8 +1063,8 @@ function listExampleNames() {
 
 function bookExampleCatalogIssues() {
   const book = fs.readFileSync(path.join(packageRoot, 'the-art-of-eyepl.md'), 'utf8');
-  const section = between(book, '# Appendix E. Further examples', 'Run the complete executable corpus');
-  const names = [...section.matchAll(/`([A-Za-z0-9_-]+)\.pl`/g)].map((match) => match[1]);
+  const section = between(book, '# Appendix E. Further examples', '# Appendix F. Conformance and portability');
+  const names = [...section.matchAll(/\(examples\/([A-Za-z0-9_-]+)\.pl\)/g)].map((match) => match[1]);
   const issues = [];
   for (const name of names) {
     if (!fs.existsSync(path.join(packageRoot, "examples", name + ".pl"))) issues.push("missing examples/" + name + ".pl");

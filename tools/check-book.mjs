@@ -39,6 +39,12 @@ for (const match of book.matchAll(/<img\s+[^>]*src="([^"]+)"/g)) {
 for (const match of book.matchAll(/`(examples\/[^`\s]+\.pl)`/g)) {
   localReferences.add(match[1]);
 }
+for (const match of book.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
+  const target = match[1].split('#', 1)[0];
+  if (target && !target.startsWith('#') && !/^[a-z]+:/i.test(target)) {
+    localReferences.add(decodeURIComponent(target));
+  }
+}
 for (const reference of localReferences) {
   if (!fs.existsSync(path.join(root, reference))) {
     failures.push(`Missing referenced file: ${reference}`);
