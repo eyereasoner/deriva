@@ -117,7 +117,7 @@ and `--include-source` behavior.
 ## Documentation
 
 - [Playground](https://eyereasoner.github.io/eyepl/playground)
-- [The Art of Eyepl](the-art-of-eyepl.md)
+- [The Art of Eyepl](https://eyereasoner.github.io/eyepl/the-art-of-eyepl)
 - [RDF tools](tools/README.md)
 
 For local browser use, serve the checkout first so the playground can load ES modules and example files:

@@ -7,6 +7,12 @@ original introduction to the habits of logic programming: describe a world,
 state the relationships that hold in it, and let unification and search connect
 the two.
 
+Its subject is not syntax alone. A logic program has two inseparable aspects:
+the relation described by its clauses and the procedure induced when goals are
+selected and clauses are tried. The first tells us what answers are justified;
+the second tells us whether and how the machine will find them. Learning to
+program in Eyepl means learning to move comfortably between these views.
+
 The name *Eyepl* combines *EYE* with *pl*: EYE-style reasoning in a compact,
 Prolog-like notation. Eyepl inherits the relational outlook of Prolog, but it is
 its own deliberately small language. It supplies facts, Horn clauses, terms,
@@ -52,6 +58,13 @@ slightly different question, and predict the answer before running it.
 15. [RDF 1.2 as relational data](#15-rdf-12-as-relational-data)
 16. [Embedding Eyepl](#16-embedding-eyepl)
 
+### Part IV — The craft of logic programming
+
+17. [Logic and control](#17-logic-and-control)
+18. [Constructing a program](#18-constructing-a-program)
+19. [Correctness and termination](#19-correctness-and-termination)
+20. [Improving a program](#20-improving-a-program)
+
 ### Appendices
 
 - [A. Language summary](#appendix-a-language-summary)
@@ -59,6 +72,7 @@ slightly different question, and predict the answer before running it.
 - [C. Command-line reference](#appendix-c-command-line-reference)
 - [D. Study paths and review](#appendix-d-study-paths-and-review)
 - [E. Further examples](#appendix-e-further-examples)
+- [F. Conformance and portability](#appendix-f-conformance-and-portability)
 
 ---
 
@@ -697,7 +711,438 @@ Treat remote source as executable logic. Although Eyepl has no arbitrary host
 call primitive, search can consume CPU and memory. Embedders should impose
 appropriate depth, solution, input-size, and time limits.
 
+### Sockets: naming the knowledge boundary
+
+Rules often outlive the source of their facts. Today `parent/2` may be written
+in the same file as `ancestor/2`; tomorrow it may come from a database adapter,
+a document extractor, or an agent. An **Eyepl Socket** gives that opening a
+name and a contract:
+
+```eyepl
+socket(family_source, provides(predicate(parent, 2))).
+plug(family_file, family_source).
+
+parent(pat, jan).
+parent(jan, emma).
+
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Z) :- parent(X, Y), ancestor(Y, Z).
+```
+
+The portable vocabulary is deliberately small:
+
+```eyepl
+socket(Name, Contract).
+plug(Provider, Name).
+provides(Signature).
+requires(Signature).
+```
+
+These are ordinary facts, not magic solver directives. A host may validate or
+act on them, but the core proof procedure does not. This modest design is
+useful: a host that knows nothing about sockets can still read the program,
+reason with the supplied clauses, and explain its answers. A host that does
+know about them can check that a provider offers the promised predicate.
+
+Sockets are particularly valuable at an AI boundary. A model can propose
+claims, but the claims should enter the theory as visible facts or rules. The
+socket states what kind of knowledge may enter; Eyepl checks and combines the
+result; `why/2` records which supplied clauses actually supported an answer.
+
 ---
+
+# Part IV — The craft of logic programming
+
+## 17. Logic and control
+
+The central pleasure—and central difficulty—of logic programming is that a
+short definition plays two roles. Consider:
+
+```eyepl
+path(X, Y) :- edge(X, Y).
+path(X, Z) :- edge(X, Y), path(Y, Z).
+```
+
+As logic, the clauses say that every edge is a path and that an edge followed
+by a path is a path. As control, they tell the solver to try a direct edge
+first, then choose an outgoing edge and continue from its endpoint.
+
+It is useful to write the relation first as a sentence:
+
+> `path(X, Y)` holds when there is a finite sequence of edges from `X` to `Y`.
+
+That sentence is independent of clause order. It is the specification against
+which examples and counterexamples can be judged. Only then ask procedural
+questions: which argument will normally be known, which goal generates a
+finite set, and which recursive call is smaller or already tabled?
+
+### The same relation, a different computation
+
+Conjunction is logically commutative, but its textual order guides search.
+These two rules have the same intended ground consequences:
+
+```eyepl
+adult(Person) :- person(Person), age(Person, Age), ge(Age, 18).
+
+adult(Person) :- ge(Age, 18), age(Person, Age), person(Person).
+```
+
+The first is executable in the natural open mode because `person/1` and
+`age/2` bind values before `ge/2` inspects them. The second asks a comparison
+to operate on unbound variables and fails. Logical equivalence therefore does
+not imply equivalent behavior for a goal-directed interpreter with modeful
+built-ins.
+
+Clause order also gives a search order. Put simple and common proofs where
+they can be found cheaply, provided doing so does not starve a necessary base
+case. A recursive clause that calls itself before consuming input is a warning:
+
+```eyepl
+% Poor control: recursion starts before one list cell is exposed.
+bad_member(X, List) :- bad_member(X, Rest), eq(List, [_ | Rest]).
+```
+
+The usual definition exposes the decreasing structure first:
+
+```eyepl
+item(X, [X | _]).
+item(X, [_ | Rest]) :- item(X, Rest).
+```
+
+### Modes are part of the design
+
+A predicate has one logical meaning but may support several useful calling
+patterns. `append(Prefix, Suffix, Whole)` can:
+
+- construct `Whole` when the first two arguments are known;
+- remove a known prefix;
+- enumerate every split of a known finite list.
+
+It is not a useful generator when all three arguments are free: there are
+infinitely many lists. Before accepting a predicate design, make a small mode
+table:
+
+| Call | Intended use | Finite? |
+| --- | --- | --- |
+| `append(+,+,-)` | concatenate | yes |
+| `append(-,-,+)` | enumerate splits | yes |
+| `append(-,-,-)` | generate all triples | no |
+
+The `+` and `-` marks are documentation, not Eyepl syntax. Advisory declarations
+can record the principal mode:
+
+```eyepl
+mode(append, 3, [in, in, out]).
+```
+
+A mode is a promise about calls, not a replacement for the relation's meaning.
+When a rule calls a helper outside its promised mode, the program may remain
+logically plausible while becoming operationally useless.
+
+### Search trees and proof trees
+
+A proof tree contains only the successful choices supporting one answer. A
+search tree also contains failed alternatives and repeated attempts. Proof
+output shows the former; performance counters give clues about the latter.
+Confusing the two leads to a common surprise: a tiny proof may have required a
+large search.
+
+When a program is slow, sketch the first few levels of its search tree. Mark:
+
+1. the selected leftmost goal;
+2. the clauses or built-ins that can solve it;
+3. bindings produced by each choice;
+4. the next selected goal;
+5. branches that repeat a previous call.
+
+This exercise often reveals that the model is sound but a generator is too
+broad, a constraint is too late, or a witness carries needless alternatives.
+
+## 18. Constructing a program
+
+A good logic program is rarely discovered by typing clauses from top to
+bottom. It is constructed by moving between examples, relations, and
+invariants.
+
+### Begin with ground sentences
+
+Suppose packages must be routed through compatible hubs. Start with sentences
+that contain no variables:
+
+```eyepl
+routeable(parcel_7, hub_north).
+```
+
+Decide exactly what that sentence claims. Does it mean the parcel can enter
+the hub, can leave it, or can complete an entire route through it? Ambiguity in
+a ground sentence becomes ambiguity in every rule built on it.
+
+Now name the evidence:
+
+```eyepl
+routeable(Parcel, Hub) :-
+  destination_zone(Parcel, Zone),
+  serves(Hub, Zone),
+  package_class(Parcel, Class),
+  accepts(Hub, Class).
+```
+
+The variables express the joins already present in the English explanation.
+No variable should appear merely because “a value might be needed later.”
+Every repeated variable asserts identity; every distinct variable permits
+difference.
+
+### Invent examples before recursion
+
+For a recursive relation, write the smallest positive example, the next larger
+positive example, and a near miss. For list prefixes:
+
+```text
+prefix([], [a,b])          true
+prefix([a], [a,b])         true
+prefix([b], [a,b])         false
+```
+
+The empty example suggests the base clause. Comparing the second example with
+a smaller one suggests removing a matching head from both lists:
+
+```eyepl
+prefix([], _).
+prefix([X | Xs], [X | Ys]) :- prefix(Xs, Ys).
+```
+
+This is a general construction method: find a measure that becomes smaller,
+preserve the invariant while reducing it, and state directly the case where
+no reduction is needed.
+
+### Separate generate, test, and describe
+
+Finite combinatorial programs become easier to read when their jobs are
+separate:
+
+```eyepl
+candidate_pair(A, B) :-
+  person(A),
+  person(B).
+
+compatible_pair(A, B) :-
+  candidate_pair(A, B),
+  neq(A, B),
+  not(conflict(A, B)).
+
+answer(pair(A, B)) :- compatible_pair(A, B).
+```
+
+`candidate_pair/2` states the domain. `compatible_pair/2` states the
+constraints. `answer/1` controls presentation. The split is not bureaucratic:
+it makes the closed domain visible, gives negation bound arguments, and makes
+proofs say whether a step generated or rejected a choice.
+
+For performance, tests may be interleaved as soon as their inputs are ready:
+
+```eyepl
+compatible_pair(A, B) :-
+  person(A),
+  person(B),
+  neq(A, B),
+  not(conflict(A, B)).
+```
+
+The conceptual separation remains even when the final clause is compact.
+
+### Choose representations by the operations they support
+
+The same domain can be represented in many ways. A graph may be edge facts, a
+list of edge terms, or a context. Ask which questions dominate:
+
+- Separate `edge/2` facts suit indexed relational lookup and proof provenance.
+- A list suits passing a private, changing graph through a recursive helper.
+- A compound state term suits transitions that replace several components.
+- A comma context suits inspecting a small record whose fields are themselves
+  structured assertions.
+
+Do not encode structure into strings and then recover it throughout the
+theory. Parse once at the boundary. A term such as
+`address(City, PostalCode)` can be unified, inspected, and explained; a string
+containing the same data needs repeated procedural parsing.
+
+### Grow a theory through layers
+
+Large rule sets benefit from a dependency direction:
+
+```text
+source facts → normalized facts → domain concepts → decisions → answers
+```
+
+Negation should normally point in the same direction, from a higher layer to a
+complete lower layer. Cycles among positive domain concepts may be tabled;
+cycles through negation usually signal that the concepts have not been given
+a stable meaning.
+
+At every layer, add one representative query. Do not wait for the final
+decision predicate to discover that normalization silently failed. Small
+queries are the logic-programming counterpart of inspecting intermediate
+values, but they retain the declarative vocabulary of the model.
+
+## 19. Correctness and termination
+
+Testing examples is necessary, but a reusable relation deserves a stronger
+argument. Two questions should be asked separately:
+
+1. **Partial correctness:** if the program returns an answer, is it justified?
+2. **Completeness:** for the intended finite calls, can it find every answer
+   required by the specification?
+
+For `prefix/2`, partial correctness follows by the clauses. The base clause
+returns only the empty prefix. The recursive clause adds the same head to a
+smaller valid prefix, so the result remains a prefix. Completeness follows in
+the opposite direction: every nonempty prefix shares its first element with
+the whole list, and removing that element yields a smaller prefix problem
+covered by the recursive clause.
+
+This informal induction is often enough. State the property, justify each base
+clause, assume recursive calls satisfy it, and show that each recursive clause
+preserves it.
+
+### Termination needs its own argument
+
+A correct relation may still fail to return. For ordinary structural recursion,
+identify a well-founded measure:
+
+- length of the remaining list;
+- a nonnegative integer that decreases;
+- number of unvisited states in a finite graph;
+- size of a syntax tree.
+
+The measure must decrease before the recursive call in the intended mode. For
+factorial, `N` decreases while remaining a nonnegative integer:
+
+```eyepl
+factorial(0, 1).
+factorial(N, F) :-
+  gt(N, 0),
+  sub(N, 1, Previous),
+  factorial(Previous, PF),
+  mul(N, PF, F).
+```
+
+Reordering the subtraction after the recursive call preserves a mathematical
+equation but destroys the termination argument.
+
+Tabling changes the argument for graph recursion. A cyclic `path/2` call can
+terminate when the program has only finitely many distinct tabled calls and
+answers. The measure is then not necessarily smaller at each edge; finiteness
+comes from exhausting a finite answer space. Tabling cannot rescue a rule that
+constructs `s(s(s(...)))` without bound.
+
+### Negation and aggregation require bounded subsearch
+
+`not(Goal)`, `forall/2`, and aggregates ask the engine to settle a nested
+search. Their meaning is usable only when that search can finish. Before
+writing:
+
+```eyepl
+not(disqualified(Person))
+```
+
+check that `Person` is bound and that `disqualified/1` has a finite search for
+that value. Before collecting routes, decide whether only simple routes, only
+routes below a cost, or some other finite family is intended.
+
+### Integrity is not merely failure
+
+Ordinary failure says that one attempted proof did not work. An inference fuse
+says that the supplied theory violates a condition that must hold:
+
+```eyepl
+false :-
+  lower_limit(Name, Low),
+  upper_limit(Name, High),
+  gt(Low, High).
+```
+
+This distinction matters operationally and socially. A failed eligibility
+query may be a legitimate negative result. Contradictory limits invalidate the
+knowledge base and should stop all decisions until repaired.
+
+## 20. Improving a program
+
+Program improvement begins with observation, not cleverness. Preserve a set of
+representative answers and proofs, collect solver statistics, and change one
+structural choice at a time.
+
+### Strengthen calls before adding machinery
+
+The most effective improvement is often a better question. Prefer
+`route(brussels, Destination)` to a completely open enumeration if the
+application already knows its origin. Put selective, indexed relations early
+enough to bind arguments for later work. Avoid constructing a large witness
+when the caller needs only existence.
+
+Compare:
+
+```eyepl
+connected(X, Y) :- path_with_nodes(X, Y, _).
+```
+
+with a direct reachability relation that tables pairs. The first may enumerate
+many distinct paths to establish one fact; the second records the fact itself.
+Keep the witness-producing relation for callers that truly need a path.
+
+### Introduce helpers that express invariants
+
+Inlining every condition creates wide clauses with repeated work. A helper can
+name a stable concept:
+
+```eyepl
+within_thermal_limits(Battery) :-
+  temperature(Battery, T),
+  temperature_limit(Max),
+  le(T, Max).
+```
+
+The gain is not just reuse. Proofs now contain a domain statement, and later
+changes to the limit policy have one home. Choose helpers that add vocabulary;
+avoid names such as `step2/3` that merely expose an implementation sequence.
+
+### Move invariant work outward
+
+If a recursive call repeatedly computes a value that does not change, compute
+it once and pass the result:
+
+```eyepl
+search(Request, Answer) :-
+  normalized_request(Request, Normalized),
+  search_normalized(Normalized, initial_state, Answer).
+```
+
+This resembles loop-invariant code motion in procedural programming, but the
+relational formulation is explicit: the helper's arguments show exactly which
+values vary from step to step.
+
+### Preserve meaning while changing control
+
+Reordering goals, adding a helper, or specializing a predicate should preserve
+the intended ground answers. Verify that with:
+
+- ordinary positive examples;
+- cases expected to fail;
+- duplicate derivations;
+- boundary numeric values;
+- cyclic data;
+- proof premises, not only printed conclusions.
+
+An optimization that changes which proof is found first may affect `once/1`,
+tie-breaking aggregates, and explanation shape even when the answer set is
+unchanged. Treat those observable choices as part of the calling contract
+whenever users depend on them.
+
+### Know when to stop
+
+Not every relation should be made maximally general. A three-mode predicate can
+be harder to terminate, explain, and index than two simple predicates with
+clear contracts. Generalize when a real second use appears. The art lies in
+keeping the logical idea visible while giving it enough control to run well.
 
 # Appendix A. Language summary
 
@@ -705,6 +1150,18 @@ Eyepl source is UTF-8. `%` starts a line comment. Plain atoms begin with a
 lowercase ASCII letter. Variables begin with uppercase or underscore. The bare
 `_` is fresh each time. Single quotes delimit quoted atoms; double quotes
 delimit strings. Integers, decimals, and scientific notation are accepted.
+
+Unquoted names deliberately use ASCII spelling. Unicode belongs inside quoted
+atoms and strings:
+
+```eyepl
+city('München').
+message("café").
+```
+
+Inside a quoted atom, a single quote is doubled: `'don''t'`. Strings support
+the common escapes `\n`, `\t`, `\"`, and `\\`. Whitespace is insignificant
+between tokens, and a `%` comment continues to the end of its line.
 
 Graphic atoms may contain `#$&*+-/<=>@^~\`. Colon names and unquoted
 angle-bracket IRIs are not syntax; quote names containing such punctuation.
@@ -724,11 +1181,36 @@ clause ends in a period. There are no user-defined operators.
 
 The pure definite-clause fragment has a Herbrand reading: ground terms denote
 themselves, predicates denote sets of ground atomic formulas, variables have
-clause scope, and unification is structural. Execution is goal-directed rather
-than complete bottom-up saturation. `not/1` is negation as failure.
+clause scope, and unification is structural. The implementation performs
+first-order unification without an occurs check. Thus programmers should avoid
+attempting to bind a variable to a term containing that same variable.
+
+An **atom constant** such as `pat` is a term. An **atomic formula** such as
+`parent(pat, jan)` is a proposition that may be a fact, rule head, or goal.
+The surface form `pair(pat, jan)` may also be compound data when nested inside
+another term; its role comes from context. Predicate identity includes arity,
+so `edge/2` and `edge/3` are different predicates.
+
+Execution is goal-directed rather than complete bottom-up saturation. Goals in
+a body are selected from left to right. Ordinary calls use depth-first
+resolution; eligible positive recursive groups are tabled automatically.
+`not/1` is stratified negation as failure, not classical negation.
 
 Eyepl deliberately omits cut, operator declarations, modules, dynamic database
 updates, DCGs, and a complete ISO Prolog library.
+
+### Declarations
+
+`query(Goal)` selects a goal for host execution. `mode(Name, Arity, Modes)`,
+`det(Name, Arity)`, and `semidet(Name, Arity)` are advisory documentation for
+people and tools; they do not alter proof search. A clause headed by `false`
+is different: it is an inference fuse, checked before queries, and aborts
+execution when its body succeeds.
+
+Normal output contains only ground query answers, one term and period at a
+time. Source facts are not echoed as new conclusions, and duplicate answers
+are suppressed. Answers are not asserted back into the running program.
+Supported output syntax is designed to be readable as Eyepl input.
 
 # Appendix B. Built-in predicates
 
@@ -815,6 +1297,56 @@ golden answers in `examples/output/`; selected programs have proof goldens in
 | RDF 1.2 | `rdf12-triple-term.pl`, `rdf12-trig-named-graph.pl`, `rdf12-directional-language.pl` |
 
 Run the complete executable corpus with `npm test`.
+
+# Appendix F. Conformance and portability
+
+A conforming Eyepl implementation presents the language as one surface:
+lexical syntax, facts and definite clauses, first-order unification without an
+occurs check, left-to-right goal-directed search, lists, comma conjunctions,
+the standard built-ins, automatic hybrid execution, declarations, fuses,
+answer formatting, and—when exposed by the host—proof output.
+
+The executable contract lives under `test/conformance/`. Positive programs and
+their exact output cover arithmetic, strings, lists, terms, atoms, variables,
+negation, declarations, queries, rules, and syntax. Separate corpora cover
+expected errors, warnings, and proofs:
+
+```sh
+npm run test:conformance
+node test/run-conformance-report.mjs
+```
+
+### Relationship to ISO Prolog
+
+Eyepl uses familiar Prolog clause syntax, variable spelling, quoted atoms, and
+lists, but it is not ISO Prolog. Portable Eyepl programs should remember these
+differences:
+
+- there are no operators or operator declarations;
+- zero-arity compound syntax such as `ready()` is absent;
+- cut, modules, dynamic database updates, and DCGs are absent;
+- variables cannot occupy functor or predicate position;
+- term ordering and the standard library are not the complete ISO versions;
+- unification has no occurs check.
+
+Write terms explicitly, keep variables uppercase or underscore-prefixed, and
+quote atom names that are neither lowercase plain names nor graphic tokens.
+These restrictions keep the language small and its source easy to transport,
+but superficial similarity is not a promise that an arbitrary Prolog program
+will run unchanged.
+
+### Security and resource use
+
+Eyepl has no general host-call primitive, yet an untrusted theory is still
+executable input. It can request enormous finite searches or construct
+unbounded terms. URL inputs also cross a network and trust boundary.
+Applications should restrict accepted sources and impose suitable input-size,
+time, depth, memory, and solution limits. Proof output can be larger than
+answer output and needs its own budget.
+
+Sockets do not grant authority by themselves. They describe expected
+knowledge; the embedding host remains responsible for authenticating a
+provider and validating what it supplies.
 
 The aim of Eyepl is not to make every difficult problem easy. It is to keep the
 theory visible while the machine searches it: facts you can inspect, rules you
