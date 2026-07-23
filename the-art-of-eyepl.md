@@ -1,7 +1,7 @@
 # The Art of Eyepl
 
-<p align="left">
-  <img src="eyepl-logo.png" alt="Eyepl logo" width="100">
+<p align="center">
+  <img src="eyepl-logo.png" alt="Eyepl logo" width="160">
 </p>
 
 ## Relations, search, and explanations in a small logic language
