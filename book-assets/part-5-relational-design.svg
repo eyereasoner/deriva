@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="460" viewBox="0 0 900 460" role="img" aria-labelledby="title desc">
+  <title id="title">Advanced relational design as a navigable workshop</title>
+  <desc id="desc">A central relation connects a search tree, a syntax tree, a transformed program, and an auditable decision, with meaning held steady at the center.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f1eadc}.panel{fill:#fffdf7;stroke:#243447;stroke-width:2}.hub{fill:#dcefe8;stroke:#2f6f55;stroke-width:3}
+      .ink{fill:none;stroke:#526273;stroke-width:2.5;stroke-linecap:round}.green{stroke:#2f6f55}.red{stroke:#8b3a3a}.gold{stroke:#9a5b18}
+      .node{fill:#fffdf7;stroke:#243447;stroke-width:2}.ok{fill:#e7f3ee;stroke:#2f6f55;stroke-width:2}
+      .title{fill:#713535;font:bold 22px Georgia,serif}.label{fill:#243447;font:15px Georgia,serif}
+      .code{fill:#243447;font:12px ui-monospace,SFMono-Regular,Consolas,monospace}
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#526273"/></marker>
+  </defs>
+  <rect width="900" height="460" class="bg"/>
+  <text class="title" x="450" y="35" text-anchor="middle">KEEP THE RELATION VISIBLE</text>
+
+  <rect class="panel" x="35" y="65" width="250" height="145" rx="12"/>
+  <text class="label" x="160" y="91" text-anchor="middle">READ THE SEARCH</text>
+  <path class="ink" d="M160 115L105 155M160 115L215 155M105 155L75 188M105 155L130 188M215 155L190 188M215 155L245 188"/>
+  <circle class="node" cx="160" cy="115" r="12"/><circle class="ok" cx="105" cy="155" r="11"/><circle class="node" cx="215" cy="155" r="11"/>
+  <circle class="node" cx="75" cy="188" r="8"/><circle class="ok" cx="130" cy="188" r="8"/><circle class="node" cx="190" cy="188" r="8"/><circle class="node" cx="245" cy="188" r="8"/>
+
+  <rect class="panel" x="615" y="65" width="250" height="145" rx="12"/>
+  <text class="label" x="740" y="91" text-anchor="middle">REPRESENT SYNTAX</text>
+  <rect class="node" x="692" y="107" width="96" height="30" rx="6"/><text class="code" x="740" y="127" text-anchor="middle">plus/2</text>
+  <path class="ink" d="M720 137L675 168M760 137L805 168"/>
+  <rect class="node" x="630" y="168" width="90" height="28" rx="6"/><text class="code" x="675" y="187" text-anchor="middle">number(2)</text>
+  <rect class="node" x="760" y="168" width="90" height="28" rx="6"/><text class="code" x="805" y="187" text-anchor="middle">times/2</text>
+
+  <rect class="hub" x="320" y="145" width="260" height="155" rx="78"/>
+  <text class="title" x="450" y="205" text-anchor="middle">MEANING</text>
+  <text class="label" x="450" y="235" text-anchor="middle">ground answers</text>
+  <text class="label" x="450" y="258" text-anchor="middle">and their proofs</text>
+  <path class="ink" marker-end="url(#arrow)" d="M285 150C310 165 315 180 325 195"/>
+  <path class="ink" marker-end="url(#arrow)" d="M615 150C590 165 585 180 575 195"/>
+
+  <rect class="panel" x="35" y="265" width="250" height="150" rx="12"/>
+  <text class="label" x="160" y="291" text-anchor="middle">TRANSFORM CONTROL</text>
+  <text class="code" x="55" y="325">before: broad generate</text>
+  <path class="ink red" d="M55 338H257"/>
+  <text class="code" x="55" y="365">after:  bind, then test</text>
+  <path class="ink green" d="M55 379H230"/>
+  <text class="code" x="55" y="402">answers preserved ✓</text>
+  <path class="ink" marker-end="url(#arrow)" d="M285 335C310 320 315 295 335 275"/>
+
+  <rect class="panel" x="615" y="265" width="250" height="150" rx="12"/>
+  <text class="label" x="740" y="291" text-anchor="middle">AUDIT A DECISION</text>
+  <rect class="node" x="638" y="315" width="74" height="30" rx="5"/><text class="code" x="675" y="335" text-anchor="middle">facts</text>
+  <rect class="node" x="728" y="315" width="74" height="30" rx="5"/><text class="code" x="765" y="335" text-anchor="middle">rules</text>
+  <path class="ink gold" d="M675 345L720 377M765 345L720 377"/>
+  <rect class="ok" x="667" y="375" width="106" height="30" rx="5"/><text class="code" x="720" y="395" text-anchor="middle">proof ✓</text>
+  <path class="ink" marker-end="url(#arrow)" d="M615 335C590 320 585 295 565 275"/>
+</svg>

@@ -1733,6 +1733,11 @@ keeping the logical idea visible while giving it enough control to run well.
 
 # Part V — Advanced relational design
 
+<figure>
+  <img src="book-assets/part-5-relational-design.svg" alt="A central relation connects a search tree, a syntax tree, a transformed program, and an auditable decision.">
+  <figcaption>Advanced design keeps meaning at the center while search is inspected, syntax is represented, control is transformed, and decisions remain auditable.</figcaption>
+</figure>
+
 The earlier parts introduced the language and the habits needed to use it
 safely. This part stays longer with whole computations. It asks how to inspect
 a search tree, represent languages and evaluators as relations, transform a
@@ -2472,6 +2477,11 @@ decision can be reconstructed under the rules that actually governed it.
 ---
 
 # Part VI — Mathematics made executable
+
+<figure>
+  <img src="book-assets/part-6-mathematics.svg" alt="A bridge carries mathematical definitions and proof into executable clauses, witnesses, counterexamples, and derivations.">
+  <figcaption>Formal clauses form a bridge: definitions and invariants become computations that return witnesses, counterexamples, and inspectable proofs.</figcaption>
+</figure>
 
 Mathematics appears throughout this book as subject matter: arithmetic,
 combinatorics, graphs, geometry, algebra, statistics, and physical models. But
@@ -3647,6 +3657,11 @@ Review questions:
     outside the formal theory?
 
 # Appendix E. Further examples
+
+<figure>
+  <img src="book-assets/example-landscape.svg" alt="A map connects Eyepl examples across mathematics, search, planning, policy, science, program analysis, symbolic systems, and RDF.">
+  <figcaption>The corpus is a connected landscape. Every path leads from a readable source program to checked answers and, for selected examples, checked proofs.</figcaption>
+</figure>
 
 The [examples directory](examples/) is the book's executable companion. Every
 source program has an exact answer file under
