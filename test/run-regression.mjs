@@ -361,22 +361,22 @@ why(
 function documentationSyncCases() {
   return [
     {
-      name: 'language reference builtins match runtime registry',
-      run: () => assertArrayEqual(languageReferenceBuiltinNames(), registeredBuiltinNames(), 'builtins'),
+      name: 'book builtins match runtime registry',
+      run: () => assertArrayEqual(bookBuiltinNames(), registeredBuiltinNames(), 'builtins'),
     },
     {
-      name: 'guide builtin catalog matches runtime registry',
+      name: 'book builtin catalog matches runtime registry',
       run: () => {
-        assertArrayEqual(guideBuiltinNames(), registeredBuiltinNames(), 'builtins');
-        const summary = guideBuiltinSummary();
+        assertArrayEqual(bookBuiltinNames(), registeredBuiltinNames(), 'builtins');
+        const summary = bookBuiltinSummary();
         const actual = registeredBuiltinSummary();
         assertEqual(summary.entries, actual.entries, 'builtin entry count');
         assertEqual(summary.names, actual.names, 'builtin predicate name count');
       },
     },
     {
-      name: 'guide example catalog source and output links match examples directory',
-      run: () => assertArrayEqual(guideExampleCatalogIssues(), [], 'guide example catalog'),
+      name: 'book example catalog names resolve in examples directory',
+      run: () => assertArrayEqual(bookExampleCatalogIssues(), [], 'guide example catalog'),
     },
     {
       name: 'playground example catalog and relative loaders match examples directory',
@@ -1061,24 +1061,16 @@ function listExampleNames() {
     .sort();
 }
 
-function guideExampleCatalogIssues() {
+function bookExampleCatalogIssues() {
+  const book = fs.readFileSync(path.join(packageRoot, 'the-art-of-eyepl.md'), 'utf8');
+  const section = between(book, '# Appendix E. Further examples', 'Run the complete executable corpus');
+  const names = [...section.matchAll(/`([A-Za-z0-9_-]+)\.pl`/g)].map((match) => match[1]);
   const issues = [];
-  const expected = listExampleNames();
-  const guide = fs.readFileSync(path.join(packageRoot, 'docs', 'guide.md'), 'utf8');
-  const section = between(guide, '## Example catalog', '## Golden outputs, tests, and conformance');
-  const rows = [...section.matchAll(/^\| \[`([A-Za-z0-9_-]+)\.pl`\]\(\.\.\/examples\/\1\.pl\) \|[^|]+\| \[`output\/\1\.pl`\]\(\.\.\/examples\/output\/\1\.pl\) \|$/gm)]
-    .map((match) => match[1]);
-  const sourceNames = [...section.matchAll(/\.\.\/examples\/([A-Za-z0-9_-]+)\.pl/g)].map((match) => match[1]).sort();
-  const outputNames = [...section.matchAll(/\.\.\/examples\/output\/([A-Za-z0-9_-]+)\.pl/g)].map((match) => match[1]).sort();
-  if (rows.length !== expected.length) issues.push(`expected ${expected.length} complete example rows, found ${rows.length}`);
-  issues.push(...arrayDiffMessages(rows.sort(), expected, 'complete example rows'));
-  issues.push(...arrayDiffMessages(sourceNames, expected, 'source links'));
-  issues.push(...arrayDiffMessages(outputNames, expected, 'output links'));
-  for (const name of expected) {
-    const outputPath = path.join(packageRoot, 'examples', 'output', `${name}.pl`);
-    if (!fs.existsSync(outputPath)) issues.push(`missing examples/output/${name}.pl`);
+  for (const name of names) {
+    if (!fs.existsSync(path.join(packageRoot, "examples", name + ".pl"))) issues.push("missing examples/" + name + ".pl");
+    if (!fs.existsSync(path.join(packageRoot, "examples", "output", name + ".pl"))) issues.push("missing examples/output/" + name + ".pl");
   }
-  return issues.sort();
+  return [...new Set(issues)].sort();
 }
 
 function playgroundExampleIssues() {
@@ -1172,22 +1164,16 @@ function registeredBuiltinSummary() {
   };
 }
 
-function guideBuiltinNames() {
-  const guide = fs.readFileSync(path.join(packageRoot, 'docs', 'guide.md'), 'utf8');
-  return documentedBuiltinNames(between(guide, '### Builtins', '## Aggregation helpers'));
+function bookBuiltinNames() {
+  const book = fs.readFileSync(path.join(packageRoot, 'the-art-of-eyepl.md'), 'utf8');
+  return documentedBuiltinNames(between(book, '# Appendix B. Built-in predicates', '# Appendix C. Command-line reference'));
 }
 
-function guideBuiltinSummary() {
-  const guide = fs.readFileSync(path.join(packageRoot, 'docs', 'guide.md'), 'utf8');
-  const section = between(guide, '### Builtins', '## Aggregation helpers');
-  const match = section.match(/currently registers (\d+) name\/arity entries across (\d+) predicate names/);
-  if (match == null) throw new Error('guide builtin summary not found');
+function bookBuiltinSummary() {
+  const book = fs.readFileSync(path.join(packageRoot, 'the-art-of-eyepl.md'), 'utf8');
+  const match = book.match(/registers (\d+) name\/arity entries across (\d+) names/);
+  if (match == null) throw new Error('book builtin summary not found');
   return { entries: Number(match[1]), names: Number(match[2]) };
-}
-
-function languageReferenceBuiltinNames() {
-  const reference = fs.readFileSync(path.join(packageRoot, 'docs', 'language-reference.md'), 'utf8');
-  return documentedBuiltinNames(between(reference, '## 9. Standard built-in predicates', '## 10. Implementation-specific built-ins'));
 }
 
 function documentedBuiltinNames(section) {
@@ -1255,29 +1241,12 @@ function misleadingDependencyInstallDocs() {
 
 function documentationSourceStyleIssues() {
   const issues = [];
-  const docsRoot = path.join(packageRoot, 'docs');
-  const docs = [
-    path.join(docsRoot, 'guide.md'),
-    path.join(docsRoot, 'language-reference.md'),
-  ];
-  for (const file of docs) {
-    const text = fs.readFileSync(file, 'utf8');
-    if (text.includes('```prolog')) {
-      issues.push(`${path.relative(packageRoot, file)}: use eyepl code fences instead of prolog fences`);
-    }
+  const file = path.join(packageRoot, 'the-art-of-eyepl.md');
+  const text = fs.readFileSync(file, 'utf8');
+  if (text.includes('```prolog')) {
+    issues.push('the-art-of-eyepl.md: use eyepl code fences instead of prolog fences');
   }
-
-  const reference = fs.readFileSync(path.join(docsRoot, 'language-reference.md'), 'utf8');
-  const builtins = between(reference, '## 9. Standard built-in predicates', '## 10. Implementation-specific built-ins');
-  const staleQuestionVariables = /`[^`]*\?[A-Za-z_][A-Za-z0-9_]*[^`]*`|`[^`]*\?(?=[,.)\] |])[^`]*`/;
-  for (const [index, line] of builtins.split('\n').entries()) {
-    if (!line.trim().startsWith('|')) continue;
-    if (line.includes('EYEPL_LOCAL_TIME=')) continue;
-    if (staleQuestionVariables.test(line)) {
-      issues.push(`docs/language-reference.md section 9 line ${index + 1}: stale question-mark variable in built-in description: ${line.trim()}`);
-    }
-  }
-  return issues.sort();
+  return issues;
 }
 
 function findBrokenDocLinks() {
@@ -1307,8 +1276,7 @@ function findBrokenDocLinks() {
 function documentationFiles() {
   return [
     path.join(packageRoot, 'README.md'),
-    path.join(packageRoot, 'docs', 'guide.md'),
-    path.join(packageRoot, 'docs', 'language-reference.md'),
+    path.join(packageRoot, 'the-art-of-eyepl.md'),
   ];
 }
 

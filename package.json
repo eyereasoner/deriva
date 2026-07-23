@@ -31,11 +31,12 @@
     "index.js",
     "index.d.ts",
     "playground.html",
+    "eyepl-logo.png",
     "bin",
     "src",
     "tools",
     "conformance-report.md",
-    "docs",
+    "the-art-of-eyepl.md",
     "examples",
     "test"
   ],

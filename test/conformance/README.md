@@ -1,6 +1,6 @@
 # Eyepl conformance suite
 
-This directory contains the executable conformance cases for the Eyepl language and reference engine. The normative language description is in the [Eyepl language reference](../../../docs/language-reference.md).
+This directory contains the executable conformance cases for the Eyepl language and reference engine. The normative language description is in the [The Art of Eyepl](../../../the-art-of-eyepl.md).
 
 The suite is intentionally file-based so another implementation can run the same programs and compare exact standard output, expected errors, expected warnings, and expected proof output. The conformance corpus is part of the public language contract, not just an implementation smoke test.
 

@@ -1,7 +1,7 @@
 # Eyepl
 
 <p align="left">
-  <img src="docs/assets/eyepl-logo.png" alt="Eyepl logo" width="70">
+  <img src="eyepl-logo.png" alt="Eyepl logo" width="70">
 </p>
 
 [![npm version](https://img.shields.io/npm/v/eyepl.svg)](https://www.npmjs.com/package/eyepl)
@@ -117,11 +117,8 @@ and `--include-source` behavior.
 ## Documentation
 
 - [Playground](https://eyereasoner.github.io/eyepl/playground)
-- [Guide](docs/guide.md)
-- [The Eyepl Position](docs/position.md)
-- [Language reference](docs/language-reference.md)
+- [The Art of Eyepl](the-art-of-eyepl.md)
 - [RDF tools](tools/README.md)
-- [A Compact Reasoning Workbench](docs/compact-reasoning-workbench.md)
 
 For local browser use, serve the checkout first so the playground can load ES modules and example files:
 
