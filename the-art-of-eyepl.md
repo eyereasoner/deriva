@@ -24,13 +24,15 @@ lists, finite search, built-ins, automatic tabling, and proof output. It does no
 attempt to reproduce the whole ISO Prolog environment.
 
 This places Eyepl in a tradition that joins automated deduction, database
-querying, and programming. Resolution made logical consequence mechanically
-searchable; early Prolog showed that Horn clauses could also be executable
-programs; deductive databases emphasized finite relations and fixed points.
-Eyepl borrows from all three traditions without pretending that they are
-identical. Its clauses are logical statements, its query execution is an
-ordered computation, and its proof terms make the connection between the two
-available for inspection.
+querying, and programming. Jacques Herbrand's doctoral work made ground terms
+and ground instances central to proof theory; Robinson's later resolution
+principle turned unification and refutation into a general proof procedure;
+early Prolog showed that Horn clauses could also be executable programs;
+deductive databases emphasized finite relations and fixed points. Eyepl
+borrows from all three traditions without pretending that they are identical.
+Its clauses are logical statements, its query execution is an ordered
+computation, and its proof terms make the connection between the two available
+for inspection.
 
 That history explains a recurring theme of the book. Logic programming is not
 the claim that control disappears. It is the discipline of stating the
@@ -83,6 +85,14 @@ slightly different question, and predict the answer before running it.
 18. [Constructing a program](#18-constructing-a-program)
 19. [Correctness and termination](#19-correctness-and-termination)
 20. [Improving a program](#20-improving-a-program)
+
+### Part V — Advanced relational design
+
+21. [Reading the computation](#21-reading-the-computation)
+22. [Trees, languages, and symbolic evaluation](#22-trees-languages-and-symbolic-evaluation)
+23. [Transforming programs](#23-transforming-programs)
+24. [Designing finite search](#24-designing-finite-search)
+25. [Case study: an auditable decision service](#25-case-study-an-auditable-decision-service)
 
 ### Appendices
 
@@ -326,6 +336,43 @@ high_score(Case) :-
 status(Case, accepted) :- high_score(Case).
 reason(Case, "score meets threshold") :- high_score(Case).
 ```
+
+### Herbrand's foundational move
+
+The terminology in the next section honors a remarkably early source. Jacques
+Herbrand developed the relevant ideas in his 1930 doctoral thesis,
+*Recherches sur la théorie de la démonstration* (“Investigations in proof
+theory”). His fundamental theorem connected first-order derivability with
+propositional reasoning over suitably chosen ground instances. In broad terms,
+quantified proof obligations could be studied through formulas obtained by
+substituting constructed terms for variables.
+
+That move supplied more than names. It made syntax usable as a mathematical
+universe: constants and function symbols generate ground terms, and atomic
+formulas over those terms provide a concrete space in which proofs can be
+analyzed. This viewpoint became foundational for automated theorem proving.
+Unification can be understood as finding substitutions that bring symbolic
+formulas together, while later proof procedures can search among clause
+instances without first assigning terms to an unrelated external domain.
+
+The historical distinctions matter. Herbrand did not invent Robinson's 1965
+resolution calculus, nor did his thesis state the later least-model semantics
+of logic programs in its modern form. Rather, his proof theory laid essential
+groundwork. Resolution supplied a powerful subsequent inference mechanism, and
+van Emden and Kowalski later gave definite logic programs their fixed-point and
+least-Herbrand-model account. Eyepl sits downstream of this sequence:
+
+```text
+Herbrand: ground terms and instances as a proof-theoretic foundation
+  -> Robinson: resolution and unification as a proof procedure
+  -> logic programming: executable clauses and least-model semantics
+  -> Eyepl: a small relational language with inspectable derivations
+```
+
+Herbrand completed this work while still in his early twenties and died in
+1931. The scale of its later influence—in proof theory, automated deduction,
+and logic programming—is one reason the word *Herbrand* recurs throughout this
+book rather than appearing only as historical attribution.
 
 ### The Herbrand world
 
@@ -1633,6 +1680,744 @@ be harder to terminate, explain, and index than two simple predicates with
 clear contracts. Generalize when a real second use appears. The art lies in
 keeping the logical idea visible while giving it enough control to run well.
 
+# Part V — Advanced relational design
+
+The earlier parts introduced the language and the habits needed to use it
+safely. This part stays longer with whole computations. It asks how to inspect
+a search tree, represent languages and evaluators as relations, transform a
+correct program without losing its meaning, and organize a decision system
+whose conclusions remain auditable.
+
+Eyepl is deliberately smaller than full Prolog. It has no cut, dynamic clause
+database, predicate variables, operator declarations, or definite-clause
+grammar notation. Where a larger Prolog program might rely on those features,
+the examples make the domain relation, state, or syntax tree explicit. This
+usually requires more arguments, but it also makes assumptions easier to
+inspect.
+
+## 21. Reading the computation
+
+A query is not solved in one leap. It is reduced to goals, each goal is matched
+against candidate clauses, and each successful match contributes bindings and
+new subgoals. The computation has two kinds of branching:
+
+- an **and** step, because every goal in a rule body must succeed;
+- an **or** step, because any matching clause may establish a goal.
+
+This and–or structure is the operational counterpart of the program's logical
+structure. A conjunction asks for several supporting claims; multiple clauses
+offer alternative justifications.
+
+```eyepl
+parent(ada, byron).
+parent(byron, clara).
+parent(clara, diego).
+
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Z) :- parent(X, Y), ancestor(Y, Z).
+
+query(ancestor(ada, Who)).
+```
+
+For `ancestor(ada, Who)`, the first clause asks
+`parent(ada, Who)` and produces `Who = byron`. The second clause asks two
+questions in sequence. `parent(ada, Y)` first binds `Y = byron`; the remaining
+call is therefore `ancestor(byron, Who)`. That call repeats the choice between
+a direct-parent proof and a longer proof.
+
+The three answers occupy increasing depths of one proof family:
+
+```text
+ancestor(ada, byron)
+  parent(ada, byron)
+
+ancestor(ada, clara)
+  parent(ada, byron)
+  ancestor(byron, clara)
+    parent(byron, clara)
+
+ancestor(ada, diego)
+  parent(ada, byron)
+  ancestor(byron, diego)
+    parent(byron, clara)
+    ancestor(clara, diego)
+      parent(clara, diego)
+```
+
+Drawing even a partial tree exposes errors that are hard to see in source
+alone: a variable that should have been shared, a recursive call that did not
+consume input, or a generator placed after the test that needs its output.
+
+### Substitutions accumulate
+
+A substitution is a set of bindings carried through the remaining goals.
+Bindings are not local return values. If the first goal binds a variable, every
+later occurrence of that variable sees the same term:
+
+```eyepl
+grandparent(X, Z) :-
+  parent(X, Y),
+  parent(Y, Z).
+```
+
+Solving `grandparent(ada, Z)` begins with `parent(ada, Y)`. Once that goal
+binds `Y` to `byron`, the second goal is the selective
+`parent(byron, Z)`.
+
+Repeated variables impose equality through unification:
+
+```eyepl
+loop_edge(Node) :- edge(Node, Node).
+```
+
+This does not find an arbitrary edge and compare its endpoints later. The
+shared variable makes equal endpoints part of the pattern being matched.
+
+### Failure rewinds choices, not facts
+
+Suppose a later goal fails:
+
+```eyepl
+eligible(Person) :-
+  applicant(Person),
+  age(Person, Age),
+  ge(Age, 18),
+  verified(Person).
+```
+
+Failure of `verified(Person)` rejects the current combination of bindings.
+Search may return to another `age/2` fact or another applicant clause. It does
+not retract source facts or erase answers already printed. Backtracking is
+better understood as exploring alternatives than as undoing the world.
+
+### Variants, cycles, and tables
+
+Recursive graph search can encounter the same logical subquestion through
+different paths. Calls that differ only in variable names are **variants**:
+`path(a, X)` and `path(a, Y)` pose the same pattern. Positive recursive groups
+can table such patterns, share their answers, and stop a cycle from expanding
+the same question forever.
+
+The table does not prove termination for every recursive program. If each call
+constructs a larger pattern, then the calls are not variants:
+
+```eyepl
+grows(X) :- grows(wrapper(X)).
+```
+
+`grows(A)`, `grows(wrapper(A))`, and
+`grows(wrapper(wrapper(A)))` are distinct calls. Remembering them does not
+make their number finite.
+
+### A practical tracing discipline
+
+When a query surprises you, write down:
+
+1. the selected goal;
+2. its current resolved arguments;
+3. the candidate clause;
+4. the unifier produced by the head;
+5. the new body goals;
+6. the point to which failure would return.
+
+Compare that hand trace with `--proof` for a successful answer and `--stats`
+for the amount of search. Proofs explain one successful derivation; statistics
+summarize work across successful and failed branches. Neither is a complete
+trace, but together they usually locate the modeling issue.
+
+**Exercises.**
+
+1. Draw the and–or tree for `ancestor(byron, Who)`.
+2. Add a second parent of `clara` and identify where the tree branches.
+3. Write a cyclic `edge/2` graph and compare reachability answers with the
+   table rounds reported by `--stats`.
+4. Construct a recursive rule whose call grows a list on every step. Explain
+   why variant tabling does not make its call space finite.
+
+## 22. Trees, languages, and symbolic evaluation
+
+Compound terms are finite trees. A functor labels an internal node and its
+arguments are the children. Lists are one familiar tree encoding, but syntax,
+plans, types, circuits, formulas, and organizational structures can all be
+represented directly.
+
+```eyepl
+tree(
+  oak,
+  tree(birch, empty, empty),
+  tree(pine, empty, empty)
+).
+```
+
+A structural relation follows the representation:
+
+```eyepl
+tree_member(X, tree(X, _, _)).
+tree_member(X, tree(_, Left, _)) :- tree_member(X, Left).
+tree_member(X, tree(_, _, Right)) :- tree_member(X, Right).
+```
+
+The clauses say where a member may occur. They also define a search order:
+root, then left subtree, then right subtree. If only membership matters, that
+order is an implementation choice. If a caller uses `once/1`, it becomes
+observable.
+
+### Transforming a tree
+
+```eyepl
+mirror(empty, empty).
+mirror(
+  tree(Value, Left, Right),
+  tree(Value, MirroredRight, MirroredLeft)
+) :-
+  mirror(Left, MirroredLeft),
+  mirror(Right, MirroredRight).
+```
+
+Read forward, `mirror/2` constructs a mirror. With both trees ground, it
+verifies the relationship. In some partially bound modes it can fill missing
+structure. The rule does not mutate a tree; it relates two persistent terms.
+
+The representation exposes an invariant: mirroring preserves every node value
+and exchanges left and right at every level. It also suggests a structural
+induction. The empty tree is its own mirror; if both recursive calls are
+correct, the constructed parent is correct.
+
+### A grammar without special syntax
+
+A recognizer can relate an input list to its unconsumed suffix. The pair of
+arguments makes sequencing explicit:
+
+```eyepl
+sentence(Input, Rest) :-
+  noun_phrase(Input, AfterNoun),
+  verb_phrase(AfterNoun, Rest).
+
+noun_phrase([the | Input], Rest) :- noun(Input, Rest).
+noun_phrase([a | Input], Rest) :- noun(Input, Rest).
+
+noun([robot | Rest], Rest).
+noun([scientist | Rest], Rest).
+
+verb_phrase(Input, Rest) :-
+  verb(Input, AfterVerb),
+  noun_phrase(AfterVerb, Rest).
+
+verb([helps | Rest], Rest).
+verb([observes | Rest], Rest).
+
+complete_sentence(Words) :- sentence(Words, []).
+
+query(complete_sentence([the, robot, helps, a, scientist])).
+```
+
+The first argument is the list before a phrase and the second is the suffix
+after it. Composition is variable sharing: the suffix returned by
+`noun_phrase/2` becomes the input of `verb_phrase/2`. This is the central idea
+behind difference-list grammars, expressed without dedicated notation.
+
+The same relation can be a bounded generator when vocabulary and output length
+are constrained by surrounding relations. An unconstrained
+`complete_sentence(Words)` call can generate sentences of unbounded length if
+the grammar is recursive. A grammar is also a search program, so its intended
+modes need the same termination analysis as other recursive relations.
+
+### Interpreting an expression
+
+Syntax trees separate the expression from the act of evaluating it:
+
+```eyepl
+evaluate(number(N), N).
+
+evaluate(add(Left, Right), Value) :-
+  evaluate(Left, L),
+  evaluate(Right, R),
+  add(L, R, Value).
+
+evaluate(multiply(Left, Right), Value) :-
+  evaluate(Left, L),
+  evaluate(Right, R),
+  mul(L, R, Value).
+```
+
+```eyepl
+query(
+  evaluate(
+    add(number(2), multiply(number(3), number(4))),
+    Value
+  )
+).
+```
+
+The value is `14`. More importantly, the proof follows the syntax tree: two
+literal evaluations support one multiplication and one addition.
+
+An extension can add variables and an explicit environment:
+
+```eyepl
+lookup(Name, [binding(Name, Value) | _], Value).
+lookup(Name, [_ | Rest], Value) :- lookup(Name, Rest, Value).
+
+evaluate(variable(Name), Environment, Value) :-
+  lookup(Name, Environment, Value).
+```
+
+Passing the environment as data avoids hidden global state. Shadowing is
+determined by list order and should be documented as part of `lookup/3`.
+
+### Rewriting symbolic expressions
+
+Evaluation collapses syntax to a value. Rewriting preserves syntax while
+replacing one form with an equivalent or preferred form:
+
+```eyepl
+simplify(add(number(0), X), X).
+simplify(add(X, number(0)), X).
+simplify(multiply(number(1), X), X).
+simplify(multiply(X, number(1)), X).
+
+simplify(add(A, B), add(SA, SB)) :-
+  simplify(A, SA),
+  simplify(B, SB).
+```
+
+Overlapping rules can produce several answers. That may be desirable when
+exploring equivalent forms, but a normalizer needs a strategy and termination
+measure. A rule that expands `X` to `add(X, number(0))` reverses the first
+simplification and permits unbounded rewriting.
+
+**Exercises.**
+
+1. Define `tree_size/2` and `tree_height/2`.
+2. Extend the grammar with adjectives while preserving the input/suffix
+   contract.
+3. Add subtraction to the evaluator and state which arguments must be ground.
+4. Define constant folding for `add(number(A), number(B))`.
+5. Explain why individually sensible rewrite rules may fail to terminate when
+   repeatedly combined.
+
+## 23. Transforming programs
+
+Program transformation changes clauses while attempting to preserve an
+intended relation. The useful question is not merely “does the new version
+run?” but “for which calls does it preserve answers, termination, answer
+order, and explanations?”
+
+Four transformations recur in logic programs:
+
+- **unfolding** replaces a call by the bodies of its defining clauses;
+- **folding** names a repeated conjunction with a helper relation;
+- **specialization** fixes known arguments and removes irrelevant choices;
+- **accumulation** carries a partial result through recursion.
+
+Each can improve control or reveal structure. Each can also change modes,
+duplicate work, or alter proof shape.
+
+### Unfolding and folding
+
+Start with:
+
+```eyepl
+adult(Person) :-
+  recorded_age(Person, Age),
+  adult_age(Age).
+
+adult_age(Age) :- ge(Age, 18).
+```
+
+Unfolding `adult_age/1` gives:
+
+```eyepl
+adult(Person) :-
+  recorded_age(Person, Age),
+  ge(Age, 18).
+```
+
+For this deterministic helper, the ground answers are unchanged. The shorter
+proof loses the named concept `adult_age/1`, however. That loss may be
+undesirable in an auditable policy even if execution becomes slightly cheaper.
+If a helper has several clauses, unfolding produces one caller clause for each
+alternative. If it is recursive, unrestricted unfolding may never finish.
+
+Folding moves in the other direction. Suppose decisions repeat:
+
+```eyepl
+can_board(Person) :-
+  registered(Person),
+  identity_checked(Person),
+  not(suspended(Person)),
+  has_ticket(Person).
+
+can_enter_lounge(Person) :-
+  registered(Person),
+  identity_checked(Person),
+  not(suspended(Person)),
+  lounge_pass(Person).
+```
+
+Name the shared concept:
+
+```eyepl
+traveler_in_good_standing(Person) :-
+  registered(Person),
+  identity_checked(Person),
+  not(suspended(Person)).
+
+can_board(Person) :-
+  traveler_in_good_standing(Person),
+  has_ticket(Person).
+
+can_enter_lounge(Person) :-
+  traveler_in_good_standing(Person),
+  lounge_pass(Person).
+```
+
+The helper is valuable because it has a stable meaning, not merely because
+three lines became one. It creates one place to state and test the closed-world
+assumption behind `not(suspended(Person))`.
+
+### Specializing a relation
+
+A general transport database may use:
+
+```eyepl
+connection(Mode, From, To, Cost).
+```
+
+An application that only plans rail journeys can define:
+
+```eyepl
+rail_connection(From, To, Cost) :-
+  connection(rail, From, To, Cost).
+```
+
+This wrapper establishes a stronger contract and gives indexing a bound first
+argument. Deeper specialization can precompute invariant classifications or
+remove irrelevant branches. Keep the general relation as the specification
+against which specialized answers are compared.
+
+### Accumulators and modes
+
+A direct list sum performs work after recursion:
+
+```eyepl
+sum_numbers([], 0).
+sum_numbers([X | Xs], Sum) :-
+  sum_numbers(Xs, Rest),
+  add(X, Rest, Sum).
+```
+
+An accumulator makes the partial sum explicit:
+
+```eyepl
+sum_numbers_acc(List, Sum) :- sum_from(List, 0, Sum).
+
+sum_from([], Accumulator, Accumulator).
+sum_from([X | Xs], Accumulator, Sum) :-
+  add(Accumulator, X, Next),
+  sum_from(Xs, Next, Sum).
+```
+
+For a ground numeric list, both versions return the same sum. They do not have
+identical relational behavior in every mode. The accumulator version requires
+each intermediate addition to be ready on the way down. State the intended
+mode instead of claiming unconditional equivalence.
+
+### A transformation checklist
+
+Before replacing one definition with another, record:
+
+1. the intended ground relation;
+2. supported binding patterns;
+3. a termination measure for each supported pattern;
+4. whether duplicates and answer order matter;
+5. whether callers inspect proof structure;
+6. representative positive, negative, and boundary queries.
+
+Then compare both versions. `--stats` can show fewer calls or unifications, but
+performance evidence comes after semantic evidence. A faster program that
+silently drops a mode is a different program.
+
+**Exercises.**
+
+1. Unfold a two-clause helper and count the resulting caller clauses.
+2. Fold repeated validation conditions in two rules of your own.
+3. Specialize a generic graph relation for one edge type.
+4. Compare direct and accumulator-based length relations in several modes.
+5. Find a transformation that preserves answers but changes the first proof
+   selected by `once/1`.
+
+## 24. Designing finite search
+
+Nondeterminism is not randomness. A nondeterministic relation defines several
+legitimate continuations, and search systematically explores them. The design
+problem is to make useful alternatives complete while keeping their number
+finite and their order productive.
+
+### Generate, constrain, describe
+
+A clear search program often has three layers:
+
+1. generate a candidate from a finite domain;
+2. constrain the candidate;
+3. describe or score the surviving witness.
+
+```eyepl
+worker(ada).
+worker(byron).
+worker(clara).
+
+task(inspect).
+task(repair).
+
+qualified(ada, inspect).
+qualified(byron, repair).
+qualified(clara, inspect).
+qualified(clara, repair).
+
+assignment(Worker, Task) :-
+  worker(Worker),
+  task(Task),
+  qualified(Worker, Task).
+
+query(assignment(Worker, Task)).
+```
+
+`worker/1` and `task/1` make the search space explicit. `qualified/2` is both a
+constraint and a selective relation. If the application knows the task,
+calling `assignment(Worker, repair)` avoids generating irrelevant task values.
+
+### Search over states
+
+A state-space problem needs a state term, a finite move relation, a goal test,
+a policy for repeated states, and a witness representation. A simple graph
+path carries visited nodes:
+
+```eyepl
+simple_path(From, To, Path) :-
+  walk(From, To, [From], Reversed),
+  reverse(Reversed, Path).
+
+walk(To, To, Visited, Visited).
+walk(From, To, Visited, Path) :-
+  edge(From, Next),
+  not_member(Next, Visited),
+  walk(Next, To, [Next | Visited], Path).
+```
+
+The visited list makes the witness finite on a finite graph. It also changes
+the question from arbitrary walks to simple paths. That is a modeling choice,
+not merely an optimization. A caller asking for repeated stops needs another
+bound, such as maximum steps or cost.
+
+### Existence, one witness, and all witnesses
+
+These questions have very different costs:
+
+```eyepl
+reachable(From, To).
+once(simple_path(From, To, Path)).
+findall(Path, simple_path(From, To, Path), Paths).
+```
+
+Reachability needs only a pair and is a good candidate for tabling. One path
+may stop after the first witness. All simple paths may be exponentially
+numerous even though the graph is finite. Choose the weakest result that meets
+the caller's need.
+
+### Optimization is search plus an order
+
+An optimal answer requires a finite candidate relation and a comparison key:
+
+```eyepl
+best_plan(Request, Plan, Cost) :-
+  aggregate_min(
+    [CandidateCost, CandidatePlan],
+    CandidatePlan,
+    candidate_plan(Request, CandidatePlan, CandidateCost),
+    [Cost, Plan],
+    Plan
+  ).
+```
+
+The structured key makes ties deterministic. It does not reduce the candidate
+space: `aggregate_min/5` must settle the nested search before knowing the
+minimum. For a large problem, strengthen `candidate_plan/3` or use a
+domain-specific dynamic program instead of assuming aggregation performs
+branch-and-bound.
+
+### Fairness and depth-first search
+
+Depth-first clause search can become trapped in an infinite branch before
+reaching a later finite proof. Base cases should be reachable before recursive
+expansion, and recursive steps should consume a finite resource or enter a
+finite table. When neither is possible, the query is outside the practical
+contract of the relation.
+
+Multiple clauses normally mean that any or all may yield legitimate answers.
+`once/1` turns the first success into a don't-care choice: later alternatives
+are intentionally discarded. Use it only when selection order is an accepted
+part of the specification.
+
+**Exercises.**
+
+1. Add skills and time slots to the assignment example.
+2. Modify `simple_path/3` to return accumulated cost.
+3. Compare reachability, one path, and all paths on a diamond-shaped graph.
+4. Give a finite candidate relation for which `aggregate_min/5` still performs
+   an impractically large search.
+5. Construct a recursive first clause that starves a valid later base clause,
+   then repair its control.
+
+## 25. Case study: an auditable decision service
+
+This case study develops a small access decision from prose to an executable,
+explainable theory. The purpose is the sequence of design decisions that turns
+informal requirements into maintainable relations.
+
+### Requirements and questions
+
+A research facility says:
+
+- a person may enter a zone when their badge is active;
+- the badge must grant the zone's required clearance;
+- required training must be current;
+- an explicit suspension blocks entry;
+- contradictory badge records invalidate the decision service;
+- every permit should carry a reason traceable to source facts.
+
+Before coding, identify ambiguities. Is the badge registry complete? Is missing
+training evidence a denial or unknown? Can a person have several active badges?
+Which clock determines “current”? A rule engine cannot remove these choices;
+it can only make the chosen answers precise.
+
+### Source and concept layers
+
+Represent observations without embedding decisions:
+
+```eyepl
+person(ada).
+badge(b17, ada).
+badge_status(b17, active).
+badge_clearance(b17, laboratory).
+zone_requires(clean_room, laboratory).
+training_valid(ada, clean_room).
+```
+
+The badge identifier remains explicit. Collapsing it into
+`active_badge(ada)` would hide the record used as evidence and make conflicting
+records harder to detect.
+
+Build vocabulary that reads like the policy:
+
+```eyepl
+active_badge(Person, Badge) :-
+  badge(Badge, Person),
+  badge_status(Badge, active).
+
+cleared_for(Badge, Zone) :-
+  badge_clearance(Badge, Clearance),
+  zone_requires(Zone, Clearance).
+
+prepared_for(Person, Zone) :-
+  training_valid(Person, Zone).
+```
+
+Each helper has one responsibility. A proof of `cleared_for/2` names both the
+badge clearance and zone requirement rather than burying their join in a wide
+decision clause.
+
+### Closed-world choice
+
+If the suspension list is authoritative and complete, absence can be used:
+
+```eyepl
+in_good_standing(Person) :-
+  person(Person),
+  not(suspended(Person)).
+```
+
+If it is incomplete, this rule is unsound as policy. Replace it with a positive
+source claim such as `standing(Person, good)`. The difference is an agreement
+about the knowledge boundary, not a matter of syntax.
+
+### Decision, reasons, and proof
+
+```eyepl
+permit(Person, Zone) :-
+  active_badge(Person, Badge),
+  cleared_for(Badge, Zone),
+  prepared_for(Person, Zone),
+  in_good_standing(Person).
+
+reason(Person, Zone, badge_and_training_verified) :-
+  permit(Person, Zone).
+
+query(permit(Person, Zone)).
+query(reason(Person, Zone, Reason)).
+```
+
+`reason/3` supplies a stable user-facing summary. With `--proof`, the same
+answer carries its detailed derivation. These are complementary: the reason is
+domain vocabulary, while the proof records actual clauses and bindings.
+
+### Integrity before decisions
+
+Contradictory badge states stop every query:
+
+```eyepl
+incompatible_status(active, revoked).
+incompatible_status(revoked, active).
+
+false :-
+  badge_status(Badge, Status),
+  incompatible_status(Status, Other),
+  badge_status(Badge, Other).
+```
+
+The fuse does not say that one permit failed. It says the theory is unfit to
+decide. Other fuses can reject a badge assigned to two people or a zone with
+incompatible clearance definitions.
+
+### Tests are policy examples
+
+A useful test set includes an ordinary permit, missing training, suspension,
+insufficient clearance, duplicate derivations, contradictory status, and a
+proof showing the exact badge and training facts.
+
+Boundary examples reveal requirements. If a person has two valid badges,
+should there be one permit with two derivations or two permit terms containing
+the badge? `permit(Person, Zone)` chooses one ground decision with potentially
+several proofs. If badge identity belongs in the answer, define
+`permit(Person, Zone, Badge)`.
+
+### Embedding and audit
+
+Authenticate source systems in the host, convert records to Eyepl facts, run
+the theory, and store the answer with its proof and input version. The solver
+can explain logical support; it cannot attest that a badge database was current
+or a training provider trustworthy.
+
+```text
+authenticated source snapshot
+  -> normalized Eyepl facts
+  -> checked theory
+  -> permit and reason
+  -> proof referencing clauses and facts
+```
+
+When policy changes, preserve old inputs, theory versions, and proofs so a past
+decision can be reconstructed under the rules that actually governed it.
+
+**Exercises.**
+
+1. Add time-bounded training using explicit dates and `difference/3`.
+2. Model `denial/3` without assuming every failed permit has the same reason.
+3. Add a two-person escort rule and identify duplicate-proof cases.
+4. Write fuses for badges assigned to multiple people.
+5. Design a source socket for badge facts and state what the host must validate.
+6. Run the case with `--proof` and decide which helpers improve the explanation.
+
 # Appendix A. Language summary
 
 Eyepl source is UTF-8. `%` starts a line comment. Plain atoms begin with a
@@ -2116,6 +2901,15 @@ and technical background for the ideas that Eyepl adapts. They describe larger
 languages and theories, so they should not be read as additional Eyepl
 specifications.
 
+- Jacques Herbrand,
+  [*Recherches sur la théorie de la
+  démonstration*](https://www.numdam.org/item/THESE_1930__110__1_0/),
+  doctoral thesis, University of Paris, 1930. Herbrand's fundamental theorem
+  and treatment of ground instances form a major proof-theoretic foundation
+  for automated deduction. Chapter 3 explains how the later Herbrand universe,
+  base, interpretations, and least-model vocabulary connect that foundation to
+  logic programming.
+
 - J. A. Robinson, [“A Machine-Oriented Logic Based on the Resolution
   Principle”](https://doi.org/10.1145/321250.321253), *Journal of the ACM*
   12(1), 1965, pp. 23–41. The foundational account of resolution and
@@ -2166,6 +2960,15 @@ specifications.
   EYE side of Eyepl's name and for the relationship between Semantic Web rule
   languages and existential-rule reasoning. Eyepl deliberately implements a
   different, compact Horn-clause language.
+
+- Leon Sterling and Ehud Shapiro,
+  [*The Art of Prolog*, second
+  edition](https://mitpress.ublish.com/book/art-prolog),
+  MIT Press, 1994. Its sustained treatment of computation, program
+  construction, nondeterminism, transformation, interpreters, grammars,
+  search, and applications is an important pedagogical benchmark for Part V.
+  Eyepl differs substantially from full Prolog, so the material here develops
+  those themes only through Eyepl's explicit, supported relations.
 
 The aim of Eyepl is not to make every difficult problem easy. It is to keep the
 theory visible while the machine searches it: facts you can inspect, rules you
