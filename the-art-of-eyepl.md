@@ -83,8 +83,8 @@ slightly different question, and predict the answer before running it.
 # Part I — Relations
 
 <figure>
-  <img src="book-assets/part-1-relations.svg" alt="Two constellations joined by arcs through a shared center.">
-  <figcaption>A relation gives separate terms a common shape: identity travels along the threads made by shared variables.</figcaption>
+  <img src="book-assets/part-1-relations.svg" alt="People, homes, a school, and a bicycle connected by named relations in a small town.">
+  <figcaption>One ordinary scene contains many relations: who lives where, who is a parent, who attends school, and who owns the bicycle.</figcaption>
 </figure>
 
 We begin with connection rather than calculation. Facts place points in a
@@ -537,8 +537,8 @@ fail unless the tail is `[]`.
 # Part II — Search
 
 <figure>
-  <img src="book-assets/part-2-search.svg" alt="A question branches through alternatives toward one highlighted answer.">
-  <figcaption>Search opens possibilities, abandons failures, revisits useful questions, and carries one coherent path to an answer.</figcaption>
+  <img src="book-assets/part-2-search.svg" alt="A traveler chooses among mountain paths leading toward a cabin.">
+  <figcaption>A route is found by exploring alternatives, recognizing dead ends and cycles, and carrying a productive choice toward the destination.</figcaption>
 </figure>
 
 A theory may justify many conclusions, but an evaluator must still find them.
@@ -756,8 +756,8 @@ numerical kernels generally belong in a host, with Eyepl as the decision layer.
 # Part III — Trustworthy reasoning
 
 <figure>
-  <img src="book-assets/part-3-trustworthy-reasoning.svg" alt="Fragments of evidence rise through transparent layers into a balanced conclusion.">
-  <figcaption>A trustworthy conclusion remains connected to the independent pieces of evidence that support and constrain it.</figcaption>
+  <img src="book-assets/part-3-trustworthy-reasoning.svg" alt="A spacecraft engineer reviews sensor evidence leading to a battery safety action.">
+  <figcaption>Current, resistance, and temperature readings remain visible as independent premises for a thermal warning and safety action.</figcaption>
 </figure>
 
 An answer becomes useful when its grounds remain visible. Here reasoning is
@@ -1011,8 +1011,8 @@ result; `why/2` records which supplied clauses actually supported an answer.
 # Part IV — The craft of logic programming
 
 <figure>
-  <img src="book-assets/part-4-craft.svg" alt="Rough fragments are refined through a spiral into a clear relational form.">
-  <figcaption>Craft is repeated clarification: preserve the logical idea while reshaping its control until the program becomes clear and usable.</figcaption>
+  <img src="book-assets/part-4-craft.svg" alt="A logic programmer works between domain sketches, design questions, and tested Eyepl clauses.">
+  <figcaption>Craft moves repeatedly between the real domain, the relations on paper, executable clauses, answers, and proofs.</figcaption>
 </figure>
 
 The final Part turns from language features to habits of construction. A good

@@ -1,33 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
-  <title id="title">The craft of logic programming</title>
-  <desc id="desc">A rough field of fragments is repeatedly folded into a clear spiral and finally an elegant relational pattern.</desc>
-  <defs>
-    <linearGradient id="field" x1="0" x2="1">
-      <stop offset="0" stop-color="#f1e7d6"/>
-      <stop offset=".5" stop-color="#fffdf7"/>
-      <stop offset="1" stop-color="#e4eee9"/>
-    </linearGradient>
-    <style>
-      .rough{fill:none;stroke:#8b3a3a;stroke-width:3;stroke-linecap:round;opacity:.75}
-      .guide{fill:none;stroke:#9a5b18;stroke-width:2;stroke-dasharray:6 8}
-      .form{fill:none;stroke:#2f6f55;stroke-width:5;stroke-linecap:round}
-      .joint{fill:#fffdf7;stroke:#243447;stroke-width:2.5}
-    </style>
-  </defs>
-  <rect width="900" height="360" fill="url(#field)"/>
-  <path class="rough" d="M55 95 L115 70 L145 130 L90 155 L160 205 L85 280"/>
-  <path class="rough" d="M155 60 L205 115 L175 170 L235 225 L190 300"/>
-  <path class="guide" d="M210 180 C300 30 500 55 520 175 C540 290 360 315 315 220 C270 125 405 90 450 165 C485 225 400 260 365 210"/>
-  <path class="form" d="M330 180 C390 85 525 100 535 180 C545 255 435 275 400 220 C365 165 435 130 470 175"/>
-  <path class="form" d="M535 180 C610 180 645 105 715 105"/>
-  <path class="form" d="M535 180 C620 180 650 180 735 180"/>
-  <path class="form" d="M535 180 C610 180 645 255 715 255"/>
-  <circle class="joint" cx="330" cy="180" r="17"/>
-  <circle class="joint" cx="535" cy="180" r="20"/>
-  <circle class="joint" cx="715" cy="105" r="24"/>
-  <circle class="joint" cx="735" cy="180" r="24"/>
-  <circle class="joint" cx="715" cy="255" r="24"/>
-  <circle cx="715" cy="105" r="6" fill="#8b3a3a"/>
-  <circle cx="735" cy="180" r="6" fill="#8b3a3a"/>
-  <circle cx="715" cy="255" r="6" fill="#8b3a3a"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" role="img" aria-labelledby="title desc">
+  <title id="title">A logic programmer's workbench</title>
+  <desc id="desc">A programmer moves between domain notes, clause cards, a graph sketch, and tested Eyepl code at a warm workbench.</desc>
+  <style>
+    .wall{fill:#eee5d3}.desk{fill:#a97852}.paper{fill:#fffdf7;stroke:#243447;stroke-width:2}
+    .screen{fill:#243447;stroke:#172334;stroke-width:5}.code{fill:#dcefe8;font:14px ui-monospace,monospace}
+    .ink{fill:none;stroke:#243447;stroke-width:2.5;stroke-linecap:round}.red{stroke:#8b3a3a}.green{stroke:#2f6f55}
+    .note{fill:#e8c980;stroke:#9a5b18;stroke-width:1.5}.cup{fill:#d7e9e2;stroke:#243447;stroke-width:2}
+  </style>
+  <rect width="900" height="420" class="wall"/><rect y="290" width="900" height="130" class="desk"/>
+  <rect class="paper" x="45" y="45" width="220" height="190" rx="4"/><text x="155" y="76" text-anchor="middle" fill="#713535" font-family="Georgia,serif" font-size="18">DOMAIN SKETCH</text>
+  <circle cx="90" cy="125" r="17" fill="#fffdf7" stroke="#243447" stroke-width="2"/><circle cx="195" cy="115" r="17" fill="#fffdf7" stroke="#243447" stroke-width="2"/><circle cx="145" cy="190" r="17" fill="#fffdf7" stroke="#243447" stroke-width="2"/>
+  <path class="ink green" d="M107 124 L177 116 M102 139 L135 177 M185 131 L156 177"/><text x="144" y="150" fill="#435166" font-family="ui-monospace,monospace" font-size="12">relations</text>
+  <rect class="note" x="285" y="60" width="118" height="70" transform="rotate(-5 344 95)"/><text x="344" y="91" text-anchor="middle" fill="#713535" font-family="ui-monospace,monospace" font-size="13">What does one</text><text x="344" y="109" text-anchor="middle" fill="#713535" font-family="ui-monospace,monospace" font-size="13">fact mean?</text>
+  <rect class="note" x="295" y="155" width="125" height="72" transform="rotate(4 357 191)"/><text x="357" y="187" text-anchor="middle" fill="#713535" font-family="ui-monospace,monospace" font-size="13">Which argument</text><text x="357" y="205" text-anchor="middle" fill="#713535" font-family="ui-monospace,monospace" font-size="13">gets smaller?</text>
+  <rect class="screen" x="470" y="35" width="360" height="235" rx="10"/>
+  <text class="code" x="495" y="75">path(X, Y) :- edge(X, Y).</text>
+  <text class="code" x="495" y="110">path(X, Z) :-</text><text class="code" x="520" y="135">edge(X, Y),</text><text class="code" x="520" y="160">path(Y, Z).</text>
+  <text class="code" x="495" y="205">query(path(a, X)).</text>
+  <text x="495" y="240" fill="#8fc9a9" font-family="ui-monospace,monospace" font-size="14">✓ answers and proofs agree</text>
+  <path d="M625 270 L675 305 H580Z" fill="#536b78"/>
+  <rect x="545" y="304" width="165" height="12" rx="6" fill="#536b78"/>
+  <g transform="translate(115 285)"><ellipse class="cup" cx="0" cy="45" rx="45" ry="12"/><path class="cup" d="M-45 0 H45 L35 45 H-35Z"/><path class="ink" d="M45 10 Q78 12 65 36 Q58 46 38 38"/><path d="M-15-8 Q-25-35-8-48 M10-8 Q22-32 8-48" fill="none" stroke="#fffdf7" stroke-width="3" opacity=".8"/></g>
+  <rect class="paper" x="230" y="305" width="230" height="90" transform="rotate(-3 345 350)"/><path class="ink red" d="M250 332 L350 328"/><path class="ink green" d="M250 355 L420 347 M250 376 L385 370"/>
 </svg>

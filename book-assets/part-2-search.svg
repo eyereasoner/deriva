@@ -1,36 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
-  <title id="title">Search</title>
-  <desc id="desc">A single question branches through a field of alternatives; some paths fade, one reaches a bright answer, and one loops back.</desc>
-  <defs>
-    <linearGradient id="field" x1="0" x2="1">
-      <stop offset="0" stop-color="#eee5d3"/>
-      <stop offset=".55" stop-color="#f8f3e8"/>
-      <stop offset="1" stop-color="#e4eee9"/>
-    </linearGradient>
-    <style>
-      .branch{fill:none;stroke:#435166;stroke-width:3;stroke-linecap:round}
-      .lost{fill:none;stroke:#8b3a3a;stroke-width:2;stroke-dasharray:3 9;opacity:.7}
-      .chosen{fill:none;stroke:#2f6f55;stroke-width:6;stroke-linecap:round}
-      .choice{fill:#fffdf7;stroke:#243447;stroke-width:2}
-      .answer{fill:#dcefe8;stroke:#2f6f55;stroke-width:4}
-    </style>
-  </defs>
-  <rect width="900" height="360" fill="url(#field)"/>
-  <path class="branch" d="M65 180 C170 180 165 75 280 75"/>
-  <path class="branch" d="M65 180 C170 180 175 180 280 180"/>
-  <path class="branch" d="M65 180 C170 180 165 285 280 285"/>
-  <path class="lost" d="M280 75 C390 75 400 35 500 35 S630 80 700 55"/>
-  <path class="branch" d="M280 75 C380 75 410 125 500 125"/>
-  <path class="chosen" d="M280 180 C390 180 405 230 510 230 S685 170 825 180"/>
-  <path class="lost" d="M280 285 C380 285 390 325 500 325"/>
-  <path class="branch" d="M500 125 C620 125 630 300 520 300 C450 300 445 245 510 230"/>
-  <circle class="choice" cx="65" cy="180" r="25"/>
-  <circle class="choice" cx="280" cy="75" r="18"/>
-  <circle class="choice" cx="280" cy="180" r="18"/>
-  <circle class="choice" cx="280" cy="285" r="18"/>
-  <circle class="choice" cx="500" cy="35" r="13"/>
-  <circle class="choice" cx="500" cy="125" r="18"/>
-  <circle class="choice" cx="510" cy="230" r="18"/>
-  <circle class="choice" cx="500" cy="325" r="13"/>
-  <circle class="answer" cx="825" cy="180" r="32"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" role="img" aria-labelledby="title desc">
+  <title id="title">Searching for a route through the hills</title>
+  <desc id="desc">A traveler studies several mountain paths; dead ends and a loop are marked while one green route reaches a cabin.</desc>
+  <style>
+    .sky{fill:#e9f1ee}.hill1{fill:#b7cbbd}.hill2{fill:#819f8c}.snow{fill:#fffdf7}
+    .path{fill:none;stroke:#76553c;stroke-width:7;stroke-linecap:round;stroke-dasharray:9 7}
+    .chosen{fill:none;stroke:#2f6f55;stroke-width:9;stroke-linecap:round}
+    .dead{stroke:#8b3a3a;stroke-width:5}.sign{fill:#fffdf7;stroke:#243447;stroke-width:2}
+    .ink{fill:none;stroke:#243447;stroke-width:3;stroke-linecap:round}.coat{fill:#a55246;stroke:#243447;stroke-width:2}
+  </style>
+  <rect width="900" height="420" class="sky"/>
+  <circle cx="735" cy="85" r="43" fill="#e8c980"/>
+  <polygon class="hill2" points="0,330 165,95 345,330"/><polygon class="snow" points="117,163 165,95 220,172 183,158 160,180 140,155"/>
+  <polygon class="hill1" points="160,350 410,70 680,350"/><polygon class="snow" points="345,143 410,70 482,151 438,135 408,165 382,137"/>
+  <polygon class="hill2" points="520,345 700,125 900,345"/><polygon class="snow" points="654,181 700,125 750,185 720,176 700,198 680,175"/>
+  <path d="M0 320 Q220 275 420 330 T900 305 V420 H0Z" fill="#dcd2bf"/>
+  <path class="path" d="M95 360 C180 290 240 310 290 230 S395 170 480 235"/>
+  <path class="path" d="M290 230 C345 265 335 325 395 342"/>
+  <path class="path" d="M480 235 C565 175 590 100 660 145"/>
+  <path class="chosen" d="M95 360 C180 290 240 310 290 230 S395 170 480 235 C555 290 650 320 790 270"/>
+  <path class="path" d="M480 235 C535 185 565 225 548 268 C530 308 478 282 500 245"/>
+  <line class="dead" x1="380" y1="327" x2="410" y2="357"/><line class="dead" x1="410" y1="327" x2="380" y2="357"/>
+  <line class="dead" x1="647" y1="132" x2="675" y2="158"/><line class="dead" x1="675" y1="132" x2="647" y2="158"/>
+  <g transform="translate(75 315)"><circle cx="0" cy="-35" r="14" class="sign"/><path class="coat" d="M-22-13 Q0-28 22-13 L18 37 H-18Z"/><path class="ink" d="M-8 37 L-12 66 M8 37 L13 66 M18-2 L35 10"/></g>
+  <g transform="translate(760 205)"><rect class="sign" x="0" y="28" width="92" height="62"/><polygon points="-12,30 46,-10 104,30" fill="#a55246" stroke="#243447" stroke-width="2"/><rect x="37" y="58" width="22" height="32" fill="#c89062" stroke="#243447" stroke-width="2"/><path d="M72 0 Q65-25 76-43" class="ink"/></g>
+  <g transform="translate(220 292)"><path class="ink" d="M0 38 V0"/><path class="sign" d="M0 3 L62 3 L52-17 L0-17Z"/><path class="sign" d="M0 28 L-55 28 L-45 8 L0 8Z"/></g>
 </svg>
