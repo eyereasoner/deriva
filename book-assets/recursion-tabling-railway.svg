@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="380" viewBox="0 0 900 380" role="img" aria-labelledby="title desc">
+  <title id="title">Recursion and tabling on a railway map</title>
+  <desc id="desc">A railway network contains a cycle; a route ledger records reached stations so recurring questions reuse known answers.</desc>
+  <style>
+    .map{fill:#e9f1ee}.land{fill:#eee5d3}.rail{fill:none;stroke:#536b78;stroke-width:8}.tie{fill:none;stroke:#fffdf7;stroke-width:2;stroke-dasharray:4 8}
+    .station{fill:#fffdf7;stroke:#243447;stroke-width:3}.known{fill:#dcefe8;stroke:#2f6f55;stroke-width:4}
+    .text{fill:#243447;font:14px ui-monospace,monospace}.ledger{fill:#fffdf7;stroke:#243447;stroke-width:2}.check{fill:#2f6f55}
+  </style>
+  <rect width="900" height="380" class="map"/><path class="land" d="M0 270 Q170 210 330 280 T650 245 T900 275 V380 H0Z"/>
+  <path class="rail" d="M75 250 C180 130 290 115 390 190 S580 300 700 190 S800 105 845 145"/>
+  <path class="tie" d="M75 250 C180 130 290 115 390 190 S580 300 700 190 S800 105 845 145"/>
+  <path class="rail" d="M390 190 C445 75 590 75 620 180 C650 285 500 300 450 235"/>
+  <path class="tie" d="M390 190 C445 75 590 75 620 180 C650 285 500 300 450 235"/>
+  <circle class="known" cx="75" cy="250" r="20"/><circle class="known" cx="250" cy="130" r="20"/><circle class="known" cx="390" cy="190" r="20"/><circle class="station" cx="535" cy="100" r="20"/><circle class="known" cx="620" cy="180" r="20"/><circle class="station" cx="700" cy="190" r="20"/><circle class="station" cx="845" cy="145" r="20"/>
+  <rect class="ledger" x="650" y="245" width="205" height="112" rx="7"/><text class="text" x="752" y="272" text-anchor="middle">ROUTE TABLE</text>
+  <circle class="check" cx="675" cy="295" r="7"/><text class="text" x="692" y="300">a → b</text><circle class="check" cx="675" cy="323" r="7"/><text class="text" x="692" y="328">a → c</text><text class="text" x="790" y="328">reuse ↻</text>
+</svg>

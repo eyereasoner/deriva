@@ -482,6 +482,11 @@ suitable positive recursive groups. A table records answers for a recursive
 call, iterates cyclic calls to a fixed point, and reuses results. Authors
 describe `path/2`; the engine chooses the recursive strategy.
 
+<figure>
+  <img src="book-assets/recursion-tabling-railway.svg" alt="A railway network with a cycle and a ledger of routes already reached.">
+  <figcaption>Recursive route questions may return to the same station. A table acts like a route ledger: new destinations are recorded and recurring questions reuse them.</figcaption>
+</figure>
+
 Tabling does not make every open relation finite. A rule that constructs
 ever-larger terms can still produce infinitely many distinct calls or answers.
 Keep the selected query and its generators finite.
@@ -502,6 +507,11 @@ simple paths rather than arbitrary walks.
 
 `[a, b, c]` abbreviates nested cons cells. `[Head | Tail]` exposes one cell;
 `[]` is empty.
+
+<figure>
+  <img src="book-assets/lists-train.svg" alt="Three railway carriages illustrate a list head and tail.">
+  <figcaption>A list resembles a train: expose the first carriage as the head, pass the remaining train as the tail, or join two trains with an append relation.</figcaption>
+</figure>
 
 ```eyepl
 first([Head | _], Head).
@@ -613,6 +623,11 @@ negation. Bind variables before negating. Putting `not(blocked(User))` before
 `user(User)` asks whether there is no blocked user at all, not whether this
 particular user is unblocked.
 
+<figure>
+  <img src="book-assets/negation-guest-registry.svg" alt="A receptionist checks a complete guest registry against a blocked list.">
+  <figcaption>Absence becomes informative only inside a declared complete boundary: Clara is allowed because the event registry is complete and she is not on its blocked list.</figcaption>
+</figure>
+
 Negative dependencies should be stratified: compute a lower relation, then
 negate it from a higher layer. Use `--warnings` to report negative recursion:
 
@@ -651,6 +666,11 @@ total_outgoing(Node, Total) :-
 ```
 
 `findall/3` returns `[]` for no answers; counts and sums return zero.
+
+<figure>
+  <img src="book-assets/aggregation-market.svg" alt="Market baskets with weights flow into count, sum, minimum, and maximum results.">
+  <figcaption>Aggregation temporarily treats a finite family of solutions as a collection: the same baskets can be counted, summed, or compared.</figcaption>
+</figure>
 
 Optimization can retain only a best solution:
 
@@ -830,6 +850,11 @@ false :-
 Eyepl checks fuses before queries. The first match aborts the CLI with exit code
 `65` and reports the rule and matched instance. A bare `false.` is unconditional.
 
+<figure>
+  <img src="book-assets/inference-fuse-control-panel.svg" alt="Conflicting engineering limits trigger a red inference fuse before operation.">
+  <figcaption>An inference fuse is a domain interlock: contradictory limits stop every downstream query instead of allowing decisions from an invalid theory.</figcaption>
+</figure>
+
 ```eyepl
 false :-
   assigned(Person, Role),
@@ -877,6 +902,11 @@ A maintainable theory separates:
 - integrity constraints: rules headed by `false`;
 - outputs: focused `query/1` declarations.
 
+<figure>
+  <img src="book-assets/knowledge-engineering-workflow.svg" alt="Source facts pass through normalization and domain concepts into a decision and proof.">
+  <figcaption>A maintainable theory moves in visible layers from observations to decisions, while the proof preserves the route back to evidence.</figcaption>
+</figure>
+
 Prefer positive domain concepts. Use negation only across a closed boundary.
 Represent confidence, alternative worlds, and provenance explicitly rather
 than hiding them in rule order.
@@ -912,6 +942,11 @@ conformance cases, example goldens, and proof goldens demonstrate these levels.
 
 Eyepl's core is RDF-agnostic. Adapter tools translate datasets into ordinary
 `rdf(Subject, Predicate, Object, Graph)` facts:
+
+<figure>
+  <img src="book-assets/rdf-adapter-pipeline.svg" alt="Several RDF formats pass through an explicit adapter into Eyepl rules and derived N-Quads.">
+  <figcaption>The adapter preserves web data structure at the boundary while the reasoning core continues to work with ordinary explicit terms and rules.</figcaption>
+</figure>
 
 ```sh
 node tools/rdf-to-eyepl.mjs --rules rules.pl data.trig -o program.pl
@@ -974,6 +1009,11 @@ Rules often outlive the source of their facts. Today `parent/2` may be written
 in the same file as `ancestor/2`; tomorrow it may come from a database adapter,
 a document extractor, or an agent. An **Eyepl Socket** gives that opening a
 name and a contract:
+
+<figure>
+  <img src="book-assets/sockets-providers.svg" alt="A file, database, and AI extractor connect through one predicate contract to Eyepl rules.">
+  <figcaption>A socket separates a stable reasoning contract from interchangeable providers; supplied claims remain Eyepl terms that proofs can cite.</figcaption>
+</figure>
 
 ```eyepl
 socket(family_source, provides(predicate(parent, 2))).
