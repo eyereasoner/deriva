@@ -82,6 +82,15 @@ slightly different question, and predict the answer before running it.
 
 # Part I — Relations
 
+<figure>
+  <img src="book-assets/part-1-relations.svg" alt="Two constellations joined by arcs through a shared center.">
+  <figcaption>A relation gives separate terms a common shape: identity travels along the threads made by shared variables.</figcaption>
+</figure>
+
+We begin with connection rather than calculation. Facts place points in a
+relational world; variables draw threads between them; rules make one pattern
+follow from another.
+
 ## 1. A program is a little theory
 
 Logic programming begins with a change of emphasis. Instead of listing the
@@ -527,6 +536,15 @@ fail unless the tail is `[]`.
 
 # Part II — Search
 
+<figure>
+  <img src="book-assets/part-2-search.svg" alt="A question branches through alternatives toward one highlighted answer.">
+  <figcaption>Search opens possibilities, abandons failures, revisits useful questions, and carries one coherent path to an answer.</figcaption>
+</figure>
+
+A theory may justify many conclusions, but an evaluator must still find them.
+This Part studies the finite domains, constraints, failure, and choice that
+turn a field of possibilities into a productive computation.
+
 ## 6. Arithmetic and finite generation
 
 Arithmetic is predicate-based. There is no `is` operator:
@@ -736,6 +754,15 @@ numerical kernels generally belong in a host, with Eyepl as the decision layer.
 ---
 
 # Part III — Trustworthy reasoning
+
+<figure>
+  <img src="book-assets/part-3-trustworthy-reasoning.svg" alt="Fragments of evidence rise through transparent layers into a balanced conclusion.">
+  <figcaption>A trustworthy conclusion remains connected to the independent pieces of evidence that support and constrain it.</figcaption>
+</figure>
+
+An answer becomes useful when its grounds remain visible. Here reasoning is
+treated as an accountable structure: queries define the question, proofs retain
+support, fuses guard integrity, and knowledge boundaries stay explicit.
 
 ## 11. Queries, answers, and proofs
 
@@ -982,6 +1009,15 @@ result; `why/2` records which supplied clauses actually supported an answer.
 ---
 
 # Part IV — The craft of logic programming
+
+<figure>
+  <img src="book-assets/part-4-craft.svg" alt="Rough fragments are refined through a spiral into a clear relational form.">
+  <figcaption>Craft is repeated clarification: preserve the logical idea while reshaping its control until the program becomes clear and usable.</figcaption>
+</figure>
+
+The final Part turns from language features to habits of construction. A good
+program rarely arrives whole; it is discovered through examples, corrected by
+invariants, and refined without losing sight of the relation it means.
 
 ## 17. Logic and control
 

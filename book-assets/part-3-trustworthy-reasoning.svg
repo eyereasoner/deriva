@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Trustworthy reasoning</title>
+  <desc id="desc">Separate fragments of evidence rise through transparent layers and converge into one balanced, inspectable conclusion.</desc>
+  <defs>
+    <linearGradient id="field" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#eee5d3"/>
+      <stop offset="1" stop-color="#f9f6ee"/>
+    </linearGradient>
+    <style>
+      .layer{fill:#fffdf7;fill-opacity:.62;stroke:#536b78;stroke-width:2}
+      .evidence{fill:#8b3a3a}
+      .path{fill:none;stroke:#8b3a3a;stroke-width:2;opacity:.7}
+      .conclusion{fill:#dcefe8;stroke:#2f6f55;stroke-width:4}
+      .balance{fill:none;stroke:#243447;stroke-width:3}
+    </style>
+  </defs>
+  <rect width="900" height="360" fill="url(#field)"/>
+  <polygon class="layer" points="120,300 780,300 700,250 200,250"/>
+  <polygon class="layer" points="200,235 700,235 640,190 260,190"/>
+  <polygon class="layer" points="280,175 620,175 570,130 330,130"/>
+  <path class="path" d="M190 282 C250 255 300 225 360 205 S415 165 450 145"/>
+  <path class="path" d="M335 282 C350 250 390 230 420 205 S440 165 450 145"/>
+  <path class="path" d="M565 282 C550 250 510 230 480 205 S460 165 450 145"/>
+  <path class="path" d="M710 282 C650 255 600 225 540 205 S485 165 450 145"/>
+  <circle class="evidence" cx="190" cy="282" r="13"/>
+  <circle class="evidence" cx="335" cy="282" r="13"/>
+  <circle class="evidence" cx="565" cy="282" r="13"/>
+  <circle class="evidence" cx="710" cy="282" r="13"/>
+  <circle class="evidence" cx="360" cy="205" r="9"/>
+  <circle class="evidence" cx="540" cy="205" r="9"/>
+  <circle class="conclusion" cx="450" cy="110" r="38"/>
+  <path class="balance" d="M450 72 L450 42 M390 42 L510 42 M405 42 L385 70 M495 42 L515 70"/>
+  <path class="balance" d="M365 70 Q385 92 405 70 M495 70 Q515 92 535 70"/>
+</svg>

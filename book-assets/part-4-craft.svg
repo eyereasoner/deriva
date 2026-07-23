@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">The craft of logic programming</title>
+  <desc id="desc">A rough field of fragments is repeatedly folded into a clear spiral and finally an elegant relational pattern.</desc>
+  <defs>
+    <linearGradient id="field" x1="0" x2="1">
+      <stop offset="0" stop-color="#f1e7d6"/>
+      <stop offset=".5" stop-color="#fffdf7"/>
+      <stop offset="1" stop-color="#e4eee9"/>
+    </linearGradient>
+    <style>
+      .rough{fill:none;stroke:#8b3a3a;stroke-width:3;stroke-linecap:round;opacity:.75}
+      .guide{fill:none;stroke:#9a5b18;stroke-width:2;stroke-dasharray:6 8}
+      .form{fill:none;stroke:#2f6f55;stroke-width:5;stroke-linecap:round}
+      .joint{fill:#fffdf7;stroke:#243447;stroke-width:2.5}
+    </style>
+  </defs>
+  <rect width="900" height="360" fill="url(#field)"/>
+  <path class="rough" d="M55 95 L115 70 L145 130 L90 155 L160 205 L85 280"/>
+  <path class="rough" d="M155 60 L205 115 L175 170 L235 225 L190 300"/>
+  <path class="guide" d="M210 180 C300 30 500 55 520 175 C540 290 360 315 315 220 C270 125 405 90 450 165 C485 225 400 260 365 210"/>
+  <path class="form" d="M330 180 C390 85 525 100 535 180 C545 255 435 275 400 220 C365 165 435 130 470 175"/>
+  <path class="form" d="M535 180 C610 180 645 105 715 105"/>
+  <path class="form" d="M535 180 C620 180 650 180 735 180"/>
+  <path class="form" d="M535 180 C610 180 645 255 715 255"/>
+  <circle class="joint" cx="330" cy="180" r="17"/>
+  <circle class="joint" cx="535" cy="180" r="20"/>
+  <circle class="joint" cx="715" cy="105" r="24"/>
+  <circle class="joint" cx="735" cy="180" r="24"/>
+  <circle class="joint" cx="715" cy="255" r="24"/>
+  <circle cx="715" cy="105" r="6" fill="#8b3a3a"/>
+  <circle cx="735" cy="180" r="6" fill="#8b3a3a"/>
+  <circle cx="715" cy="255" r="6" fill="#8b3a3a"/>
+</svg>

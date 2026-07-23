@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Search</title>
+  <desc id="desc">A single question branches through a field of alternatives; some paths fade, one reaches a bright answer, and one loops back.</desc>
+  <defs>
+    <linearGradient id="field" x1="0" x2="1">
+      <stop offset="0" stop-color="#eee5d3"/>
+      <stop offset=".55" stop-color="#f8f3e8"/>
+      <stop offset="1" stop-color="#e4eee9"/>
+    </linearGradient>
+    <style>
+      .branch{fill:none;stroke:#435166;stroke-width:3;stroke-linecap:round}
+      .lost{fill:none;stroke:#8b3a3a;stroke-width:2;stroke-dasharray:3 9;opacity:.7}
+      .chosen{fill:none;stroke:#2f6f55;stroke-width:6;stroke-linecap:round}
+      .choice{fill:#fffdf7;stroke:#243447;stroke-width:2}
+      .answer{fill:#dcefe8;stroke:#2f6f55;stroke-width:4}
+    </style>
+  </defs>
+  <rect width="900" height="360" fill="url(#field)"/>
+  <path class="branch" d="M65 180 C170 180 165 75 280 75"/>
+  <path class="branch" d="M65 180 C170 180 175 180 280 180"/>
+  <path class="branch" d="M65 180 C170 180 165 285 280 285"/>
+  <path class="lost" d="M280 75 C390 75 400 35 500 35 S630 80 700 55"/>
+  <path class="branch" d="M280 75 C380 75 410 125 500 125"/>
+  <path class="chosen" d="M280 180 C390 180 405 230 510 230 S685 170 825 180"/>
+  <path class="lost" d="M280 285 C380 285 390 325 500 325"/>
+  <path class="branch" d="M500 125 C620 125 630 300 520 300 C450 300 445 245 510 230"/>
+  <circle class="choice" cx="65" cy="180" r="25"/>
+  <circle class="choice" cx="280" cy="75" r="18"/>
+  <circle class="choice" cx="280" cy="180" r="18"/>
+  <circle class="choice" cx="280" cy="285" r="18"/>
+  <circle class="choice" cx="500" cy="35" r="13"/>
+  <circle class="choice" cx="500" cy="125" r="18"/>
+  <circle class="choice" cx="510" cy="230" r="18"/>
+  <circle class="choice" cx="500" cy="325" r="13"/>
+  <circle class="answer" cx="825" cy="180" r="32"/>
+</svg>
